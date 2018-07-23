@@ -1,0 +1,18 @@
+{
+  "name": "papb-js-snippets",
+  "version": "0.0.1",
+  "description": "A collection of snippets that I find useful",
+  "scripts": {
+    "test": "ava --verbose"
+  },
+  "author": "Pedro Augusto de Paula Barbosa",
+  "license": "MIT",
+  "dependencies": {
+    "is-circular": "^1.0.2",
+    "lorem-ipsum": "^1.0.5"
+  },
+  "devDependencies": {
+    "ava": "1.0.0-beta.6",
+    "bluebird": "^3.5.1"
+  }
+}
