@@ -5,6 +5,10 @@
   "scripts": {
     "test": "ava --verbose"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/papb/papb-js-snippets.git"
+  },
   "author": "Pedro Augusto de Paula Barbosa",
   "license": "MIT",
   "dependencies": {
