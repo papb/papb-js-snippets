@@ -14,7 +14,8 @@
   "dependencies": {
     "is-circular": "^1.0.2",
     "js-base64": "^2.4.8",
-    "lorem-ipsum": "^1.0.5"
+    "lorem-ipsum": "^1.0.5",
+    "utf8": "^3.0.0"
   },
   "devDependencies": {
     "ava": "1.0.0-beta.6",
