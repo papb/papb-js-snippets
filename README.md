@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/papb/papb-js-snippets.svg?branch=master)](https://travis-ci.com/papb/papb-js-snippets)
+
 # papb-js-snippets
 
 This is a collection of JS snippets that I find useful.
