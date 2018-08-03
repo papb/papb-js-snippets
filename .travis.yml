@@ -13,6 +13,7 @@ jobs:
       node_js: '10'
     - stage: deploy
       name: "Deploy docs to Github Pages"
+      node_js: '6'
       deploy:
         provider: pages
         local-dir: docs_output
