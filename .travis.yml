@@ -14,6 +14,7 @@ jobs:
     - stage: deploy
       name: "Deploy docs to Github Pages"
       node_js: '6'
+      before_deploy: "npm run docs"
       deploy:
         provider: pages
         local-dir: docs_output
