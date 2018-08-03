@@ -1,0 +1,137 @@
+<!DOCTYPE html><html><head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/base64-substitution-cipher.js | papb-js-snippets API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+<link data-ice="userStyle" rel="stylesheet" href="user/css/0-style.css">
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+        <a href="index.html" style="font-weight: bold; padding-right: 30px;">papb-js-snippets</a>
+    
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">API Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/papb/papb-js-snippets" class="repo-url-github" target="_blank">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+
+
+<div class="content" data-ice="content" style="margin-left: 0;"><h1 data-ice="title">src/base64-substitution-cipher.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
+ * Perform a substitution cipher on any string by first converting the string to Base64. Note: this is a very weak
+ * encryption algorithm that shouldn&apos;t be used for security purposes.
+ * 
+ * The plaintext alphabet used is &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=&quot; (after the
+ * string is converted to Base64).
+ * 
+ * To decrypt, set the `reverse` option to true.
+ * 
+ * @requires snippet:simple-substitution-cipher
+ * @requires npm:js-base64 by dankogai
+ *
+ * @param {string} str The string to be encrypted / decrypted.
+ * 
+ * @param {Object} [options] An object to provide options.
+ * 
+ * @param {string} [options.ciphertextAlphabet=&quot;hrVtM=TYziLNIemw39dBXDj18lykGUPosR20+fEK6buFCcJpZgqWH/xQ57S4nvaAO&quot;]
+ * The ciphertext alphabet to be used. Must be an anagram of the plaintext alphabet.
+ * 
+ * @param {boolean} [options.reverse=false] Whether or not to reverse the encryption, i.e., to decrypt. Setting this
+ * to true will cause the cipher to be undone followed by the Base64 decode of the result.
+ * 
+ * @throws {Error} If the `reverse` option is set to true and the passed string is not a valid Base64 string.
+ * 
+ * @see https://en.wikipedia.org/wiki/Substitution_cipher
+ * @see https://en.wikipedia.org/wiki/Base64
+ * 
+ * @example
+ * 
+ * ```
+ * base64SubstitutionCipher(&quot;hello! ^^&quot;); // &quot;yTDCkTnRz=7P&quot;
+ * base64SubstitutionCipher(&quot;yTDCkTnRz=7P&quot;, { reverse: true }); // &quot;hello! ^^&quot;
+ * base64SubstitutionCipher(&quot;hello! ^^&quot;, {
+ *     ciphertextAlphabet: &quot;cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR&quot;
+ * }); // &quot;lf1HPfXTQthD&quot;
+ * base64SubstitutionCipher(&quot;lf1HPfXTQthD&quot;, {
+ *     ciphertextAlphabet: &quot;cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR&quot;,
+ *     reverse: true
+ * }); // &quot;hello! ^^&quot;
+ * ```
+ */
+let base64SubstitutionCipher = (function() {
+
+    const Base64 = require(&apos;js-base64&apos;).Base64;
+
+    function areAnagrams(str1, str2) {
+        return str1.split(&quot;&quot;).sort().join(&quot;&quot;) === str2.split(&quot;&quot;).sort().join(&quot;&quot;);
+    }
+
+    return function base64SubstitutionCipher(str, options = {}) {
+        let plaintextAlphabet = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=&quot;;
+        let ciphertextAlphabet = options.ciphertextAlphabet;
+        let reverse = options.reverse;
+
+        if (ciphertextAlphabet === undefined) ciphertextAlphabet = &quot;hrVtM=TYziLNIemw39dBXDj18lykGUPosR20+fEK6buFCcJpZgqWH/xQ57S4nvaAO&quot;;
+        if (reverse === undefined) reverse = false;
+        if (typeof ciphertextAlphabet !== &quot;string&quot;) throw new Error(&quot;Ciphertext alphabet must be a string.&quot;);
+        if (!areAnagrams(plaintextAlphabet, ciphertextAlphabet)) {
+            throw new Error(&quot;Ciphertext alphabet and plaintext alphabet must be anagrams.&quot;);
+        }
+
+        if (!reverse) str = Base64.encode(str);
+        let result = snippets.simpleSubstitutionCipher(str, { plaintextAlphabet, ciphertextAlphabet, reverse });
+        if (reverse &amp;&amp; result.indexOf(&quot;?&quot;) !== -1) throw new Error(&quot;The passed string is not a valid Base64 string.&quot;);
+        return reverse ? Base64.decode(result) : result;
+    };
+
+})();
+
+/* test */ module.exports = {
+    snippet: base64SubstitutionCipher,
+    snippetName: &quot;base64SubstitutionCipher&quot;,
+    snippetTest: t =&gt; {
+        t.is(base64SubstitutionCipher(&quot;hello! ^^&quot;), &quot;yTDCkTnRz=7P&quot;);
+        t.is(base64SubstitutionCipher(&quot;yTDCkTnRz=7P&quot;, { reverse: true }), &quot;hello! ^^&quot;);
+        t.is(base64SubstitutionCipher(&quot;hello! ^^&quot;, {
+            ciphertextAlphabet: &quot;cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR&quot;
+        }), &quot;lf1HPfXTQthD&quot;);
+        t.is(base64SubstitutionCipher(&quot;lf1HPfXTQthD&quot;, {
+            ciphertextAlphabet: &quot;cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR&quot;,
+            reverse: true
+        }), &quot;hello! ^^&quot;);
+        t.throws(() =&gt; base64SubstitutionCipher(&quot;hello! ^^&quot;, { reverse: true }));
+    }
+};</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+
+
+</body></html>

@@ -1,0 +1,19 @@
+.index-title {
+    top: 3px;
+    font-size: 65px;
+    font-family: 'Helvetica', sans-serif;
+    text-align: center;
+    padding: 0 5px;
+}
+
+html body header {
+    font-family: 'Source Sans Pro', 'Roboto', sans-serif !important;
+}
+
+td[data-ice=type] {
+    white-space: nowrap;
+}
+
+.manual-badge, .manual-cards {
+    display: none !important;
+}

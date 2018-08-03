@@ -1,0 +1,160 @@
+<!DOCTYPE html><html><head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/simple-substitution-cipher.js | papb-js-snippets API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+<link data-ice="userStyle" rel="stylesheet" href="user/css/0-style.css">
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+        <a href="index.html" style="font-weight: bold; padding-right: 30px;">papb-js-snippets</a>
+    
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">API Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/papb/papb-js-snippets" class="repo-url-github" target="_blank">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+
+
+<div class="content" data-ice="content" style="margin-left: 0;"><h1 data-ice="title">src/simple-substitution-cipher.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
+ * Perform a simple substitution cipher on a string. Note: this is a very weak encryption algorithm that shouldn&apos;t
+ * be used for security purposes.
+ * 
+ * It is common to associate this function with Base64 encode/decode methods so that any string can be encrypted,
+ * instead of only working with strings whose chars are in the plaintext alphabet. The default plaintext and
+ * ciphertext alphabets are compatible with Base64. See, for example. js-base64 by dankogai on npm.
+ *
+ * @param {string} str The string to be encrypted.
+ * 
+ * @param {Object} [options] An object to provide options.
+ * 
+ * @param {string} [options.plaintextAlphabet=&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=&quot;]
+ * The plaintext alphabet to be used. Must have the same length as options.ciphertextAlphabet.
+ * 
+ * @param {string} [options.ciphertextAlphabet=&quot;hrVtM=TYziLNIemw39dBXDj18lykGUPosR20+fEK6buFCcJpZgqWH/xQ57S4nvaAO&quot;]
+ * The ciphertext alphabet to be used. Must have the same length as options.plaintextAlphabet.
+ * 
+ * @param {boolean} [options.reverse=false] Whether or not to reverse the encryption. Setting this to true is exactly
+ * equivalent as switching options.plaintextAlphabet and options.ciphertextAlphabet.
+ * 
+ * @param {char | null} [options.unknownChar=&quot;?&quot;] The character to be used in place of a character in the input string that
+ * is not present in the plaintext alphabet. If null, the character will be left untouched.
+ * 
+ * @see https://en.wikipedia.org/wiki/Substitution_cipher
+ * 
+ * @example
+ * 
+ * ```
+ * simpleSubstitutionCipher(&quot;Hello&quot;); //&quot;YPff6&quot;
+ * simpleSubstitutionCipher(&quot;YPff6&quot;, { reverse: true }); // &quot;Hello&quot;
+ * simpleSubstitutionCipher(&quot;Hello&quot;, {
+ *     ciphertextAlphabet: &quot;cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR&quot;
+ * }); // &quot;WDpp=&quot;
+ * simpleSubstitutionCipher(&quot;WDpp=&quot;, {
+ *     ciphertextAlphabet: &quot;cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR&quot;,
+ *     reverse: true
+ * }); // &quot;Hello&quot;
+ * ```
+ */
+let simpleSubstitutionCipher = function(str, options = {}) {
+    let plaintextAlphabet = options.plaintextAlphabet;
+    let ciphertextAlphabet = options.ciphertextAlphabet;
+    let reverse = options.reverse;
+    let unknownChar = options.unknownChar;
+
+    if (plaintextAlphabet === undefined) plaintextAlphabet = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=&quot;;
+    if (ciphertextAlphabet === undefined) ciphertextAlphabet = &quot;hrVtM=TYziLNIemw39dBXDj18lykGUPosR20+fEK6buFCcJpZgqWH/xQ57S4nvaAO&quot;;
+    if (reverse === undefined) reverse = false;
+    if (unknownChar === undefined) unknownChar = &quot;?&quot;;
+
+    if (typeof plaintextAlphabet !== &quot;string&quot;) throw new Error(&quot;Plaintext alphabet must be a string.&quot;);
+    if (typeof ciphertextAlphabet !== &quot;string&quot;) throw new Error(&quot;Ciphertext alphabet must be a string.&quot;);
+
+    if (plaintextAlphabet.length !== ciphertextAlphabet.length) {
+        throw new Error(&quot;Plaintext alphabet and ciphertext alphabet must have the same length.&quot;);
+    }
+
+    if (reverse) {
+        let temp = plaintextAlphabet;
+        plaintextAlphabet = ciphertextAlphabet;
+        ciphertextAlphabet = temp;
+    }
+
+    let lookupMap = new Map();
+    for (let i = 0; i &lt; plaintextAlphabet.length; i++) {
+        lookupMap.set(plaintextAlphabet.charAt(i), ciphertextAlphabet.charAt(i));
+    }
+
+    let result = [];
+    for (let i = 0; i &lt; str.length; i++) {
+        let char = lookupMap.get(str.charAt(i));
+        if (char === undefined) char = unknownChar === null ? char : unknownChar;
+        result.push(char);
+    }
+
+    return result.join(&quot;&quot;);
+};
+
+/* test */ module.exports = {
+    snippet: simpleSubstitutionCipher,
+    snippetName: &quot;simpleSubstitutionCipher&quot;,
+    snippetTest: t =&gt; {
+        t.is(simpleSubstitutionCipher(&quot;Hello&quot;), &quot;YPff6&quot;);
+        t.is(simpleSubstitutionCipher(&quot;YPff6&quot;, { reverse: true }), &quot;Hello&quot;);
+        t.is(simpleSubstitutionCipher(&quot;Hello&quot;, {
+            ciphertextAlphabet: &quot;cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR&quot;
+        }), &quot;WDpp=&quot;);
+        t.is(simpleSubstitutionCipher(&quot;WDpp=&quot;, {
+            ciphertextAlphabet: &quot;cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR&quot;,
+            reverse: true
+        }), &quot;Hello&quot;);
+    }
+};
+
+
+
+
+
+// t.is(simpleSubstitutionCipher(&quot;hello! ^^&quot;), &quot;yTDCkTnRz=7P&quot;);
+// t.is(simpleSubstitutionCipher(&quot;yTDCkTnRz=7P&quot;, { reverse: true }), &quot;hello! ^^&quot;);
+// t.is(simpleSubstitutionCipher(&quot;hello! ^^&quot;, {
+//     ciphertextAlphabet: &quot;cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR&quot;
+// }), &quot;lf1HPfXTQthD&quot;);
+// t.is(simpleSubstitutionCipher(&quot;lf1HPfXTQthD&quot;, {
+//     ciphertextAlphabet: &quot;cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR&quot;,
+//     reverse: true
+// }), &quot;hello! ^^&quot;);</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+
+
+</body></html>
