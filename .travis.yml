@@ -1,5 +1,23 @@
 language: node_js
-node_js:
-  - '10'
-  - '8'
-  - '6'
+
+jobs:
+  include:
+    - stage: test
+      name: "Unit Tests on Node 6"
+      node_js: '6'
+    - stage: test
+      name: "Unit Tests on Node 8"
+      node_js: '8'
+    - stage: test
+      name: "Unit Tests on Node 10"
+      node_js: '10'
+    - stage: deploy
+      name: "Deploy docs to Github Pages"
+      deploy:
+        provider: pages
+        local-dir: docs_output
+        skip-cleanup: true
+        github-token: $GITHUB_TOKEN
+        keep-history: true
+        on:
+          branch: master
