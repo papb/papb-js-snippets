@@ -1,5 +1,11 @@
 window.esdocSearchIndex = [
   [
+    "papb-js-snippets/src/add-script.js~addscript",
+    "function/index.html#static-function-addScript",
+    "<span>addScript</span> <span class=\"search-result-import-path\">papb-js-snippets/src/add-script.js</span>",
+    "function"
+  ],
+  [
     "papb-js-snippets/src/array-has.js~arrayhas",
     "function/index.html#static-function-arrayHas",
     "<span>arrayHas</span> <span class=\"search-result-import-path\">papb-js-snippets/src/array-has.js</span>",
@@ -57,6 +63,12 @@ window.esdocSearchIndex = [
     "papb-js-snippets/src/get-now-string.js~getnowstring",
     "function/index.html#static-function-getNowString",
     "<span>getNowString</span> <span class=\"search-result-import-path\">papb-js-snippets/src/get-now-string.js</span>",
+    "function"
+  ],
+  [
+    "papb-js-snippets/src/add-script.js~inline",
+    "function/index.html#static-function-inline",
+    "<span>inline</span> <span class=\"search-result-import-path\">papb-js-snippets/src/add-script.js</span>",
     "function"
   ],
   [
@@ -154,6 +166,12 @@ window.esdocSearchIndex = [
     "function/index.html#static-function-zeroPadLeft",
     "<span>zeroPadLeft</span> <span class=\"search-result-import-path\">papb-js-snippets/src/zero-pad-left.js</span>",
     "function"
+  ],
+  [
+    "src/add-script.js",
+    "file/src/add-script.js.html",
+    "src/add-script.js",
+    "file"
   ],
   [
     "src/array-has.js",
