@@ -15,7 +15,7 @@
  * randomInt(-3, 1); // A value between -3 and 0 (inclusive)
  * ```
  */
-let randomInt = function(begin, end) {
+const randomInt = function(begin, end) {
     if (end <= begin) throw new Error("end must be greater than begin");
     return Math.floor(Math.random() * (end - begin)) + begin;
 };
@@ -25,7 +25,7 @@ let randomInt = function(begin, end) {
     snippetName: "randomInt",
     snippetTest: t => {
         for (let i = 0; i < 100; i++) {
-            let random = randomInt(-3, 1);
+            const random = randomInt(-3, 1);
             t.true(-3 <= random);
             t.true(random < 1);
         }

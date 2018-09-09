@@ -26,10 +26,10 @@
  * f(z); // 1
  * ```
  */
-let arrayToPickerFunction = function(array) {
+const arrayToPickerFunction = function(array) {
     if (!Array.isArray(array)) throw new TypeError("Parameter must be an array.");
-    let localArray = array.slice(); // If the given array changes, this won't change.
-    let indexMap = new Map();
+    const localArray = array.slice(); // If the given array changes, this won't change.
+    const indexMap = new Map();
     let nextIndex = 0;
     return function(obj) {
         if (!indexMap.has(obj)) {
@@ -44,11 +44,11 @@ let arrayToPickerFunction = function(array) {
     snippet: arrayToPickerFunction,
     snippetName: "arrayToPickerFunction",
     snippetTest: t => {
-        let f = arrayToPickerFunction([1, 2, 3]);
-        let w = 55;
-        let x = {};
-        let y = {};
-        let z = "something";
+        const f = arrayToPickerFunction([1, 2, 3]);
+        const w = 55;
+        const x = {};
+        const y = {};
+        const z = "something";
         t.is(f(w), 1);
         t.is(f(x), 2);
         t.is(f(w), 1);

@@ -38,7 +38,7 @@
  * }); // "Hello"
  * ```
  */
-let simpleSubstitutionCipher = function(str, options = {}) {
+const simpleSubstitutionCipher = function(str, options = {}) {
     let plaintextAlphabet = options.plaintextAlphabet;
     let ciphertextAlphabet = options.ciphertextAlphabet;
     let reverse = options.reverse;
@@ -57,17 +57,17 @@ let simpleSubstitutionCipher = function(str, options = {}) {
     }
 
     if (reverse) {
-        let temp = plaintextAlphabet;
+        const temp = plaintextAlphabet;
         plaintextAlphabet = ciphertextAlphabet;
         ciphertextAlphabet = temp;
     }
 
-    let lookupMap = new Map();
+    const lookupMap = new Map();
     for (let i = 0; i < plaintextAlphabet.length; i++) {
         lookupMap.set(plaintextAlphabet.charAt(i), ciphertextAlphabet.charAt(i));
     }
 
-    let result = [];
+    const result = [];
     for (let i = 0; i < str.length; i++) {
         let char = lookupMap.get(str.charAt(i));
         if (char === undefined) char = unknownChar === null ? char : unknownChar;

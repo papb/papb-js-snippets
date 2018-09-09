@@ -19,11 +19,11 @@
  * sha256("test"); // "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"
  * ```
  */
-let sha256 = (function() {
+const sha256 = (function() {
 
     const utf8 = require('utf8');
 
-    var priv = {};
+    const priv = {};
 
     /**
      * Rotates right (circular right shift) value x by n positions [§3.2.4].
@@ -48,8 +48,8 @@ let sha256 = (function() {
     priv.toHexStr = function(n) {
         // Note that we can't use toString(16) as it is implementation-dependant,
         // and in IE it returns signed numbers when used on full words.
-        var s = "", v;
-        for (var i = 7; i >= 0; i--) { v = (n>>>(i*4)) & 0xf; s += v.toString(16); }
+        let s = "", v;
+        for (let i = 7; i >= 0; i--) { v = (n>>>(i*4)) & 0xf; s += v.toString(16); }
         return s;
     };
 
@@ -59,10 +59,10 @@ let sha256 = (function() {
         }
 
         // convert string to UTF-8, as SHA only deals with byte-streams
-        var msg = utf8.encode(str);
+        let msg = utf8.encode(str);
         
         // constants [§4.2.2]
-        var K = [
+        const K = [
             0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
             0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
             0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
@@ -74,7 +74,7 @@ let sha256 = (function() {
         ];
 
         // initial hash value [§5.3.1]
-        var H = [
+        const H = [
             0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
         ];
 
@@ -83,13 +83,13 @@ let sha256 = (function() {
         msg += String.fromCharCode(0x80); // add trailing '1' bit (+ 0's padding) to string [§5.1.1]
 
         // convert string msg into 512-bit/16-integer blocks arrays of ints [§5.2.1]
-        var l = msg.length/4 + 2; // length (in 32-bit integers) of msg + ‘1’ + appended length
-        var N = Math.ceil(l/16); // number of 16-integer-blocks required to hold 'l' ints
-        var M = new Array(N);
+        const l = msg.length/4 + 2; // length (in 32-bit integers) of msg + ‘1’ + appended length
+        const N = Math.ceil(l/16); // number of 16-integer-blocks required to hold 'l' ints
+        const M = new Array(N);
 
-        for (var i=0; i<N; i++) {
+        for (let i=0; i<N; i++) {
             M[i] = new Array(16);
-            for (var j=0; j<16; j++) { // encode 4 chars per integer, big-endian encoding
+            for (let j=0; j<16; j++) { // encode 4 chars per integer, big-endian encoding
                 M[i][j] = (msg.charCodeAt(i*64+j*4)<<24) | (msg.charCodeAt(i*64+j*4+1)<<16) |
                           (msg.charCodeAt(i*64+j*4+2)<<8) | (msg.charCodeAt(i*64+j*4+3));
             } // note running off the end of msg is ok since bitwise ops on NaN return 0
@@ -102,20 +102,20 @@ let sha256 = (function() {
 
         // HASH COMPUTATION [§6.1.2]
 
-        var W = new Array(64); var a, b, c, d, e, f, g, h;
-        for (var i=0; i<N; i++) {
+        const W = new Array(64); let a, b, c, d, e, f, g, h;
+        for (let i=0; i<N; i++) {
 
             // 1 - prepare message schedule 'W'
-            for (var t=0;  t<16; t++) W[t] = M[i][t];
-            for (var t=16; t<64; t++) W[t] = (priv.sigma1(W[t-2]) + W[t-7] + priv.sigma0(W[t-15]) + W[t-16]) & 0xffffffff;
+            for (let t=0;  t<16; t++) W[t] = M[i][t];
+            for (let t=16; t<64; t++) W[t] = (priv.sigma1(W[t-2]) + W[t-7] + priv.sigma0(W[t-15]) + W[t-16]) & 0xffffffff;
 
             // 2 - initialise working variables a, b, c, d, e, f, g, h with previous hash value
             a = H[0]; b = H[1]; c = H[2]; d = H[3]; e = H[4]; f = H[5]; g = H[6]; h = H[7];
 
             // 3 - main loop (note 'addition modulo 2^32')
-            for (var t=0; t<64; t++) {
-                var T1 = h + priv.Sigma1(e) + priv.Ch(e, f, g) + K[t] + W[t];
-                var T2 = priv.Sigma0(a) + priv.Maj(a, b, c);
+            for (let t=0; t<64; t++) {
+                const T1 = h + priv.Sigma1(e) + priv.Ch(e, f, g) + K[t] + W[t];
+                const T2 = priv.Sigma0(a) + priv.Maj(a, b, c);
                 h = g;
                 g = f;
                 f = e;
@@ -141,7 +141,7 @@ let sha256 = (function() {
                priv.toHexStr(H[4]) + priv.toHexStr(H[5]) + priv.toHexStr(H[6]) + priv.toHexStr(H[7]);
     };
 
-}());
+})();
 
 /* test */ module.exports = {
     snippet: sha256,

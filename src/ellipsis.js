@@ -13,7 +13,7 @@
  * ellipsis("Hello World", 11); // "Hello World"
  * ```
  */
-let ellipsis = function(str, maxlength) {
+const ellipsis = function(str, maxlength) {
     return str.length > maxlength ? str.substring(0, maxlength - 3) + "..." : str;
 };
 

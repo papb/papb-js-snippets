@@ -19,7 +19,7 @@
  * arrayHas([1, 2, 3], [1, 2, 3]); // false
  * ```
  */
-let arrayHas = function(array, ...values) {
+const arrayHas = function(array, ...values) {
     return values.every(value => array.some(obj => obj === value));
 };
 

@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Adds an script from the given src to the page.
  * 
@@ -11,7 +9,7 @@
  * 
  * @return {Promise} A promise that resolves when the script finishes loading.
  */
-let addScript = function(document, src) {
+const addScript = function(document, src) {
     if (typeof src !== "string") throw new Error("Invalid src argument: must be a string.");
     return new Promise(resolve => {
         const script = document.createElement('script');
@@ -19,7 +17,7 @@ let addScript = function(document, src) {
         script.onload = resolve;
         document.body.appendChild(script);
     });
-}
+};
 
 /**
  * Adds an script with the given content to the page.

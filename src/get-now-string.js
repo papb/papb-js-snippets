@@ -5,10 +5,10 @@
  * 
  * @return {string}
  */
-let getNowString = function() {
-    var reg = /^(.+)T(.+):(.+):(.+)\.\d{3}Z$/;
-    var str = new Date().toJSON();
-    var res = reg.exec(str);
+const getNowString = function() {
+    const reg = /^(.+)T(.+):(.+):(.+)\.\d{3}Z$/;
+    const str = new Date().toJSON();
+    const res = reg.exec(str);
     return res[1] + "_" + res[2] + "h" + res[3] + "min" + res[4] + "s";
 };
 

@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "A collection of snippets that I find useful",
   "scripts": {
-    "test": "ava --verbose",
+    "test:lint": "eslint .",
+    "test:ava": "ava --verbose",
+    "test": "npm run test:lint && npm run test:ava",
     "docs": "rimraf docs_output && esdoc -c docs/esdoc-config.js"
   },
   "repository": {
@@ -23,6 +25,7 @@
     "bluebird": "^3.5.1",
     "cheerio": "^1.0.0-rc.2",
     "esdoc": "^0.5.2",
+    "eslint": "^5.5.0",
     "rimraf": "^2.6.2"
   }
 }

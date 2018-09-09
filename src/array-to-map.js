@@ -21,7 +21,7 @@
  * map.get(5); // { a: 5, b: 3 }
  * ```
  */
-let arrayToMap = function(array, keyMaker) {
+const arrayToMap = function(array, keyMaker) {
     return new Map(array.map(x => [keyMaker(x), x]));
 };
 
@@ -29,8 +29,8 @@ let arrayToMap = function(array, keyMaker) {
     snippet: arrayToMap,
     snippetName: "arrayToMap",
     snippetTest: t => {
-        let array = [{ a: 3 }, { a: 1, d: 2 }, { a: 5, b: 3 }];
-        let map = arrayToMap(array, x => x.a);
+        const array = [{ a: 3 }, { a: 1, d: 2 }, { a: 5, b: 3 }];
+        const map = arrayToMap(array, x => x.a);
         t.deepEqual(map.get(3), { a: 3 });
         t.deepEqual(map.get(1), { a: 1, d: 2 });
         t.deepEqual(map.get(5), { a: 5, b: 3 });

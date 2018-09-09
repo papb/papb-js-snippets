@@ -15,7 +15,7 @@
  * console.log(x); // [1, 3]
  * ```
  */
-let filterInPlace = function(array, filterFunction) {
+const filterInPlace = function(array, filterFunction) {
     return snippets.replaceArray(array, array.filter(filterFunction));
 };
 
@@ -23,7 +23,7 @@ let filterInPlace = function(array, filterFunction) {
     snippet: filterInPlace,
     snippetName: "filterInPlace",
     snippetTest: t => {
-        let x = [1, -1, -2, 3];
+        const x = [1, -1, -2, 3];
         filterInPlace(x, v => v > 0);
         t.deepEqual(x, [1, 3]);
     }

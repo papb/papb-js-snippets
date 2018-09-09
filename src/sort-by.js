@@ -19,8 +19,8 @@
  * console.log(x); // [{id:3},{id:7}];
  * ```
  */
-let sortBy = function(array, valuePicker, reverse = false) {
-    let n = reverse ? -1 : 1;
+const sortBy = function(array, valuePicker, reverse = false) {
+    const n = reverse ? -1 : 1;
     snippets.mapInPlace(array, x => ({ value: x, picked: valuePicker(x) }));
     array.sort((a, b) => a.picked < b.picked ? -n : a.picked === b.picked ? 0 : n);
     snippets.mapInPlace(array, x => x.value);
@@ -31,7 +31,7 @@ let sortBy = function(array, valuePicker, reverse = false) {
     snippet: sortBy,
     snippetName: "sortBy",
     snippetTest: t => {
-        let list = [{id:7},{id:3}];
+        const list = [{id:7},{id:3}];
         sortBy(list, x => x.id);
         t.deepEqual(list, [{id:3},{id:7}]);
     }

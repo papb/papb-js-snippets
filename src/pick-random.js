@@ -7,7 +7,7 @@
  * @returns {*} A random element from the given array.
  *
  */
-let pickRandom = function(array) {
+const pickRandom = function(array) {
     return array[Math.floor(Math.random() * array.length)];
 };
 
@@ -15,7 +15,7 @@ let pickRandom = function(array) {
     snippet: pickRandom,
     snippetName: "pickRandom",
     snippetTest: t => {
-        let array = [{}, {}, {}, {}];
+        const array = [{}, {}, {}, {}];
         for (let i = 0; i < 10; i++) {
             t.true(snippets.arrayHas(array, pickRandom(array)));
         }

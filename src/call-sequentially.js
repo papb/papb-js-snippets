@@ -9,8 +9,8 @@
  * rejects with an error if any of the functions throw an error (in which case
  * the sequence is terminated immediately).
  */
-let callSequentially = function(functions) {
-    var promiseChain = Promise.resolve();
+const callSequentially = function(functions) {
+    let promiseChain = Promise.resolve();
     functions.forEach(f => {
         promiseChain = promiseChain.then(f);
     });

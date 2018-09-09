@@ -6,8 +6,8 @@
  * 
  * @return {string} The sanitized text
  */
-let sanitizeHTMLInText = function(text) {
-    var map = { '&': 'amp', '<': 'lt', '>': 'gt', '"': 'quot', "'": '#039' };
+const sanitizeHTMLInText = function(text) {
+    const map = { '&': 'amp', '<': 'lt', '>': 'gt', '"': 'quot', "'": '#039' };
     return text.replace(/[&<>"']/g, m => `&${map[m]};`);
 };
 

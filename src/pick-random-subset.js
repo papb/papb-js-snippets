@@ -18,11 +18,11 @@
  * 
  * @throws {Error} If options.length or options.minLength is greater than array.length.
  */
-let pickRandomSubset = function(array, options = undefined) {
+const pickRandomSubset = function(array, options = undefined) {
     // Edited from https://github.com/Jam3/random-array-subset
 
     let length = options && options.length !== undefined ? options.length : undefined;
-    let minLength = options && options.minLength !== undefined ? options.minLength : 0;
+    const minLength = options && options.minLength !== undefined ? options.minLength : 0;
 
     if (length === undefined) {
         if (minLength > array.length) {
@@ -33,9 +33,9 @@ let pickRandomSubset = function(array, options = undefined) {
         throw new Error("The specified length can't be greater than the array length.");
     }
     array = array.slice();
-    var result = [];
+    const result = [];
     while (result.length < length) {
-        let index = snippets.randomInt(0, array.length);
+        const index = snippets.randomInt(0, array.length);
         result.push(array[index]);
         array.splice(index, 1);
     }
@@ -46,7 +46,7 @@ let pickRandomSubset = function(array, options = undefined) {
     snippet: pickRandomSubset,
     snippetName: "pickRandomSubset",
     snippetTest: t => {
-        let array = [{}, {}, {}, {}];
+        const array = [{}, {}, {}, {}];
         for (let i = 0; i < 20; i++) {
             t.true(snippets.arrayHas(array, ...pickRandomSubset(array)));
             t.is(pickRandomSubset(array, { length: 3 }).length, 3);

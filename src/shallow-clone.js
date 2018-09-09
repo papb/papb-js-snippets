@@ -4,7 +4,7 @@
  * @param {object} obj The object to be shallow-cloned
  * @return {object} The shallow-cloned object
  */
-let shallowClone = function(obj) {
+const shallowClone = function(obj) {
     return Object.assign({}, obj);
 };
 
@@ -12,7 +12,7 @@ let shallowClone = function(obj) {
     snippet: shallowClone,
     snippetName: "shallowClone",
     snippetTest: t => {
-        let x = { a: 1, b: 2 };
+        const x = { a: 1, b: 2 };
         t.not(x, { a: 1, b: 2 });
         t.deepEqual(shallowClone(x), { a: 1, b: 2 });
     }

@@ -7,7 +7,7 @@
  * @return {Promise} A promise that resolves after the given amount of milliseconds with
  * the given value (if given) or undefined (if not given).
  */
-let wait = function(millis, value = undefined) {
+const wait = function(millis, value = undefined) {
     return new Promise(resolve => {
         setTimeout(() => {
             resolve(value);

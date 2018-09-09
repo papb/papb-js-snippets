@@ -15,7 +15,7 @@
  * console.log(x); // ["a", "b"]
  * ```
  */
-let replaceArray = function(baseArray, otherArray) {
+const replaceArray = function(baseArray, otherArray) {
     baseArray.splice(0, baseArray.length, ...otherArray);
     return baseArray;
 };
@@ -24,7 +24,7 @@ let replaceArray = function(baseArray, otherArray) {
     snippet: replaceArray,
     snippetName: "replaceArray",
     snippetTest: t => {
-        let x = [1, -1, -2, 3];
+        const x = [1, -1, -2, 3];
         replaceArray(x, ["a", "b"]);
         t.deepEqual(x, ["a", "b"]);
     }

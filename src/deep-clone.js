@@ -11,7 +11,7 @@
  * 
  * @throws {Error} If the object has circular references
  */
-let deepClone = (() => {
+const deepClone = (() => {
     const isCircular = require('is-circular');
     return function(obj) {
         if (obj === null) return null;
@@ -26,8 +26,8 @@ let deepClone = (() => {
     snippet: deepClone,
     snippetName: "deepClone",
     snippetTest: t => {
-        let obj = { a: 1, b: 2, c: [{ d: 3, e: 4 }] };
-        let clone = deepClone(obj);
+        const obj = { a: 1, b: 2, c: [{ d: 3, e: 4 }] };
+        const clone = deepClone(obj);
         t.not(clone, obj);
         t.not(clone.c, obj.c);
         t.not(clone.c[0], obj.c[0]);

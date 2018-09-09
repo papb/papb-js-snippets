@@ -13,10 +13,10 @@
  * 
  * @return {string} The generated string.
  */
-let loremIpsum = (() => {
+const loremIpsum = (() => {
     const loremIpsum = require('lorem-ipsum');
     return function(wordCount, fullstop = false, ucfirst = true) {
-        var str = loremIpsum({ count: wordCount, units: 'words', format: 'plain' });
+        let str = loremIpsum({ count: wordCount, units: 'words', format: 'plain' });
         if (ucfirst) str = str[0].toUpperCase() + str.substr(1);
         if (fullstop) str += ".";
         return str;

@@ -20,7 +20,7 @@
  * Credits to http://sedition.com/perl/javascript-fy.html
  * Thanks also to CoolAJ86
  */
-let shuffleArray = function(array) {
+const shuffleArray = function(array) {
     if (!Array.isArray(array)) {
         throw new TypeError("Parameter must be an array.");
     }
@@ -49,8 +49,8 @@ let shuffleArray = function(array) {
     snippet: shuffleArray,
     snippetName: "shuffleArray",
     snippetTest: t => {
-        let fruits = ["Apple", "Orange", "Mango"];
-        let result = shuffleArray(fruits);
+        const fruits = ["Apple", "Orange", "Mango"];
+        const result = shuffleArray(fruits);
         t.is(fruits, result);
         t.true(snippets.arrayHas(result, "Apple", "Orange", "Mango"));
 

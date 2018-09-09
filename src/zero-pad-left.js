@@ -18,8 +18,8 @@
  * zeroPadLeft("Hello", 9); // "0000Hello"
  * ```
  */
-let zeroPadLeft = function(value, length) {
-    var str = "" + value;
+const zeroPadLeft = function(value, length) {
+    let str = "" + value;
     while (str.length < length) str = "0" + str;
     return str;
 };

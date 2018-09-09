@@ -15,7 +15,7 @@
  * console.log(x); // [3, 1, 0, 5]
  * ```
  */
-let mapInPlace = function(array, mapFunction) {
+const mapInPlace = function(array, mapFunction) {
     return snippets.replaceArray(array, array.map(mapFunction));
 };
 
@@ -23,7 +23,7 @@ let mapInPlace = function(array, mapFunction) {
     snippet: mapInPlace,
     snippetName: "mapInPlace",
     snippetTest: t => {
-        let x = [1, -1, -2, 3];
+        const x = [1, -1, -2, 3];
         mapInPlace(x, v => v + 2);
         t.deepEqual(x, [3, 1, 0, 5]);
     }
