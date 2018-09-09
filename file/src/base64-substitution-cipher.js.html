@@ -74,7 +74,7 @@
  * }); // &quot;hello! ^^&quot;
  * ```
  */
-let base64SubstitutionCipher = (function() {
+const base64SubstitutionCipher = (function() {
 
     const Base64 = require(&apos;js-base64&apos;).Base64;
 
@@ -83,7 +83,7 @@ let base64SubstitutionCipher = (function() {
     }
 
     return function base64SubstitutionCipher(str, options = {}) {
-        let plaintextAlphabet = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=&quot;;
+        const plaintextAlphabet = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=&quot;;
         let ciphertextAlphabet = options.ciphertextAlphabet;
         let reverse = options.reverse;
 
@@ -95,7 +95,7 @@ let base64SubstitutionCipher = (function() {
         }
 
         if (!reverse) str = Base64.encode(str);
-        let result = snippets.simpleSubstitutionCipher(str, { plaintextAlphabet, ciphertextAlphabet, reverse });
+        const result = snippets.simpleSubstitutionCipher(str, { plaintextAlphabet, ciphertextAlphabet, reverse });
         if (reverse &amp;&amp; result.indexOf(&quot;?&quot;) !== -1) throw new Error(&quot;The passed string is not a valid Base64 string.&quot;);
         return reverse ? Base64.decode(result) : result;
     };

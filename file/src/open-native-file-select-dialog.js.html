@@ -40,9 +40,9 @@
  * @return {Promise} A promise that resolves with the
  * selected file(s).
  */
-let openNativeFileSelectDialog = function() {
+const openNativeFileSelectDialog = function() {
     return new Promise(resolve =&gt; {
-        const input = document.createElement(&quot;input&quot;);
+        const input = document.createElement(&quot;input&quot;); /* global document */
         input.type = &quot;file&quot;;
         input.style.display = &quot;none&quot;;
         input.onchange = function(e) {

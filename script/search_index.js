@@ -168,6 +168,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "src/.eslintrc.js",
+    "file/src/.eslintrc.js.html",
+    "src/.eslintrc.js",
+    "file"
+  ],
+  [
     "src/add-script.js",
     "file/src/add-script.js.html",
     "src/add-script.js",

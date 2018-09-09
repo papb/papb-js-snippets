@@ -2,8 +2,19 @@
   {
     "__docId__": 0,
     "kind": "file",
+    "name": "src/.eslintrc.js",
+    "content": "module.exports = {\n    \"rules\": {\n        \"strict\": \"off\"\n    },\n    \"globals\": {\n        \"snippets\": false\n    }\n};",
+    "static": true,
+    "longname": "src/.eslintrc.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 1,
+    "kind": "file",
     "name": "src/add-script.js",
-    "content": "\"use strict\";\n\n/**\n * Adds an script from the given src to the page.\n * \n * WARNING: This is incredibly dangerous. Only use this if you are sure\n * you can trust the given src.\n * \n * @param {DOCUMENT} document The document object.\n * @param {string} src The src of the script to be added.\n * \n * @return {Promise} A promise that resolves when the script finishes loading.\n */\nlet addScript = function(document, src) {\n    if (typeof src !== \"string\") throw new Error(\"Invalid src argument: must be a string.\");\n    return new Promise(resolve => {\n        const script = document.createElement('script');\n        script.setAttribute('src', src);\n        script.onload = resolve;\n        document.body.appendChild(script);\n    });\n}\n\n/**\n * Adds an script with the given content to the page.\n * \n * WARNING: This is incredibly dangerous. Only use this if you know\n * exactly what you're doing, and if the content is a hardcoded string,\n * and definitely nothing that comes from user input.\n * \n * The given content starts executing immediately. This function returns\n * immediately unless the given content code hangs or throws (in which\n * case this function will also hang/throw respectively).\n * \n * @param {DOCUMENT} document The document object.\n * @param {string} content The content to be put in the script.\n */\naddScript.inline = function(document, content) {\n    if (typeof content !== \"string\") throw new Error(\"Invalid content argument: must be a string.\");\n    return new Promise(resolve => {\n        const script = document.createElement('script');\n        try {\n            script.appendChild(document.createTextNode(content));\n        } catch (e) {\n            script.text = content;\n        }\n        document.body.appendChild(script);\n        resolve();\n    });\n};\n\n/* test */ module.exports = {\n    snippet: addScript,\n    snippetName: \"addScript\",\n    snippetTest: t => {\n        t.is(typeof addScript, \"function\");\n        t.is(typeof addScript.inline, \"function\");\n    }\n};",
+    "content": "/**\n * Adds an script from the given src to the page.\n * \n * WARNING: This is incredibly dangerous. Only use this if you are sure\n * you can trust the given src.\n * \n * @param {DOCUMENT} document The document object.\n * @param {string} src The src of the script to be added.\n * \n * @return {Promise} A promise that resolves when the script finishes loading.\n */\nconst addScript = function(document, src) {\n    if (typeof src !== \"string\") throw new Error(\"Invalid src argument: must be a string.\");\n    return new Promise(resolve => {\n        const script = document.createElement('script');\n        script.setAttribute('src', src);\n        script.onload = resolve;\n        document.body.appendChild(script);\n    });\n};\n\n/**\n * Adds an script with the given content to the page.\n * \n * WARNING: This is incredibly dangerous. Only use this if you know\n * exactly what you're doing, and if the content is a hardcoded string,\n * and definitely nothing that comes from user input.\n * \n * The given content starts executing immediately. This function returns\n * immediately unless the given content code hangs or throws (in which\n * case this function will also hang/throw respectively).\n * \n * @param {DOCUMENT} document The document object.\n * @param {string} content The content to be put in the script.\n */\naddScript.inline = function(document, content) {\n    if (typeof content !== \"string\") throw new Error(\"Invalid content argument: must be a string.\");\n    return new Promise(resolve => {\n        const script = document.createElement('script');\n        try {\n            script.appendChild(document.createTextNode(content));\n        } catch (e) {\n            script.text = content;\n        }\n        document.body.appendChild(script);\n        resolve();\n    });\n};\n\n/* test */ module.exports = {\n    snippet: addScript,\n    snippetName: \"addScript\",\n    snippetTest: t => {\n        t.is(typeof addScript, \"function\");\n        t.is(typeof addScript.inline, \"function\");\n    }\n};",
     "static": true,
     "longname": "src/add-script.js",
     "access": null,
@@ -11,7 +22,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 1,
+    "__docId__": 2,
     "kind": "function",
     "name": "addScript",
     "memberof": "src/add-script.js",
@@ -24,7 +35,7 @@
     "importPath": "papb-js-snippets/src/add-script.js",
     "importStyle": null,
     "description": "Adds an script from the given src to the page.\n\nWARNING: This is incredibly dangerous. Only use this if you are sure\nyou can trust the given src.",
-    "lineNumber": 14,
+    "lineNumber": 12,
     "params": [
       {
         "nullable": null,
@@ -57,7 +68,7 @@
     }
   },
   {
-    "__docId__": 2,
+    "__docId__": 3,
     "kind": "function",
     "name": "inline",
     "memberof": "src/add-script.js",
@@ -70,7 +81,7 @@
     "importPath": "papb-js-snippets/src/add-script.js",
     "importStyle": null,
     "description": "Adds an script with the given content to the page.\n\nWARNING: This is incredibly dangerous. Only use this if you know\nexactly what you're doing, and if the content is a hardcoded string,\nand definitely nothing that comes from user input.\n\nThe given content starts executing immediately. This function returns\nimmediately unless the given content code hangs or throws (in which\ncase this function will also hang/throw respectively).",
-    "lineNumber": 38,
+    "lineNumber": 36,
     "params": [
       {
         "nullable": null,
@@ -100,10 +111,10 @@
     }
   },
   {
-    "__docId__": 3,
+    "__docId__": 4,
     "kind": "file",
     "name": "src/array-has.js",
-    "content": "/**\n * Checks whether the given array contains the given value(s) or not. The value(s) is/are\n * searched in O(n*k) using javascript strict equality operator (`===`), where n is the\n * array length and k is the amount of passed values.\n * \n * This function returs true if and only if all given values are present in the array.\n * \n * @param {Array} array The array to be checked\n * @param {...*} values The value(s) to be searched in the array\n * \n * @returns {boolean} A boolean that indicates whether the array contains the value.\n * \n * @example\n * \n * ```\n * arrayHas([1, 2, 3], 1); // true\n * arrayHas([1, 2, 3], 2, 1, 1); // true\n * arrayHas([1, 2, 3], 2, 4, 1); // false\n * arrayHas([1, 2, 3], [1, 2, 3]); // false\n * ```\n */\nlet arrayHas = function(array, ...values) {\n    return values.every(value => array.some(obj => obj === value));\n};\n\n/* test */ module.exports = {\n    snippet: arrayHas,\n    snippetName: \"arrayHas\",\n    snippetTest: t => {\n        t.is(arrayHas([1, 2, 3], 1), true);\n        t.is(arrayHas([1, 2, 3], 2, 1, 1), true);\n        t.is(arrayHas([1, 2, 3], 2, 4, 1), false);\n        t.is(arrayHas([1, 2, 3], [1, 2, 3]), false);\n    }\n};",
+    "content": "/**\n * Checks whether the given array contains the given value(s) or not. The value(s) is/are\n * searched in O(n*k) using javascript strict equality operator (`===`), where n is the\n * array length and k is the amount of passed values.\n * \n * This function returs true if and only if all given values are present in the array.\n * \n * @param {Array} array The array to be checked\n * @param {...*} values The value(s) to be searched in the array\n * \n * @returns {boolean} A boolean that indicates whether the array contains the value.\n * \n * @example\n * \n * ```\n * arrayHas([1, 2, 3], 1); // true\n * arrayHas([1, 2, 3], 2, 1, 1); // true\n * arrayHas([1, 2, 3], 2, 4, 1); // false\n * arrayHas([1, 2, 3], [1, 2, 3]); // false\n * ```\n */\nconst arrayHas = function(array, ...values) {\n    return values.every(value => array.some(obj => obj === value));\n};\n\n/* test */ module.exports = {\n    snippet: arrayHas,\n    snippetName: \"arrayHas\",\n    snippetTest: t => {\n        t.is(arrayHas([1, 2, 3], 1), true);\n        t.is(arrayHas([1, 2, 3], 2, 1, 1), true);\n        t.is(arrayHas([1, 2, 3], 2, 4, 1), false);\n        t.is(arrayHas([1, 2, 3], [1, 2, 3]), false);\n    }\n};",
     "static": true,
     "longname": "src/array-has.js",
     "access": null,
@@ -111,7 +122,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 4,
+    "__docId__": 5,
     "kind": "function",
     "name": "arrayHas",
     "memberof": "src/array-has.js",
@@ -166,10 +177,10 @@
     }
   },
   {
-    "__docId__": 5,
+    "__docId__": 6,
     "kind": "file",
     "name": "src/array-to-map.js",
-    "content": "/**\n * Creates an ES6 Map object from an array, where each object's key is defined\n * by the keyMaker function.\n * \n * @param {Array} array The source array.\n * @param {function} keyMaker The function that takes an element of the array and\n * returns a key to be used in the map for that element. If this function returns\n * a repeated key for two different objects, the former will be overwritten and\n * only the latter value will remain in the map.\n * \n * @returns {Map} A map whose keys are the results of calling keyMaker on the array\n * elements and whose values are the array elements.\n * \n * @example\n * \n * ```\n * let array = [{ a: 3 }, { a: 1, d: 2 }, { a: 5, b: 3 }];\n * let map = arrayToMap(array, x => x.a);\n * map.get(3); // { a: 3 }\n * map.get(1); // { a: 1, d: 2 }\n * map.get(5); // { a: 5, b: 3 }\n * ```\n */\nlet arrayToMap = function(array, keyMaker) {\n    return new Map(array.map(x => [keyMaker(x), x]));\n};\n\n/* test */ module.exports = {\n    snippet: arrayToMap,\n    snippetName: \"arrayToMap\",\n    snippetTest: t => {\n        let array = [{ a: 3 }, { a: 1, d: 2 }, { a: 5, b: 3 }];\n        let map = arrayToMap(array, x => x.a);\n        t.deepEqual(map.get(3), { a: 3 });\n        t.deepEqual(map.get(1), { a: 1, d: 2 });\n        t.deepEqual(map.get(5), { a: 5, b: 3 });\n    }\n};",
+    "content": "/**\n * Creates an ES6 Map object from an array, where each object's key is defined\n * by the keyMaker function.\n * \n * @param {Array} array The source array.\n * @param {function} keyMaker The function that takes an element of the array and\n * returns a key to be used in the map for that element. If this function returns\n * a repeated key for two different objects, the former will be overwritten and\n * only the latter value will remain in the map.\n * \n * @returns {Map} A map whose keys are the results of calling keyMaker on the array\n * elements and whose values are the array elements.\n * \n * @example\n * \n * ```\n * let array = [{ a: 3 }, { a: 1, d: 2 }, { a: 5, b: 3 }];\n * let map = arrayToMap(array, x => x.a);\n * map.get(3); // { a: 3 }\n * map.get(1); // { a: 1, d: 2 }\n * map.get(5); // { a: 5, b: 3 }\n * ```\n */\nconst arrayToMap = function(array, keyMaker) {\n    return new Map(array.map(x => [keyMaker(x), x]));\n};\n\n/* test */ module.exports = {\n    snippet: arrayToMap,\n    snippetName: \"arrayToMap\",\n    snippetTest: t => {\n        const array = [{ a: 3 }, { a: 1, d: 2 }, { a: 5, b: 3 }];\n        const map = arrayToMap(array, x => x.a);\n        t.deepEqual(map.get(3), { a: 3 });\n        t.deepEqual(map.get(1), { a: 1, d: 2 });\n        t.deepEqual(map.get(5), { a: 5, b: 3 });\n    }\n};",
     "static": true,
     "longname": "src/array-to-map.js",
     "access": null,
@@ -177,7 +188,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 6,
+    "__docId__": 7,
     "kind": "function",
     "name": "arrayToMap",
     "memberof": "src/array-to-map.js",
@@ -232,10 +243,10 @@
     }
   },
   {
-    "__docId__": 7,
+    "__docId__": 8,
     "kind": "file",
     "name": "src/array-to-picker-function.js",
-    "content": "/**\n * Creates a function that yields the elements of the given array in order when called with\n * different arguments (and is idempotent). If the end of the array is reached, picking will\n * restart from the beginning. The behaviour of this function is better understood by example\n * (which can be found below).\n * \n * @param {Array} array The source array\n * @return {function} The picker function\n * \n * @example\n * \n * ```\n * let f = arrayToPickerFunction([1, 2, 3]);\n * let w = 55;\n * let x = {};\n * let y = {};\n * let z = \"something\";\n * f(w); // 1\n * f(x); // 2\n * f(w); // 1\n * f(y); // 3\n * f(z); // 1\n * f(y); // 3\n * f(y); // 3\n * f(x); // 2\n * f(z); // 1\n * ```\n */\nlet arrayToPickerFunction = function(array) {\n    if (!Array.isArray(array)) throw new TypeError(\"Parameter must be an array.\");\n    let localArray = array.slice(); // If the given array changes, this won't change.\n    let indexMap = new Map();\n    let nextIndex = 0;\n    return function(obj) {\n        if (!indexMap.has(obj)) {\n            indexMap.set(obj, nextIndex);\n            nextIndex = (nextIndex + 1) % localArray.length;\n        }\n        return localArray[indexMap.get(obj)];\n    };\n};\n\n/* test */ module.exports = {\n    snippet: arrayToPickerFunction,\n    snippetName: \"arrayToPickerFunction\",\n    snippetTest: t => {\n        let f = arrayToPickerFunction([1, 2, 3]);\n        let w = 55;\n        let x = {};\n        let y = {};\n        let z = \"something\";\n        t.is(f(w), 1);\n        t.is(f(x), 2);\n        t.is(f(w), 1);\n        t.is(f(y), 3);\n        t.is(f(z), 1);\n        t.is(f(y), 3);\n        t.is(f(y), 3);\n        t.is(f(x), 2);\n        t.is(f(z), 1);\n    }\n};",
+    "content": "/**\n * Creates a function that yields the elements of the given array in order when called with\n * different arguments (and is idempotent). If the end of the array is reached, picking will\n * restart from the beginning. The behaviour of this function is better understood by example\n * (which can be found below).\n * \n * @param {Array} array The source array\n * @return {function} The picker function\n * \n * @example\n * \n * ```\n * let f = arrayToPickerFunction([1, 2, 3]);\n * let w = 55;\n * let x = {};\n * let y = {};\n * let z = \"something\";\n * f(w); // 1\n * f(x); // 2\n * f(w); // 1\n * f(y); // 3\n * f(z); // 1\n * f(y); // 3\n * f(y); // 3\n * f(x); // 2\n * f(z); // 1\n * ```\n */\nconst arrayToPickerFunction = function(array) {\n    if (!Array.isArray(array)) throw new TypeError(\"Parameter must be an array.\");\n    const localArray = array.slice(); // If the given array changes, this won't change.\n    const indexMap = new Map();\n    let nextIndex = 0;\n    return function(obj) {\n        if (!indexMap.has(obj)) {\n            indexMap.set(obj, nextIndex);\n            nextIndex = (nextIndex + 1) % localArray.length;\n        }\n        return localArray[indexMap.get(obj)];\n    };\n};\n\n/* test */ module.exports = {\n    snippet: arrayToPickerFunction,\n    snippetName: \"arrayToPickerFunction\",\n    snippetTest: t => {\n        const f = arrayToPickerFunction([1, 2, 3]);\n        const w = 55;\n        const x = {};\n        const y = {};\n        const z = \"something\";\n        t.is(f(w), 1);\n        t.is(f(x), 2);\n        t.is(f(w), 1);\n        t.is(f(y), 3);\n        t.is(f(z), 1);\n        t.is(f(y), 3);\n        t.is(f(y), 3);\n        t.is(f(x), 2);\n        t.is(f(z), 1);\n    }\n};",
     "static": true,
     "longname": "src/array-to-picker-function.js",
     "access": null,
@@ -243,7 +254,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 8,
+    "__docId__": 9,
     "kind": "function",
     "name": "arrayToPickerFunction",
     "memberof": "src/array-to-picker-function.js",
@@ -282,10 +293,10 @@
     }
   },
   {
-    "__docId__": 9,
+    "__docId__": 10,
     "kind": "file",
     "name": "src/base64-substitution-cipher.js",
-    "content": "/**\n * Perform a substitution cipher on any string by first converting the string to Base64. Note: this is a very weak\n * encryption algorithm that shouldn't be used for security purposes.\n * \n * The plaintext alphabet used is \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\" (after the\n * string is converted to Base64).\n * \n * To decrypt, set the `reverse` option to true.\n * \n * @requires snippet:simple-substitution-cipher\n * @requires npm:js-base64 by dankogai\n *\n * @param {string} str The string to be encrypted / decrypted.\n * \n * @param {Object} [options] An object to provide options.\n * \n * @param {string} [options.ciphertextAlphabet=\"hrVtM=TYziLNIemw39dBXDj18lykGUPosR20+fEK6buFCcJpZgqWH/xQ57S4nvaAO\"]\n * The ciphertext alphabet to be used. Must be an anagram of the plaintext alphabet.\n * \n * @param {boolean} [options.reverse=false] Whether or not to reverse the encryption, i.e., to decrypt. Setting this\n * to true will cause the cipher to be undone followed by the Base64 decode of the result.\n * \n * @throws {Error} If the `reverse` option is set to true and the passed string is not a valid Base64 string.\n * \n * @see https://en.wikipedia.org/wiki/Substitution_cipher\n * @see https://en.wikipedia.org/wiki/Base64\n * \n * @example\n * \n * ```\n * base64SubstitutionCipher(\"hello! ^^\"); // \"yTDCkTnRz=7P\"\n * base64SubstitutionCipher(\"yTDCkTnRz=7P\", { reverse: true }); // \"hello! ^^\"\n * base64SubstitutionCipher(\"hello! ^^\", {\n *     ciphertextAlphabet: \"cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR\"\n * }); // \"lf1HPfXTQthD\"\n * base64SubstitutionCipher(\"lf1HPfXTQthD\", {\n *     ciphertextAlphabet: \"cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR\",\n *     reverse: true\n * }); // \"hello! ^^\"\n * ```\n */\nlet base64SubstitutionCipher = (function() {\n\n    const Base64 = require('js-base64').Base64;\n\n    function areAnagrams(str1, str2) {\n        return str1.split(\"\").sort().join(\"\") === str2.split(\"\").sort().join(\"\");\n    }\n\n    return function base64SubstitutionCipher(str, options = {}) {\n        let plaintextAlphabet = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\";\n        let ciphertextAlphabet = options.ciphertextAlphabet;\n        let reverse = options.reverse;\n\n        if (ciphertextAlphabet === undefined) ciphertextAlphabet = \"hrVtM=TYziLNIemw39dBXDj18lykGUPosR20+fEK6buFCcJpZgqWH/xQ57S4nvaAO\";\n        if (reverse === undefined) reverse = false;\n        if (typeof ciphertextAlphabet !== \"string\") throw new Error(\"Ciphertext alphabet must be a string.\");\n        if (!areAnagrams(plaintextAlphabet, ciphertextAlphabet)) {\n            throw new Error(\"Ciphertext alphabet and plaintext alphabet must be anagrams.\");\n        }\n\n        if (!reverse) str = Base64.encode(str);\n        let result = snippets.simpleSubstitutionCipher(str, { plaintextAlphabet, ciphertextAlphabet, reverse });\n        if (reverse && result.indexOf(\"?\") !== -1) throw new Error(\"The passed string is not a valid Base64 string.\");\n        return reverse ? Base64.decode(result) : result;\n    };\n\n})();\n\n/* test */ module.exports = {\n    snippet: base64SubstitutionCipher,\n    snippetName: \"base64SubstitutionCipher\",\n    snippetTest: t => {\n        t.is(base64SubstitutionCipher(\"hello! ^^\"), \"yTDCkTnRz=7P\");\n        t.is(base64SubstitutionCipher(\"yTDCkTnRz=7P\", { reverse: true }), \"hello! ^^\");\n        t.is(base64SubstitutionCipher(\"hello! ^^\", {\n            ciphertextAlphabet: \"cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR\"\n        }), \"lf1HPfXTQthD\");\n        t.is(base64SubstitutionCipher(\"lf1HPfXTQthD\", {\n            ciphertextAlphabet: \"cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR\",\n            reverse: true\n        }), \"hello! ^^\");\n        t.throws(() => base64SubstitutionCipher(\"hello! ^^\", { reverse: true }));\n    }\n};",
+    "content": "/**\n * Perform a substitution cipher on any string by first converting the string to Base64. Note: this is a very weak\n * encryption algorithm that shouldn't be used for security purposes.\n * \n * The plaintext alphabet used is \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\" (after the\n * string is converted to Base64).\n * \n * To decrypt, set the `reverse` option to true.\n * \n * @requires snippet:simple-substitution-cipher\n * @requires npm:js-base64 by dankogai\n *\n * @param {string} str The string to be encrypted / decrypted.\n * \n * @param {Object} [options] An object to provide options.\n * \n * @param {string} [options.ciphertextAlphabet=\"hrVtM=TYziLNIemw39dBXDj18lykGUPosR20+fEK6buFCcJpZgqWH/xQ57S4nvaAO\"]\n * The ciphertext alphabet to be used. Must be an anagram of the plaintext alphabet.\n * \n * @param {boolean} [options.reverse=false] Whether or not to reverse the encryption, i.e., to decrypt. Setting this\n * to true will cause the cipher to be undone followed by the Base64 decode of the result.\n * \n * @throws {Error} If the `reverse` option is set to true and the passed string is not a valid Base64 string.\n * \n * @see https://en.wikipedia.org/wiki/Substitution_cipher\n * @see https://en.wikipedia.org/wiki/Base64\n * \n * @example\n * \n * ```\n * base64SubstitutionCipher(\"hello! ^^\"); // \"yTDCkTnRz=7P\"\n * base64SubstitutionCipher(\"yTDCkTnRz=7P\", { reverse: true }); // \"hello! ^^\"\n * base64SubstitutionCipher(\"hello! ^^\", {\n *     ciphertextAlphabet: \"cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR\"\n * }); // \"lf1HPfXTQthD\"\n * base64SubstitutionCipher(\"lf1HPfXTQthD\", {\n *     ciphertextAlphabet: \"cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR\",\n *     reverse: true\n * }); // \"hello! ^^\"\n * ```\n */\nconst base64SubstitutionCipher = (function() {\n\n    const Base64 = require('js-base64').Base64;\n\n    function areAnagrams(str1, str2) {\n        return str1.split(\"\").sort().join(\"\") === str2.split(\"\").sort().join(\"\");\n    }\n\n    return function base64SubstitutionCipher(str, options = {}) {\n        const plaintextAlphabet = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\";\n        let ciphertextAlphabet = options.ciphertextAlphabet;\n        let reverse = options.reverse;\n\n        if (ciphertextAlphabet === undefined) ciphertextAlphabet = \"hrVtM=TYziLNIemw39dBXDj18lykGUPosR20+fEK6buFCcJpZgqWH/xQ57S4nvaAO\";\n        if (reverse === undefined) reverse = false;\n        if (typeof ciphertextAlphabet !== \"string\") throw new Error(\"Ciphertext alphabet must be a string.\");\n        if (!areAnagrams(plaintextAlphabet, ciphertextAlphabet)) {\n            throw new Error(\"Ciphertext alphabet and plaintext alphabet must be anagrams.\");\n        }\n\n        if (!reverse) str = Base64.encode(str);\n        const result = snippets.simpleSubstitutionCipher(str, { plaintextAlphabet, ciphertextAlphabet, reverse });\n        if (reverse && result.indexOf(\"?\") !== -1) throw new Error(\"The passed string is not a valid Base64 string.\");\n        return reverse ? Base64.decode(result) : result;\n    };\n\n})();\n\n/* test */ module.exports = {\n    snippet: base64SubstitutionCipher,\n    snippetName: \"base64SubstitutionCipher\",\n    snippetTest: t => {\n        t.is(base64SubstitutionCipher(\"hello! ^^\"), \"yTDCkTnRz=7P\");\n        t.is(base64SubstitutionCipher(\"yTDCkTnRz=7P\", { reverse: true }), \"hello! ^^\");\n        t.is(base64SubstitutionCipher(\"hello! ^^\", {\n            ciphertextAlphabet: \"cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR\"\n        }), \"lf1HPfXTQthD\");\n        t.is(base64SubstitutionCipher(\"lf1HPfXTQthD\", {\n            ciphertextAlphabet: \"cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR\",\n            reverse: true\n        }), \"hello! ^^\");\n        t.throws(() => base64SubstitutionCipher(\"hello! ^^\", { reverse: true }));\n    }\n};",
     "static": true,
     "longname": "src/base64-substitution-cipher.js",
     "access": null,
@@ -293,7 +304,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 10,
+    "__docId__": 11,
     "kind": "variable",
     "name": "base64SubstitutionCipher",
     "memberof": "src/base64-substitution-cipher.js",
@@ -381,10 +392,10 @@
     ]
   },
   {
-    "__docId__": 11,
+    "__docId__": 12,
     "kind": "file",
     "name": "src/call-sequentially.js",
-    "content": "/**\n * Takes an array of functions and calls them sequentially. If any of these\n * functions return a promise, the promise is waited for, before calling the next\n * functions.\n * \n * @param {function[]} functions The array of functions to be called sequentially\n * \n * @return {Promise} A promise that resolves when the last call is done and\n * rejects with an error if any of the functions throw an error (in which case\n * the sequence is terminated immediately).\n */\nlet callSequentially = function(functions) {\n    var promiseChain = Promise.resolve();\n    functions.forEach(f => {\n        promiseChain = promiseChain.then(f);\n    });\n    return promiseChain;\n};\n\n/* test */ module.exports = {\n    snippet: callSequentially,\n    snippetName: \"callSequentially\",\n    snippetTest: t => {\n        let temp = 100;\n        return callSequentially([\n            () => { temp += 5; },\n            () => { temp *= 2; },\n            () => snippets.wait(50).then(() => { temp *= 3; }),\n            () => { temp += 11; }\n        ]).then(() => {\n            t.is(temp, 641);\n        });\n    }\n};",
+    "content": "/**\n * Takes an array of functions and calls them sequentially. If any of these\n * functions return a promise, the promise is waited for, before calling the next\n * functions.\n * \n * @param {function[]} functions The array of functions to be called sequentially\n * \n * @return {Promise} A promise that resolves when the last call is done and\n * rejects with an error if any of the functions throw an error (in which case\n * the sequence is terminated immediately).\n */\nconst callSequentially = function(functions) {\n    let promiseChain = Promise.resolve();\n    functions.forEach(f => {\n        promiseChain = promiseChain.then(f);\n    });\n    return promiseChain;\n};\n\n/* test */ module.exports = {\n    snippet: callSequentially,\n    snippetName: \"callSequentially\",\n    snippetTest: t => {\n        let temp = 100;\n        return callSequentially([\n            () => { temp += 5; },\n            () => { temp *= 2; },\n            () => snippets.wait(50).then(() => { temp *= 3; }),\n            () => { temp += 11; }\n        ]).then(() => {\n            t.is(temp, 641);\n        });\n    }\n};",
     "static": true,
     "longname": "src/call-sequentially.js",
     "access": null,
@@ -392,7 +403,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 12,
+    "__docId__": 13,
     "kind": "function",
     "name": "callSequentially",
     "memberof": "src/call-sequentially.js",
@@ -428,10 +439,10 @@
     }
   },
   {
-    "__docId__": 13,
+    "__docId__": 14,
     "kind": "file",
     "name": "src/deduplicate-by.js",
-    "content": "/**\n * Produces an array which contains a subset of the given array, deduplicating\n * elements by the values each yield when passed to the valuePicker function.\n * In other words, produces a subset of the array by keeping only one element\n * per value yielded when passed to the valuePicker function.\n * \n * @requires snippet:replace-array\n * \n * @param {Array} array The array to the deduplicated\n * \n * @param {function} valuePicker A function that when applied to each value of\n * the array returns another value to be used for the deduplication. This function\n * is called only once per value.\n * \n * @param {boolean} [inPlace=false] If true, alters the given array instead of\n * creating a new one.\n * \n * @returns {Array} The resulting array (if inPlace is true, this is the same as\n * the passed array, otherwise it is a new array).\n * \n * @example\n * \n * ```\n * let array = [{ a: 1, b: 2 }, { a: 3, b: 2 }];\n * deduplicateBy(array, x => x.b, true);\n * console.log(array); // [{ a: 1, b: 2 }]\n * ```\n */\nlet deduplicateBy = function(array, valuePicker, inPlace = false) {\n    let result = [];\n    let helperArray = array.map(x => ({ value: x, picked: valuePicker(x) }));\n    helperArray.forEach(x => {\n        if (!result.find(r => r.picked === x.picked)) result.push(x);\n    });\n    result = result.map(x => x.value);\n    if (inPlace) return snippets.replaceArray(array, result);\n    return result;\n};\n\n/* test */ module.exports = {\n    snippet: deduplicateBy,\n    snippetName: \"deduplicateBy\",\n    snippetTest: t => {\n        let array = [{ a: 1, b: 2 }, { a: 3, b: 2 }];\n        deduplicateBy(array, x => x.a, true);\n        t.deepEqual(array, [{ a: 1, b: 2 }, { a: 3, b: 2 }]);\n        deduplicateBy(array, x => x.b, true);\n        t.deepEqual(array, [{ a: 1, b: 2 }]);\n    }\n};",
+    "content": "/**\n * Produces an array which contains a subset of the given array, deduplicating\n * elements by the values each yield when passed to the valuePicker function.\n * In other words, produces a subset of the array by keeping only one element\n * per value yielded when passed to the valuePicker function.\n * \n * @requires snippet:replace-array\n * \n * @param {Array} array The array to the deduplicated\n * \n * @param {function} valuePicker A function that when applied to each value of\n * the array returns another value to be used for the deduplication. This function\n * is called only once per value.\n * \n * @param {boolean} [inPlace=false] If true, alters the given array instead of\n * creating a new one.\n * \n * @returns {Array} The resulting array (if inPlace is true, this is the same as\n * the passed array, otherwise it is a new array).\n * \n * @example\n * \n * ```\n * let array = [{ a: 1, b: 2 }, { a: 3, b: 2 }];\n * deduplicateBy(array, x => x.b, true);\n * console.log(array); // [{ a: 1, b: 2 }]\n * ```\n */\nconst deduplicateBy = function(array, valuePicker, inPlace = false) {\n    let result = [];\n    const helperArray = array.map(x => ({ value: x, picked: valuePicker(x) }));\n    helperArray.forEach(x => {\n        if (!result.find(r => r.picked === x.picked)) result.push(x);\n    });\n    result = result.map(x => x.value);\n    if (inPlace) return snippets.replaceArray(array, result);\n    return result;\n};\n\n/* test */ module.exports = {\n    snippet: deduplicateBy,\n    snippetName: \"deduplicateBy\",\n    snippetTest: t => {\n        const array = [{ a: 1, b: 2 }, { a: 3, b: 2 }];\n        deduplicateBy(array, x => x.a, true);\n        t.deepEqual(array, [{ a: 1, b: 2 }, { a: 3, b: 2 }]);\n        deduplicateBy(array, x => x.b, true);\n        t.deepEqual(array, [{ a: 1, b: 2 }]);\n    }\n};",
     "static": true,
     "longname": "src/deduplicate-by.js",
     "access": null,
@@ -439,7 +450,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 14,
+    "__docId__": 15,
     "kind": "function",
     "name": "deduplicateBy",
     "memberof": "src/deduplicate-by.js",
@@ -510,10 +521,10 @@
     }
   },
   {
-    "__docId__": 15,
+    "__docId__": 16,
     "kind": "file",
     "name": "src/deep-clone.js",
-    "content": "/**\n * Deep clone an object without circular references. Everything whose typeof is\n * not \"object\" will be copied by reference (without cloning).\n * \n * @requires npm:is-circular^1.0.0\n * \n * @param {object} object The object to be cloned\n * \n * @return {object} The cloned object\n * \n * @throws {Error} If the object has circular references\n */\nlet deepClone = (() => {\n    const isCircular = require('is-circular');\n    return function(obj) {\n        if (obj === null) return null;\n        if (typeof obj !== \"object\") return obj;\n        if (isCircular(obj)) throw new Error(\"Unable to deep clone with circular references.\");\n        if (Array.isArray(obj)) return obj.map(deepClone);\n        return snippets.mapObject(obj, deepClone);\n    };\n})();\n\n/* test */ module.exports = {\n    snippet: deepClone,\n    snippetName: \"deepClone\",\n    snippetTest: t => {\n        let obj = { a: 1, b: 2, c: [{ d: 3, e: 4 }] };\n        let clone = deepClone(obj);\n        t.not(clone, obj);\n        t.not(clone.c, obj.c);\n        t.not(clone.c[0], obj.c[0]);\n        t.deepEqual(clone, obj);\n        obj.f = obj;\n        t.throws(() => {\n            deepClone(obj);\n        });\n    }\n};",
+    "content": "/**\n * Deep clone an object without circular references. Everything whose typeof is\n * not \"object\" will be copied by reference (without cloning).\n * \n * @requires npm:is-circular^1.0.0\n * @requires snippet:map-object\n * \n * @param {object} object The object to be cloned\n * \n * @return {object} The cloned object\n * \n * @throws {Error} If the object has circular references\n */\nconst deepClone = (() => {\n    const isCircular = require('is-circular');\n    return function(obj) {\n        if (obj === null) return null;\n        if (typeof obj !== \"object\") return obj;\n        if (isCircular(obj)) throw new Error(\"Unable to deep clone with circular references.\");\n        if (Array.isArray(obj)) return obj.map(deepClone);\n        return snippets.mapObject(obj, deepClone);\n    };\n})();\n\n/* test */ module.exports = {\n    snippet: deepClone,\n    snippetName: \"deepClone\",\n    snippetTest: t => {\n        const obj = { a: 1, b: 2, c: [{ d: 3, e: 4 }] };\n        const clone = deepClone(obj);\n        t.not(clone, obj);\n        t.not(clone.c, obj.c);\n        t.not(clone.c[0], obj.c[0]);\n        t.deepEqual(clone, obj);\n        obj.f = obj;\n        t.throws(() => {\n            deepClone(obj);\n        });\n    }\n};",
     "static": true,
     "longname": "src/deep-clone.js",
     "access": null,
@@ -521,7 +532,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 16,
+    "__docId__": 17,
     "kind": "variable",
     "name": "deepClone",
     "memberof": "src/deep-clone.js",
@@ -532,11 +543,15 @@
     "importPath": "papb-js-snippets/src/deep-clone.js",
     "importStyle": null,
     "description": "Deep clone an object without circular references. Everything whose typeof is\nnot \"object\" will be copied by reference (without cloning).",
-    "lineNumber": 13,
+    "lineNumber": 14,
     "unknown": [
       {
         "tagName": "@requires",
         "tagValue": "npm:is-circular^1.0.0"
+      },
+      {
+        "tagName": "@requires",
+        "tagValue": "snippet:map-object"
       }
     ],
     "params": [
@@ -574,10 +589,10 @@
     ]
   },
   {
-    "__docId__": 17,
+    "__docId__": 18,
     "kind": "file",
     "name": "src/ellipsis.js",
-    "content": "/**\n * Shorten a string to a certain length (truncating it and adding \"...\").\n * \n * @param {string} str The string to be shortened\n * @param {int} length The desired length (including the \"...\")\n * @return {string} A string whose length is at most the given length.\n * \n * @example\n * \n * ```\n * ellipsis(\"Hello World!\", 11); // \"Hello Wo...\"\n * ellipsis(\"Hello\", 8); // \"Hello\"\n * ellipsis(\"Hello World\", 11); // \"Hello World\"\n * ```\n */\nlet ellipsis = function(str, maxlength) {\n    return str.length > maxlength ? str.substring(0, maxlength - 3) + \"...\" : str;\n};\n\n/* test */ module.exports = {\n    snippet: ellipsis,\n    snippetName: \"ellipsis\",\n    snippetTest: t => {\n        t.is(ellipsis(\"Hello World!\", 11), \"Hello Wo...\");\n        t.is(ellipsis(\"Hello\", 8), \"Hello\");\n        t.is(ellipsis(\"Hello World\", 11), \"Hello World\");\n    }\n};",
+    "content": "/**\n * Shorten a string to a certain length (truncating it and adding \"...\").\n * \n * @param {string} str The string to be shortened\n * @param {int} length The desired length (including the \"...\")\n * @return {string} A string whose length is at most the given length.\n * \n * @example\n * \n * ```\n * ellipsis(\"Hello World!\", 11); // \"Hello Wo...\"\n * ellipsis(\"Hello\", 8); // \"Hello\"\n * ellipsis(\"Hello World\", 11); // \"Hello World\"\n * ```\n */\nconst ellipsis = function(str, maxlength) {\n    return str.length > maxlength ? str.substring(0, maxlength - 3) + \"...\" : str;\n};\n\n/* test */ module.exports = {\n    snippet: ellipsis,\n    snippetName: \"ellipsis\",\n    snippetTest: t => {\n        t.is(ellipsis(\"Hello World!\", 11), \"Hello Wo...\");\n        t.is(ellipsis(\"Hello\", 8), \"Hello\");\n        t.is(ellipsis(\"Hello World\", 11), \"Hello World\");\n    }\n};",
     "static": true,
     "longname": "src/ellipsis.js",
     "access": null,
@@ -585,7 +600,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 18,
+    "__docId__": 19,
     "kind": "function",
     "name": "ellipsis",
     "memberof": "src/ellipsis.js",
@@ -634,10 +649,10 @@
     }
   },
   {
-    "__docId__": 19,
+    "__docId__": 20,
     "kind": "file",
     "name": "src/filter-in-place.js",
-    "content": "/**\n * Filter an array in-place.\n * \n * @requires snippet:replace-array\n * \n * @param {function} filterFunction The filter function.\n * \n * @return {Array} Returns the same array.\n * \n * @example\n * \n * ```\n * let x = [1, -1, -2, 3];\n * filterInPlace(x, v => v > 0);\n * console.log(x); // [1, 3]\n * ```\n */\nlet filterInPlace = function(array, filterFunction) {\n    return snippets.replaceArray(array, array.filter(filterFunction));\n};\n\n/* test */ module.exports = {\n    snippet: filterInPlace,\n    snippetName: \"filterInPlace\",\n    snippetTest: t => {\n        let x = [1, -1, -2, 3];\n        filterInPlace(x, v => v > 0);\n        t.deepEqual(x, [1, 3]);\n    }\n};",
+    "content": "/**\n * Filter an array in-place.\n * \n * @requires snippet:replace-array\n * \n * @param {function} filterFunction The filter function.\n * \n * @return {Array} Returns the same array.\n * \n * @example\n * \n * ```\n * let x = [1, -1, -2, 3];\n * filterInPlace(x, v => v > 0);\n * console.log(x); // [1, 3]\n * ```\n */\nconst filterInPlace = function(array, filterFunction) {\n    return snippets.replaceArray(array, array.filter(filterFunction));\n};\n\n/* test */ module.exports = {\n    snippet: filterInPlace,\n    snippetName: \"filterInPlace\",\n    snippetTest: t => {\n        const x = [1, -1, -2, 3];\n        filterInPlace(x, v => v > 0);\n        t.deepEqual(x, [1, 3]);\n    }\n};",
     "static": true,
     "longname": "src/filter-in-place.js",
     "access": null,
@@ -645,7 +660,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 20,
+    "__docId__": 21,
     "kind": "function",
     "name": "filterInPlace",
     "memberof": "src/filter-in-place.js",
@@ -690,10 +705,10 @@
     }
   },
   {
-    "__docId__": 21,
+    "__docId__": 22,
     "kind": "file",
     "name": "src/get-now-string.js",
-    "content": "/**\n * Get a string representation of the current moment.\n * \n * The string follows the pattern of the following example: 2018-07-22_20h04min29s\n * \n * @return {string}\n */\nlet getNowString = function() {\n    var reg = /^(.+)T(.+):(.+):(.+)\\.\\d{3}Z$/;\n    var str = new Date().toJSON();\n    var res = reg.exec(str);\n    return res[1] + \"_\" + res[2] + \"h\" + res[3] + \"min\" + res[4] + \"s\";\n};\n\n/* test */ module.exports = {\n    snippet: getNowString,\n    snippetName: \"getNowString\",\n    snippetTest: t => {\n        t.regex(getNowString(), /^\\d{4}-\\d{2}-\\d{2}_\\d{2}h\\d{2}min\\d{2}s$/);\n    }\n};",
+    "content": "/**\n * Get a string representation of the current moment.\n * \n * The string follows the pattern of the following example: 2018-07-22_20h04min29s\n * \n * @return {string}\n */\nconst getNowString = function() {\n    const reg = /^(.+)T(.+):(.+):(.+)\\.\\d{3}Z$/;\n    const str = new Date().toJSON();\n    const res = reg.exec(str);\n    return res[1] + \"_\" + res[2] + \"h\" + res[3] + \"min\" + res[4] + \"s\";\n};\n\n/* test */ module.exports = {\n    snippet: getNowString,\n    snippetName: \"getNowString\",\n    snippetTest: t => {\n        t.regex(getNowString(), /^\\d{4}-\\d{2}-\\d{2}_\\d{2}h\\d{2}min\\d{2}s$/);\n    }\n};",
     "static": true,
     "longname": "src/get-now-string.js",
     "access": null,
@@ -701,7 +716,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 22,
+    "__docId__": 23,
     "kind": "function",
     "name": "getNowString",
     "memberof": "src/get-now-string.js",
@@ -726,10 +741,10 @@
     }
   },
   {
-    "__docId__": 23,
+    "__docId__": 24,
     "kind": "file",
     "name": "src/lorem-ipsum.js",
-    "content": "/**\n * Generate a random string of words, lorem-ipsum style.\n * \n * @requires npm:lorem-ipsum^1.0.0\n * \n * @param {int} wordCount The amount of words to generate.\n * \n * @param {boolean} [fullstop=false] Whether or not to add a\n * full stop (\".\") in the end of the string.\n * \n * @param {boolean} [ucfirst=true] Whether or not the first\n * character is uppercase.\n * \n * @return {string} The generated string.\n */\nlet loremIpsum = (() => {\n    const loremIpsum = require('lorem-ipsum');\n    return function(wordCount, fullstop = false, ucfirst = true) {\n        var str = loremIpsum({ count: wordCount, units: 'words', format: 'plain' });\n        if (ucfirst) str = str[0].toUpperCase() + str.substr(1);\n        if (fullstop) str += \".\";\n        return str;\n    };\n})();\n\n/* test */ module.exports = {\n    snippet: loremIpsum,\n    snippetName: \"loremIpsum\",\n    snippetTest: t => {\n        t.pass();\n    }\n};",
+    "content": "/**\n * Generate a random string of words, lorem-ipsum style.\n * \n * @requires npm:lorem-ipsum^1.0.0\n * \n * @param {int} wordCount The amount of words to generate.\n * \n * @param {boolean} [fullstop=false] Whether or not to add a\n * full stop (\".\") in the end of the string.\n * \n * @param {boolean} [ucfirst=true] Whether or not the first\n * character is uppercase.\n * \n * @return {string} The generated string.\n */\nconst loremIpsum = (() => {\n    const loremIpsum = require('lorem-ipsum');\n    return function(wordCount, fullstop = false, ucfirst = true) {\n        let str = loremIpsum({ count: wordCount, units: 'words', format: 'plain' });\n        if (ucfirst) str = str[0].toUpperCase() + str.substr(1);\n        if (fullstop) str += \".\";\n        return str;\n    };\n})();\n\n/* test */ module.exports = {\n    snippet: loremIpsum,\n    snippetName: \"loremIpsum\",\n    snippetTest: t => {\n        t.pass();\n    }\n};",
     "static": true,
     "longname": "src/lorem-ipsum.js",
     "access": null,
@@ -737,7 +752,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 24,
+    "__docId__": 25,
     "kind": "variable",
     "name": "loremIpsum",
     "memberof": "src/lorem-ipsum.js",
@@ -806,10 +821,10 @@
     }
   },
   {
-    "__docId__": 25,
+    "__docId__": 26,
     "kind": "file",
     "name": "src/map-in-place.js",
-    "content": "/**\n * Map an array in-place.\n * \n * @requires snippet:replace-array\n * \n * @param {function} mapFunction The map function.\n * \n * @return {Array} Returns the same array.\n * \n * @example\n * \n * ```\n * let x = [1, -1, -2, 3];\n * mapInPlace(x, v => v + 2);\n * console.log(x); // [3, 1, 0, 5]\n * ```\n */\nlet mapInPlace = function(array, mapFunction) {\n    return snippets.replaceArray(array, array.map(mapFunction));\n};\n\n/* test */ module.exports = {\n    snippet: mapInPlace,\n    snippetName: \"mapInPlace\",\n    snippetTest: t => {\n        let x = [1, -1, -2, 3];\n        mapInPlace(x, v => v + 2);\n        t.deepEqual(x, [3, 1, 0, 5]);\n    }\n};",
+    "content": "/**\n * Map an array in-place.\n * \n * @requires snippet:replace-array\n * \n * @param {function} mapFunction The map function.\n * \n * @return {Array} Returns the same array.\n * \n * @example\n * \n * ```\n * let x = [1, -1, -2, 3];\n * mapInPlace(x, v => v + 2);\n * console.log(x); // [3, 1, 0, 5]\n * ```\n */\nconst mapInPlace = function(array, mapFunction) {\n    return snippets.replaceArray(array, array.map(mapFunction));\n};\n\n/* test */ module.exports = {\n    snippet: mapInPlace,\n    snippetName: \"mapInPlace\",\n    snippetTest: t => {\n        const x = [1, -1, -2, 3];\n        mapInPlace(x, v => v + 2);\n        t.deepEqual(x, [3, 1, 0, 5]);\n    }\n};",
     "static": true,
     "longname": "src/map-in-place.js",
     "access": null,
@@ -817,7 +832,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 26,
+    "__docId__": 27,
     "kind": "function",
     "name": "mapInPlace",
     "memberof": "src/map-in-place.js",
@@ -862,10 +877,10 @@
     }
   },
   {
-    "__docId__": 27,
+    "__docId__": 28,
     "kind": "file",
     "name": "src/map-object.js",
-    "content": "/**\n * Create a new object with the same keys as the given object, whose values\n * on those keys are mapped by the mapFunction function. This should be analogous\n * to the usage of Array.prototype.map, but for objects.\n * \n * @param {object} obj The source object\n * @param {function(value: *, key: string): *} mapFunction The map function\n * \n * @return {object} The new object\n * \n * @example\n * \n * ```\n * let x = { a: \"hello\", b: \"world\" };\n * let y = mapObject(x, (value, key) => value + \"-\" + key);\n * console.log(y); // { a: \"hello-a\", b: \"world-b\" };\n * ```\n */\nlet mapObject = function(obj, mapFunction) {\n    if (typeof obj !== \"object\") throw new TypeError(\"obj must be an object\");\n    if (typeof mapFunction !== \"function\") throw new TypeError(\"mapFunction must be a function\");\n    if (obj === null) return null;\n    let result = {};\n    Object.keys(obj).forEach(key => {\n        result[key] = mapFunction(obj[key], key);\n    });\n    return result;\n};\n\n/* test */ module.exports = {\n    snippet: mapObject,\n    snippetName: \"mapObject\",\n    snippetTest: t => {\n        let x = { a: \"hello\", b: \"world\" };\n        let y = mapObject(x, (value, key) => value + \"-\" + key);\n        t.deepEqual(y, { a: \"hello-a\", b: \"world-b\" });\n    }\n};",
+    "content": "/**\n * Create a new object with the same keys as the given object, whose values\n * on those keys are mapped by the mapFunction function. This should be analogous\n * to the usage of Array.prototype.map, but for objects.\n * \n * @param {object} obj The source object\n * @param {function(value: *, key: string): *} mapFunction The map function\n * \n * @return {object} The new object\n * \n * @example\n * \n * ```\n * let x = { a: \"hello\", b: \"world\" };\n * let y = mapObject(x, (value, key) => value + \"-\" + key);\n * console.log(y); // { a: \"hello-a\", b: \"world-b\" };\n * ```\n */\nconst mapObject = function(obj, mapFunction) {\n    if (typeof obj !== \"object\") throw new TypeError(\"obj must be an object\");\n    if (typeof mapFunction !== \"function\") throw new TypeError(\"mapFunction must be a function\");\n    if (obj === null) return null;\n    const result = {};\n    Object.keys(obj).forEach(key => {\n        result[key] = mapFunction(obj[key], key);\n    });\n    return result;\n};\n\n/* test */ module.exports = {\n    snippet: mapObject,\n    snippetName: \"mapObject\",\n    snippetTest: t => {\n        const x = { a: \"hello\", b: \"world\" };\n        const y = mapObject(x, (value, key) => value + \"-\" + key);\n        t.deepEqual(y, { a: \"hello-a\", b: \"world-b\" });\n    }\n};",
     "static": true,
     "longname": "src/map-object.js",
     "access": null,
@@ -873,7 +888,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 28,
+    "__docId__": 29,
     "kind": "function",
     "name": "mapObject",
     "memberof": "src/map-object.js",
@@ -922,10 +937,10 @@
     }
   },
   {
-    "__docId__": 29,
+    "__docId__": 30,
     "kind": "file",
     "name": "src/open-native-file-select-dialog.js",
-    "content": "/**\n * Open the native file select dialog, exaclty as\n * when a user clicks on a <input type='file' />.\n * \n * @return {Promise} A promise that resolves with the\n * selected file(s).\n */\nlet openNativeFileSelectDialog = function() {\n    return new Promise(resolve => {\n        const input = document.createElement(\"input\");\n        input.type = \"file\";\n        input.style.display = \"none\";\n        input.onchange = function(e) {\n            resolve(e.target.files);\n        };\n        input.click();\n        input.remove();\n    });\n};\n\n/* test */ module.exports = {\n    snippet: openNativeFileSelectDialog,\n    snippetName: \"openNativeFileSelectDialog\",\n    snippetTest: t => {\n        t.pass();\n    }\n};",
+    "content": "/**\n * Open the native file select dialog, exaclty as\n * when a user clicks on a <input type='file' />.\n * \n * @return {Promise} A promise that resolves with the\n * selected file(s).\n */\nconst openNativeFileSelectDialog = function() {\n    return new Promise(resolve => {\n        const input = document.createElement(\"input\"); /* global document */\n        input.type = \"file\";\n        input.style.display = \"none\";\n        input.onchange = function(e) {\n            resolve(e.target.files);\n        };\n        input.click();\n        input.remove();\n    });\n};\n\n/* test */ module.exports = {\n    snippet: openNativeFileSelectDialog,\n    snippetName: \"openNativeFileSelectDialog\",\n    snippetTest: t => {\n        t.pass();\n    }\n};",
     "static": true,
     "longname": "src/open-native-file-select-dialog.js",
     "access": null,
@@ -933,7 +948,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 30,
+    "__docId__": 31,
     "kind": "function",
     "name": "openNativeFileSelectDialog",
     "memberof": "src/open-native-file-select-dialog.js",
@@ -958,10 +973,10 @@
     }
   },
   {
-    "__docId__": 31,
+    "__docId__": 32,
     "kind": "file",
     "name": "src/pick-random-subset.js",
-    "content": "/**\n * Pick a random subset array of the given array.\n * \n * @requires snippet:pick-random\n * @requires snippet:random-int\n * \n * @param {Array} array The source array.\n * \n * @param {object} [options] An object specifying options.\n * @param {int} [options.length] If specified, defines the length of the subset to be taken.\n * If omitted (undefined), the length of the subset will be defined randomly between\n * options.minLength and array.length (inclusive)\n * @param {int} [options.minLength=0] This option is only relevant if options.length is\n * undefined. This option defines the minimum length of the picked subset. A common use case\n * is to set this option to 1 instead of the default 0 to disallow the empty subset to be\n * taken.\n * \n * @returns {Array} An array whose elements consist of a random subset of the given array.\n * \n * @throws {Error} If options.length or options.minLength is greater than array.length.\n */\nlet pickRandomSubset = function(array, options = undefined) {\n    // Edited from https://github.com/Jam3/random-array-subset\n\n    let length = options && options.length !== undefined ? options.length : undefined;\n    let minLength = options && options.minLength !== undefined ? options.minLength : 0;\n\n    if (length === undefined) {\n        if (minLength > array.length) {\n            throw new Error(\"The specified minLength can't be greater than the array length.\");\n        }\n        length = snippets.randomInt(minLength, array.length + 1);\n    } else if (length > array.length) {\n        throw new Error(\"The specified length can't be greater than the array length.\");\n    }\n    array = array.slice();\n    var result = [];\n    while (result.length < length) {\n        let index = snippets.randomInt(0, array.length);\n        result.push(array[index]);\n        array.splice(index, 1);\n    }\n    return result;\n};\n\n/* test */ module.exports = {\n    snippet: pickRandomSubset,\n    snippetName: \"pickRandomSubset\",\n    snippetTest: t => {\n        let array = [{}, {}, {}, {}];\n        for (let i = 0; i < 20; i++) {\n            t.true(snippets.arrayHas(array, ...pickRandomSubset(array)));\n            t.is(pickRandomSubset(array, { length: 3 }).length, 3);\n            t.is(pickRandomSubset(array, { length: 0 }).length, 0);\n            t.true(pickRandomSubset(array, { minLength: 1 }).length > 0);\n        }\n    }\n};",
+    "content": "/**\n * Pick a random subset array of the given array.\n * \n * @requires snippet:random-int\n * \n * @param {Array} array The source array.\n * \n * @param {object} [options] An object specifying options.\n * @param {int} [options.length] If specified, defines the length of the subset to be taken.\n * If omitted (undefined), the length of the subset will be defined randomly between\n * options.minLength and array.length (inclusive)\n * @param {int} [options.minLength=0] This option is only relevant if options.length is\n * undefined. This option defines the minimum length of the picked subset. A common use case\n * is to set this option to 1 instead of the default 0 to disallow the empty subset to be\n * taken.\n * \n * @returns {Array} An array whose elements consist of a random subset of the given array.\n * \n * @throws {Error} If options.length or options.minLength is greater than array.length.\n */\nconst pickRandomSubset = function(array, options = undefined) {\n    // Edited from https://github.com/Jam3/random-array-subset\n\n    let length = options && options.length !== undefined ? options.length : undefined;\n    const minLength = options && options.minLength !== undefined ? options.minLength : 0;\n\n    if (length === undefined) {\n        if (minLength > array.length) {\n            throw new Error(\"The specified minLength can't be greater than the array length.\");\n        }\n        length = snippets.randomInt(minLength, array.length + 1);\n    } else if (length > array.length) {\n        throw new Error(\"The specified length can't be greater than the array length.\");\n    }\n    array = array.slice();\n    const result = [];\n    while (result.length < length) {\n        const index = snippets.randomInt(0, array.length);\n        result.push(array[index]);\n        array.splice(index, 1);\n    }\n    return result;\n};\n\n/* test */ module.exports = {\n    snippet: pickRandomSubset,\n    snippetName: \"pickRandomSubset\",\n    snippetTest: t => {\n        const array = [{}, {}, {}, {}];\n        for (let i = 0; i < 20; i++) {\n            t.true(snippets.arrayHas(array, ...pickRandomSubset(array)));\n            t.is(pickRandomSubset(array, { length: 3 }).length, 3);\n            t.is(pickRandomSubset(array, { length: 0 }).length, 0);\n            t.true(pickRandomSubset(array, { minLength: 1 }).length > 0);\n        }\n    }\n};",
     "static": true,
     "longname": "src/pick-random-subset.js",
     "access": null,
@@ -969,7 +984,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 32,
+    "__docId__": 33,
     "kind": "function",
     "name": "pickRandomSubset",
     "memberof": "src/pick-random-subset.js",
@@ -982,12 +997,8 @@
     "importPath": "papb-js-snippets/src/pick-random-subset.js",
     "importStyle": null,
     "description": "Pick a random subset array of the given array.",
-    "lineNumber": 22,
+    "lineNumber": 21,
     "unknown": [
-      {
-        "tagName": "@requires",
-        "tagValue": "snippet:pick-random"
-      },
       {
         "tagName": "@requires",
         "tagValue": "snippet:random-int"
@@ -1059,10 +1070,10 @@
     ]
   },
   {
-    "__docId__": 33,
+    "__docId__": 34,
     "kind": "file",
     "name": "src/pick-random.js",
-    "content": "/**\n * Pick a random element from the given array (using a uniform distribution\n * produced by `Math.random()`).\n * \n * @param {Array} array The array.\n * \n * @returns {*} A random element from the given array.\n *\n */\nlet pickRandom = function(array) {\n    return array[Math.floor(Math.random() * array.length)];\n};\n\n/* test */ module.exports = {\n    snippet: pickRandom,\n    snippetName: \"pickRandom\",\n    snippetTest: t => {\n        let array = [{}, {}, {}, {}];\n        for (let i = 0; i < 10; i++) {\n            t.true(snippets.arrayHas(array, pickRandom(array)));\n        }\n    }\n};",
+    "content": "/**\n * Pick a random element from the given array (using a uniform distribution\n * produced by `Math.random()`).\n * \n * @param {Array} array The array.\n * \n * @returns {*} A random element from the given array.\n *\n */\nconst pickRandom = function(array) {\n    return array[Math.floor(Math.random() * array.length)];\n};\n\n/* test */ module.exports = {\n    snippet: pickRandom,\n    snippetName: \"pickRandom\",\n    snippetTest: t => {\n        const array = [{}, {}, {}, {}];\n        for (let i = 0; i < 10; i++) {\n            t.true(snippets.arrayHas(array, pickRandom(array)));\n        }\n    }\n};",
     "static": true,
     "longname": "src/pick-random.js",
     "access": null,
@@ -1070,7 +1081,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 34,
+    "__docId__": 35,
     "kind": "function",
     "name": "pickRandom",
     "memberof": "src/pick-random.js",
@@ -1112,10 +1123,10 @@
     }
   },
   {
-    "__docId__": 35,
+    "__docId__": 36,
     "kind": "file",
     "name": "src/random-int.js",
-    "content": "/**\n * Generates an int between begin (inclusive) and end (exclusive).\n * \n * @param {int} begin The begin of the range (inclusive)\n * @param {int} end The end of the range (exclusive)\n * @return {int} An int whose value is between begin (inclusive) and\n * end (exclusive).\n * \n * @throws {Error} If end <= begin.\n * \n * @example\n * \n * ```\n * randomInt(0, 5); // A value between 0 and 4 (inclusive)\n * randomInt(-3, 1); // A value between -3 and 0 (inclusive)\n * ```\n */\nlet randomInt = function(begin, end) {\n    if (end <= begin) throw new Error(\"end must be greater than begin\");\n    return Math.floor(Math.random() * (end - begin)) + begin;\n};\n\n/* test */ module.exports = {\n    snippet: randomInt,\n    snippetName: \"randomInt\",\n    snippetTest: t => {\n        for (let i = 0; i < 100; i++) {\n            let random = randomInt(-3, 1);\n            t.true(-3 <= random);\n            t.true(random < 1);\n        }\n    }\n};",
+    "content": "/**\n * Generates an int between begin (inclusive) and end (exclusive).\n * \n * @param {int} begin The begin of the range (inclusive)\n * @param {int} end The end of the range (exclusive)\n * @return {int} An int whose value is between begin (inclusive) and\n * end (exclusive).\n * \n * @throws {Error} If end <= begin.\n * \n * @example\n * \n * ```\n * randomInt(0, 5); // A value between 0 and 4 (inclusive)\n * randomInt(-3, 1); // A value between -3 and 0 (inclusive)\n * ```\n */\nconst randomInt = function(begin, end) {\n    if (end <= begin) throw new Error(\"end must be greater than begin\");\n    return Math.floor(Math.random() * (end - begin)) + begin;\n};\n\n/* test */ module.exports = {\n    snippet: randomInt,\n    snippetName: \"randomInt\",\n    snippetTest: t => {\n        for (let i = 0; i < 100; i++) {\n            const random = randomInt(-3, 1);\n            t.true(-3 <= random);\n            t.true(random < 1);\n        }\n    }\n};",
     "static": true,
     "longname": "src/random-int.js",
     "access": null,
@@ -1123,7 +1134,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 36,
+    "__docId__": 37,
     "kind": "function",
     "name": "randomInt",
     "memberof": "src/random-int.js",
@@ -1180,10 +1191,10 @@
     ]
   },
   {
-    "__docId__": 37,
+    "__docId__": 38,
     "kind": "file",
     "name": "src/replace-array.js",
-    "content": "/**\n * Replaces an array with another array (in-place).\n * \n * @param {array} baseArray The array that will be replaced by the other array.\n * @param {array} otherArray The array whose values will be put into the base array.\n * This array is not modified by calling this function.\n * \n * @return {array} Returns the base array (for chaining convenience).\n * \n * @example\n * \n * ```\n * let x = [1, -1, -2, 3];\n * replaceArray(x, [\"a\", \"b\"]);\n * console.log(x); // [\"a\", \"b\"]\n * ```\n */\nlet replaceArray = function(baseArray, otherArray) {\n    baseArray.splice(0, baseArray.length, ...otherArray);\n    return baseArray;\n};\n\n/* test */ module.exports = {\n    snippet: replaceArray,\n    snippetName: \"replaceArray\",\n    snippetTest: t => {\n        let x = [1, -1, -2, 3];\n        replaceArray(x, [\"a\", \"b\"]);\n        t.deepEqual(x, [\"a\", \"b\"]);\n    }\n};",
+    "content": "/**\n * Replaces an array with another array (in-place).\n * \n * @param {array} baseArray The array that will be replaced by the other array.\n * @param {array} otherArray The array whose values will be put into the base array.\n * This array is not modified by calling this function.\n * \n * @return {array} Returns the base array (for chaining convenience).\n * \n * @example\n * \n * ```\n * let x = [1, -1, -2, 3];\n * replaceArray(x, [\"a\", \"b\"]);\n * console.log(x); // [\"a\", \"b\"]\n * ```\n */\nconst replaceArray = function(baseArray, otherArray) {\n    baseArray.splice(0, baseArray.length, ...otherArray);\n    return baseArray;\n};\n\n/* test */ module.exports = {\n    snippet: replaceArray,\n    snippetName: \"replaceArray\",\n    snippetTest: t => {\n        const x = [1, -1, -2, 3];\n        replaceArray(x, [\"a\", \"b\"]);\n        t.deepEqual(x, [\"a\", \"b\"]);\n    }\n};",
     "static": true,
     "longname": "src/replace-array.js",
     "access": null,
@@ -1191,7 +1202,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 38,
+    "__docId__": 39,
     "kind": "function",
     "name": "replaceArray",
     "memberof": "src/replace-array.js",
@@ -1240,10 +1251,10 @@
     }
   },
   {
-    "__docId__": 39,
+    "__docId__": 40,
     "kind": "file",
     "name": "src/sanitize-html-in-text.js",
-    "content": "/**\n * Replaces all occurrences of '&', '<', '>', '\"' and \"'\" in text\n * with their 'safe' counterparts (such as '&amp;').\n * \n * @param {string} text The text to be sanitized\n * \n * @return {string} The sanitized text\n */\nlet sanitizeHTMLInText = function(text) {\n    var map = { '&': 'amp', '<': 'lt', '>': 'gt', '\"': 'quot', \"'\": '#039' };\n    return text.replace(/[&<>\"']/g, m => `&${map[m]};`);\n};\n\n/* test */ module.exports = {\n    snippet: sanitizeHTMLInText,\n    snippetName: \"sanitizeHTMLInText\",\n    snippetTest: t => {\n        t.is(sanitizeHTMLInText(`&<>\"'`), \"&amp;&lt;&gt;&quot;&#039;\");\n    }\n};",
+    "content": "/**\n * Replaces all occurrences of '&', '<', '>', '\"' and \"'\" in text\n * with their 'safe' counterparts (such as '&amp;').\n * \n * @param {string} text The text to be sanitized\n * \n * @return {string} The sanitized text\n */\nconst sanitizeHTMLInText = function(text) {\n    const map = { '&': 'amp', '<': 'lt', '>': 'gt', '\"': 'quot', \"'\": '#039' };\n    return text.replace(/[&<>\"']/g, m => `&${map[m]};`);\n};\n\n/* test */ module.exports = {\n    snippet: sanitizeHTMLInText,\n    snippetName: \"sanitizeHTMLInText\",\n    snippetTest: t => {\n        t.is(sanitizeHTMLInText(`&<>\"'`), \"&amp;&lt;&gt;&quot;&#039;\");\n    }\n};",
     "static": true,
     "longname": "src/sanitize-html-in-text.js",
     "access": null,
@@ -1251,7 +1262,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 40,
+    "__docId__": 41,
     "kind": "function",
     "name": "sanitizeHTMLInText",
     "memberof": "src/sanitize-html-in-text.js",
@@ -1287,10 +1298,10 @@
     }
   },
   {
-    "__docId__": 41,
+    "__docId__": 42,
     "kind": "file",
     "name": "src/sha-256.js",
-    "content": "/**\n * Generates the SHA-256 hash of the given string.\n * \n * (c) Chris Veness 2002-2014 / MIT License\n * Modified by Pedro Augusto de Paula Barbosa (2018) - MIT\n * \n * See http://csrc.nist.gov/groups/ST/toolkit/secure_hashing.html\n * and http://csrc.nist.gov/groups/ST/toolkit/examples.html\n * \n * @requires npm:utf8\n * \n * @param {string} str The string to be hashed\n * @return {string} The hash of the string, which is a string of\n * length 64 and made of only hexadecimal symbols (0-9 and a-f).\n * \n * @example\n * \n * ```\n * sha256(\"test\"); // \"9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08\"\n * ```\n */\nlet sha256 = (function() {\n\n    const utf8 = require('utf8');\n\n    var priv = {};\n\n    /**\n     * Rotates right (circular right shift) value x by n positions [§3.2.4].\n     */\n    priv.ROTR = function(n, x) {\n        return (x >>> n) | (x << (32-n));\n    };\n\n    /**\n     * Logical functions [§4.1.2].\n     */\n    priv.Sigma0 = function(x) { return priv.ROTR(2,  x) ^ priv.ROTR(13, x) ^ priv.ROTR(22, x); };\n    priv.Sigma1 = function(x) { return priv.ROTR(6,  x) ^ priv.ROTR(11, x) ^ priv.ROTR(25, x); };\n    priv.sigma0 = function(x) { return priv.ROTR(7,  x) ^ priv.ROTR(18, x) ^ (x>>>3); };\n    priv.sigma1 = function(x) { return priv.ROTR(17, x) ^ priv.ROTR(19, x) ^ (x>>>10); };\n    priv.Ch = function(x, y, z) { return (x & y) ^ (~x & z); };\n    priv.Maj = function(x, y, z) { return (x & y) ^ (x & z) ^ (y & z); };\n\n    /**\n     * Hexadecimal representation of a number.\n     */\n    priv.toHexStr = function(n) {\n        // Note that we can't use toString(16) as it is implementation-dependant,\n        // and in IE it returns signed numbers when used on full words.\n        var s = \"\", v;\n        for (var i = 7; i >= 0; i--) { v = (n>>>(i*4)) & 0xf; s += v.toString(16); }\n        return s;\n    };\n\n    return function sha256(str) {\n        if (typeof str !== \"string\") {\n            throw new TypeError(\"sha256: Parameter must be a string.\");\n        }\n\n        // convert string to UTF-8, as SHA only deals with byte-streams\n        var msg = utf8.encode(str);\n        \n        // constants [§4.2.2]\n        var K = [\n            0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,\n            0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,\n            0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,\n            0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,\n            0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,\n            0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,\n            0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,\n            0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2\n        ];\n\n        // initial hash value [§5.3.1]\n        var H = [\n            0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19\n        ];\n\n        // PREPROCESSING\n    \n        msg += String.fromCharCode(0x80); // add trailing '1' bit (+ 0's padding) to string [§5.1.1]\n\n        // convert string msg into 512-bit/16-integer blocks arrays of ints [§5.2.1]\n        var l = msg.length/4 + 2; // length (in 32-bit integers) of msg + ‘1’ + appended length\n        var N = Math.ceil(l/16); // number of 16-integer-blocks required to hold 'l' ints\n        var M = new Array(N);\n\n        for (var i=0; i<N; i++) {\n            M[i] = new Array(16);\n            for (var j=0; j<16; j++) { // encode 4 chars per integer, big-endian encoding\n                M[i][j] = (msg.charCodeAt(i*64+j*4)<<24) | (msg.charCodeAt(i*64+j*4+1)<<16) |\n                          (msg.charCodeAt(i*64+j*4+2)<<8) | (msg.charCodeAt(i*64+j*4+3));\n            } // note running off the end of msg is ok since bitwise ops on NaN return 0\n        }\n        // add length (in bits) into final pair of 32-bit integers (big-endian) [§5.1.1]\n        // note: most significant word would be (len-1)*8 >>> 32, but since JS converts\n        // bitwise-op args to 32 bits, we need to simulate this by arithmetic operators\n        M[N-1][14] = ((msg.length-1)*8) / Math.pow(2, 32); M[N-1][14] = Math.floor(M[N-1][14]);\n        M[N-1][15] = ((msg.length-1)*8) & 0xffffffff;\n\n        // HASH COMPUTATION [§6.1.2]\n\n        var W = new Array(64); var a, b, c, d, e, f, g, h;\n        for (var i=0; i<N; i++) {\n\n            // 1 - prepare message schedule 'W'\n            for (var t=0;  t<16; t++) W[t] = M[i][t];\n            for (var t=16; t<64; t++) W[t] = (priv.sigma1(W[t-2]) + W[t-7] + priv.sigma0(W[t-15]) + W[t-16]) & 0xffffffff;\n\n            // 2 - initialise working variables a, b, c, d, e, f, g, h with previous hash value\n            a = H[0]; b = H[1]; c = H[2]; d = H[3]; e = H[4]; f = H[5]; g = H[6]; h = H[7];\n\n            // 3 - main loop (note 'addition modulo 2^32')\n            for (var t=0; t<64; t++) {\n                var T1 = h + priv.Sigma1(e) + priv.Ch(e, f, g) + K[t] + W[t];\n                var T2 = priv.Sigma0(a) + priv.Maj(a, b, c);\n                h = g;\n                g = f;\n                f = e;\n                e = (d + T1) & 0xffffffff;\n                d = c;\n                c = b;\n                b = a;\n                a = (T1 + T2) & 0xffffffff;\n            }\n\n            // 4 - compute the new intermediate hash value (note 'addition modulo 2^32')\n            H[0] = (H[0]+a) & 0xffffffff;\n            H[1] = (H[1]+b) & 0xffffffff;\n            H[2] = (H[2]+c) & 0xffffffff;\n            H[3] = (H[3]+d) & 0xffffffff;\n            H[4] = (H[4]+e) & 0xffffffff;\n            H[5] = (H[5]+f) & 0xffffffff;\n            H[6] = (H[6]+g) & 0xffffffff;\n            H[7] = (H[7]+h) & 0xffffffff;\n        }\n\n        return priv.toHexStr(H[0]) + priv.toHexStr(H[1]) + priv.toHexStr(H[2]) + priv.toHexStr(H[3]) +\n               priv.toHexStr(H[4]) + priv.toHexStr(H[5]) + priv.toHexStr(H[6]) + priv.toHexStr(H[7]);\n    };\n\n}());\n\n/* test */ module.exports = {\n    snippet: sha256,\n    snippetName: \"sha256\",\n    snippetTest: t => {\n        t.is(sha256(\"test\"), \"9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08\");\n        t.is(sha256(\"中文\"), \"72726d8818f693066ceb69afa364218b692e62ea92b385782363780f47529c21\");\n    }\n};",
+    "content": "/**\n * Generates the SHA-256 hash of the given string.\n * \n * (c) Chris Veness 2002-2014 / MIT License\n * Modified by Pedro Augusto de Paula Barbosa (2018) - MIT\n * \n * See http://csrc.nist.gov/groups/ST/toolkit/secure_hashing.html\n * and http://csrc.nist.gov/groups/ST/toolkit/examples.html\n * \n * @requires npm:utf8\n * \n * @param {string} str The string to be hashed\n * @return {string} The hash of the string, which is a string of\n * length 64 and made of only hexadecimal symbols (0-9 and a-f).\n * \n * @example\n * \n * ```\n * sha256(\"test\"); // \"9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08\"\n * ```\n */\nconst sha256 = (function() {\n\n    const utf8 = require('utf8');\n\n    const priv = {};\n\n    /**\n     * Rotates right (circular right shift) value x by n positions [§3.2.4].\n     */\n    priv.ROTR = function(n, x) {\n        return (x >>> n) | (x << (32-n));\n    };\n\n    /**\n     * Logical functions [§4.1.2].\n     */\n    priv.Sigma0 = function(x) { return priv.ROTR(2,  x) ^ priv.ROTR(13, x) ^ priv.ROTR(22, x); };\n    priv.Sigma1 = function(x) { return priv.ROTR(6,  x) ^ priv.ROTR(11, x) ^ priv.ROTR(25, x); };\n    priv.sigma0 = function(x) { return priv.ROTR(7,  x) ^ priv.ROTR(18, x) ^ (x>>>3); };\n    priv.sigma1 = function(x) { return priv.ROTR(17, x) ^ priv.ROTR(19, x) ^ (x>>>10); };\n    priv.Ch = function(x, y, z) { return (x & y) ^ (~x & z); };\n    priv.Maj = function(x, y, z) { return (x & y) ^ (x & z) ^ (y & z); };\n\n    /**\n     * Hexadecimal representation of a number.\n     */\n    priv.toHexStr = function(n) {\n        // Note that we can't use toString(16) as it is implementation-dependant,\n        // and in IE it returns signed numbers when used on full words.\n        let s = \"\", v;\n        for (let i = 7; i >= 0; i--) { v = (n>>>(i*4)) & 0xf; s += v.toString(16); }\n        return s;\n    };\n\n    return function sha256(str) {\n        if (typeof str !== \"string\") {\n            throw new TypeError(\"sha256: Parameter must be a string.\");\n        }\n\n        // convert string to UTF-8, as SHA only deals with byte-streams\n        let msg = utf8.encode(str);\n        \n        // constants [§4.2.2]\n        const K = [\n            0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,\n            0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,\n            0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,\n            0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,\n            0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,\n            0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,\n            0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,\n            0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2\n        ];\n\n        // initial hash value [§5.3.1]\n        const H = [\n            0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19\n        ];\n\n        // PREPROCESSING\n    \n        msg += String.fromCharCode(0x80); // add trailing '1' bit (+ 0's padding) to string [§5.1.1]\n\n        // convert string msg into 512-bit/16-integer blocks arrays of ints [§5.2.1]\n        const l = msg.length/4 + 2; // length (in 32-bit integers) of msg + ‘1’ + appended length\n        const N = Math.ceil(l/16); // number of 16-integer-blocks required to hold 'l' ints\n        const M = new Array(N);\n\n        for (let i=0; i<N; i++) {\n            M[i] = new Array(16);\n            for (let j=0; j<16; j++) { // encode 4 chars per integer, big-endian encoding\n                M[i][j] = (msg.charCodeAt(i*64+j*4)<<24) | (msg.charCodeAt(i*64+j*4+1)<<16) |\n                          (msg.charCodeAt(i*64+j*4+2)<<8) | (msg.charCodeAt(i*64+j*4+3));\n            } // note running off the end of msg is ok since bitwise ops on NaN return 0\n        }\n        // add length (in bits) into final pair of 32-bit integers (big-endian) [§5.1.1]\n        // note: most significant word would be (len-1)*8 >>> 32, but since JS converts\n        // bitwise-op args to 32 bits, we need to simulate this by arithmetic operators\n        M[N-1][14] = ((msg.length-1)*8) / Math.pow(2, 32); M[N-1][14] = Math.floor(M[N-1][14]);\n        M[N-1][15] = ((msg.length-1)*8) & 0xffffffff;\n\n        // HASH COMPUTATION [§6.1.2]\n\n        const W = new Array(64); let a, b, c, d, e, f, g, h;\n        for (let i=0; i<N; i++) {\n\n            // 1 - prepare message schedule 'W'\n            for (let t=0;  t<16; t++) W[t] = M[i][t];\n            for (let t=16; t<64; t++) W[t] = (priv.sigma1(W[t-2]) + W[t-7] + priv.sigma0(W[t-15]) + W[t-16]) & 0xffffffff;\n\n            // 2 - initialise working variables a, b, c, d, e, f, g, h with previous hash value\n            a = H[0]; b = H[1]; c = H[2]; d = H[3]; e = H[4]; f = H[5]; g = H[6]; h = H[7];\n\n            // 3 - main loop (note 'addition modulo 2^32')\n            for (let t=0; t<64; t++) {\n                const T1 = h + priv.Sigma1(e) + priv.Ch(e, f, g) + K[t] + W[t];\n                const T2 = priv.Sigma0(a) + priv.Maj(a, b, c);\n                h = g;\n                g = f;\n                f = e;\n                e = (d + T1) & 0xffffffff;\n                d = c;\n                c = b;\n                b = a;\n                a = (T1 + T2) & 0xffffffff;\n            }\n\n            // 4 - compute the new intermediate hash value (note 'addition modulo 2^32')\n            H[0] = (H[0]+a) & 0xffffffff;\n            H[1] = (H[1]+b) & 0xffffffff;\n            H[2] = (H[2]+c) & 0xffffffff;\n            H[3] = (H[3]+d) & 0xffffffff;\n            H[4] = (H[4]+e) & 0xffffffff;\n            H[5] = (H[5]+f) & 0xffffffff;\n            H[6] = (H[6]+g) & 0xffffffff;\n            H[7] = (H[7]+h) & 0xffffffff;\n        }\n\n        return priv.toHexStr(H[0]) + priv.toHexStr(H[1]) + priv.toHexStr(H[2]) + priv.toHexStr(H[3]) +\n               priv.toHexStr(H[4]) + priv.toHexStr(H[5]) + priv.toHexStr(H[6]) + priv.toHexStr(H[7]);\n    };\n\n})();\n\n/* test */ module.exports = {\n    snippet: sha256,\n    snippetName: \"sha256\",\n    snippetTest: t => {\n        t.is(sha256(\"test\"), \"9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08\");\n        t.is(sha256(\"中文\"), \"72726d8818f693066ceb69afa364218b692e62ea92b385782363780f47529c21\");\n    }\n};",
     "static": true,
     "longname": "src/sha-256.js",
     "access": null,
@@ -1298,7 +1309,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 42,
+    "__docId__": 43,
     "kind": "variable",
     "name": "sha256",
     "memberof": "src/sha-256.js",
@@ -1346,10 +1357,10 @@
     }
   },
   {
-    "__docId__": 43,
+    "__docId__": 44,
     "kind": "file",
     "name": "src/shallow-clone.js",
-    "content": "/**\n * Returns a shallow clone of the given object.\n * \n * @param {object} obj The object to be shallow-cloned\n * @return {object} The shallow-cloned object\n */\nlet shallowClone = function(obj) {\n    return Object.assign({}, obj);\n};\n\n/* test */ module.exports = {\n    snippet: shallowClone,\n    snippetName: \"shallowClone\",\n    snippetTest: t => {\n        let x = { a: 1, b: 2 };\n        t.not(x, { a: 1, b: 2 });\n        t.deepEqual(shallowClone(x), { a: 1, b: 2 });\n    }\n};",
+    "content": "/**\n * Returns a shallow clone of the given object.\n * \n * @param {object} obj The object to be shallow-cloned\n * @return {object} The shallow-cloned object\n */\nconst shallowClone = function(obj) {\n    return Object.assign({}, obj);\n};\n\n/* test */ module.exports = {\n    snippet: shallowClone,\n    snippetName: \"shallowClone\",\n    snippetTest: t => {\n        const x = { a: 1, b: 2 };\n        t.not(x, { a: 1, b: 2 });\n        t.deepEqual(shallowClone(x), { a: 1, b: 2 });\n    }\n};",
     "static": true,
     "longname": "src/shallow-clone.js",
     "access": null,
@@ -1357,7 +1368,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 44,
+    "__docId__": 45,
     "kind": "function",
     "name": "shallowClone",
     "memberof": "src/shallow-clone.js",
@@ -1393,10 +1404,10 @@
     }
   },
   {
-    "__docId__": 45,
+    "__docId__": 46,
     "kind": "file",
     "name": "src/shuffle-array.js",
-    "content": "/**\n * Shuffles the given array in-place, using the Fisher-Yates algorithm (also known\n * as Knuth algorithm).\n * \n * Recall that if you want a new array instead of changing the existing array, just\n * call .slice() before.\n * \n * @param {Array} array The array to be shuffled.\n * @return {Array} The same array (for chaining convenience).\n * \n * @example\n * \n * ```\n * let fruits = [\"Apple\", \"Orange\", \"Mango\"];\n * fruits.shuffle();\n * console.log(fruits); // [\"Orange\", \"Mango\", \"Apple\"];\n * ```\n * \n * http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array\n * Credits to http://sedition.com/perl/javascript-fy.html\n * Thanks also to CoolAJ86\n */\nlet shuffleArray = function(array) {\n    if (!Array.isArray(array)) {\n        throw new TypeError(\"Parameter must be an array.\");\n    }\n\n    let currentIndex = array.length;\n    let randomIndex;\n    let temp;\n\n    // While there remain elements to shuffle...\n    while (currentIndex > 0) {\n\n        // Pick a remaining element...\n        randomIndex = Math.floor(Math.random() * currentIndex);\n        currentIndex--;\n\n        // And swap it with the current element.\n        temp = array[currentIndex];\n        array[currentIndex] = array[randomIndex];\n        array[randomIndex] = temp;\n    }\n\n    return array;\n};\n\n/* test */ module.exports = {\n    snippet: shuffleArray,\n    snippetName: \"shuffleArray\",\n    snippetTest: t => {\n        let fruits = [\"Apple\", \"Orange\", \"Mango\"];\n        let result = shuffleArray(fruits);\n        t.is(fruits, result);\n        t.true(snippets.arrayHas(result, \"Apple\", \"Orange\", \"Mango\"));\n\n        t.throws(() => shuffleArray({}));\n        t.throws(() => shuffleArray(null));\n        t.throws(() => shuffleArray(5));\n        t.throws(() => shuffleArray(\"test\"));\n    }\n};",
+    "content": "/**\n * Shuffles the given array in-place, using the Fisher-Yates algorithm (also known\n * as Knuth algorithm).\n * \n * Recall that if you want a new array instead of changing the existing array, just\n * call .slice() before.\n * \n * @param {Array} array The array to be shuffled.\n * @return {Array} The same array (for chaining convenience).\n * \n * @example\n * \n * ```\n * let fruits = [\"Apple\", \"Orange\", \"Mango\"];\n * fruits.shuffle();\n * console.log(fruits); // [\"Orange\", \"Mango\", \"Apple\"];\n * ```\n * \n * http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array\n * Credits to http://sedition.com/perl/javascript-fy.html\n * Thanks also to CoolAJ86\n */\nconst shuffleArray = function(array) {\n    if (!Array.isArray(array)) {\n        throw new TypeError(\"Parameter must be an array.\");\n    }\n\n    let currentIndex = array.length;\n    let randomIndex;\n    let temp;\n\n    // While there remain elements to shuffle...\n    while (currentIndex > 0) {\n\n        // Pick a remaining element...\n        randomIndex = Math.floor(Math.random() * currentIndex);\n        currentIndex--;\n\n        // And swap it with the current element.\n        temp = array[currentIndex];\n        array[currentIndex] = array[randomIndex];\n        array[randomIndex] = temp;\n    }\n\n    return array;\n};\n\n/* test */ module.exports = {\n    snippet: shuffleArray,\n    snippetName: \"shuffleArray\",\n    snippetTest: t => {\n        const fruits = [\"Apple\", \"Orange\", \"Mango\"];\n        const result = shuffleArray(fruits);\n        t.is(fruits, result);\n        t.true(snippets.arrayHas(result, \"Apple\", \"Orange\", \"Mango\"));\n\n        t.throws(() => shuffleArray({}));\n        t.throws(() => shuffleArray(null));\n        t.throws(() => shuffleArray(5));\n        t.throws(() => shuffleArray(\"test\"));\n    }\n};",
     "static": true,
     "longname": "src/shuffle-array.js",
     "access": null,
@@ -1404,7 +1415,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 46,
+    "__docId__": 47,
     "kind": "function",
     "name": "shuffleArray",
     "memberof": "src/shuffle-array.js",
@@ -1443,10 +1454,10 @@
     }
   },
   {
-    "__docId__": 47,
+    "__docId__": 48,
     "kind": "file",
     "name": "src/simple-substitution-cipher.js",
-    "content": "/**\n * Perform a simple substitution cipher on a string. Note: this is a very weak encryption algorithm that shouldn't\n * be used for security purposes.\n * \n * It is common to associate this function with Base64 encode/decode methods so that any string can be encrypted,\n * instead of only working with strings whose chars are in the plaintext alphabet. The default plaintext and\n * ciphertext alphabets are compatible with Base64. See, for example. js-base64 by dankogai on npm.\n *\n * @param {string} str The string to be encrypted.\n * \n * @param {Object} [options] An object to provide options.\n * \n * @param {string} [options.plaintextAlphabet=\"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\"]\n * The plaintext alphabet to be used. Must have the same length as options.ciphertextAlphabet.\n * \n * @param {string} [options.ciphertextAlphabet=\"hrVtM=TYziLNIemw39dBXDj18lykGUPosR20+fEK6buFCcJpZgqWH/xQ57S4nvaAO\"]\n * The ciphertext alphabet to be used. Must have the same length as options.plaintextAlphabet.\n * \n * @param {boolean} [options.reverse=false] Whether or not to reverse the encryption. Setting this to true is exactly\n * equivalent as switching options.plaintextAlphabet and options.ciphertextAlphabet.\n * \n * @param {char | null} [options.unknownChar=\"?\"] The character to be used in place of a character in the input string that\n * is not present in the plaintext alphabet. If null, the character will be left untouched.\n * \n * @see https://en.wikipedia.org/wiki/Substitution_cipher\n * \n * @example\n * \n * ```\n * simpleSubstitutionCipher(\"Hello\"); //\"YPff6\"\n * simpleSubstitutionCipher(\"YPff6\", { reverse: true }); // \"Hello\"\n * simpleSubstitutionCipher(\"Hello\", {\n *     ciphertextAlphabet: \"cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR\"\n * }); // \"WDpp=\"\n * simpleSubstitutionCipher(\"WDpp=\", {\n *     ciphertextAlphabet: \"cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR\",\n *     reverse: true\n * }); // \"Hello\"\n * ```\n */\nlet simpleSubstitutionCipher = function(str, options = {}) {\n    let plaintextAlphabet = options.plaintextAlphabet;\n    let ciphertextAlphabet = options.ciphertextAlphabet;\n    let reverse = options.reverse;\n    let unknownChar = options.unknownChar;\n\n    if (plaintextAlphabet === undefined) plaintextAlphabet = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\";\n    if (ciphertextAlphabet === undefined) ciphertextAlphabet = \"hrVtM=TYziLNIemw39dBXDj18lykGUPosR20+fEK6buFCcJpZgqWH/xQ57S4nvaAO\";\n    if (reverse === undefined) reverse = false;\n    if (unknownChar === undefined) unknownChar = \"?\";\n\n    if (typeof plaintextAlphabet !== \"string\") throw new Error(\"Plaintext alphabet must be a string.\");\n    if (typeof ciphertextAlphabet !== \"string\") throw new Error(\"Ciphertext alphabet must be a string.\");\n\n    if (plaintextAlphabet.length !== ciphertextAlphabet.length) {\n        throw new Error(\"Plaintext alphabet and ciphertext alphabet must have the same length.\");\n    }\n\n    if (reverse) {\n        let temp = plaintextAlphabet;\n        plaintextAlphabet = ciphertextAlphabet;\n        ciphertextAlphabet = temp;\n    }\n\n    let lookupMap = new Map();\n    for (let i = 0; i < plaintextAlphabet.length; i++) {\n        lookupMap.set(plaintextAlphabet.charAt(i), ciphertextAlphabet.charAt(i));\n    }\n\n    let result = [];\n    for (let i = 0; i < str.length; i++) {\n        let char = lookupMap.get(str.charAt(i));\n        if (char === undefined) char = unknownChar === null ? char : unknownChar;\n        result.push(char);\n    }\n\n    return result.join(\"\");\n};\n\n/* test */ module.exports = {\n    snippet: simpleSubstitutionCipher,\n    snippetName: \"simpleSubstitutionCipher\",\n    snippetTest: t => {\n        t.is(simpleSubstitutionCipher(\"Hello\"), \"YPff6\");\n        t.is(simpleSubstitutionCipher(\"YPff6\", { reverse: true }), \"Hello\");\n        t.is(simpleSubstitutionCipher(\"Hello\", {\n            ciphertextAlphabet: \"cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR\"\n        }), \"WDpp=\");\n        t.is(simpleSubstitutionCipher(\"WDpp=\", {\n            ciphertextAlphabet: \"cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR\",\n            reverse: true\n        }), \"Hello\");\n    }\n};\n\n\n\n\n\n// t.is(simpleSubstitutionCipher(\"hello! ^^\"), \"yTDCkTnRz=7P\");\n// t.is(simpleSubstitutionCipher(\"yTDCkTnRz=7P\", { reverse: true }), \"hello! ^^\");\n// t.is(simpleSubstitutionCipher(\"hello! ^^\", {\n//     ciphertextAlphabet: \"cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR\"\n// }), \"lf1HPfXTQthD\");\n// t.is(simpleSubstitutionCipher(\"lf1HPfXTQthD\", {\n//     ciphertextAlphabet: \"cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR\",\n//     reverse: true\n// }), \"hello! ^^\");",
+    "content": "/**\n * Perform a simple substitution cipher on a string. Note: this is a very weak encryption algorithm that shouldn't\n * be used for security purposes.\n * \n * It is common to associate this function with Base64 encode/decode methods so that any string can be encrypted,\n * instead of only working with strings whose chars are in the plaintext alphabet. The default plaintext and\n * ciphertext alphabets are compatible with Base64. See, for example. js-base64 by dankogai on npm.\n *\n * @param {string} str The string to be encrypted.\n * \n * @param {Object} [options] An object to provide options.\n * \n * @param {string} [options.plaintextAlphabet=\"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\"]\n * The plaintext alphabet to be used. Must have the same length as options.ciphertextAlphabet.\n * \n * @param {string} [options.ciphertextAlphabet=\"hrVtM=TYziLNIemw39dBXDj18lykGUPosR20+fEK6buFCcJpZgqWH/xQ57S4nvaAO\"]\n * The ciphertext alphabet to be used. Must have the same length as options.plaintextAlphabet.\n * \n * @param {boolean} [options.reverse=false] Whether or not to reverse the encryption. Setting this to true is exactly\n * equivalent as switching options.plaintextAlphabet and options.ciphertextAlphabet.\n * \n * @param {char | null} [options.unknownChar=\"?\"] The character to be used in place of a character in the input string that\n * is not present in the plaintext alphabet. If null, the character will be left untouched.\n * \n * @see https://en.wikipedia.org/wiki/Substitution_cipher\n * \n * @example\n * \n * ```\n * simpleSubstitutionCipher(\"Hello\"); //\"YPff6\"\n * simpleSubstitutionCipher(\"YPff6\", { reverse: true }); // \"Hello\"\n * simpleSubstitutionCipher(\"Hello\", {\n *     ciphertextAlphabet: \"cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR\"\n * }); // \"WDpp=\"\n * simpleSubstitutionCipher(\"WDpp=\", {\n *     ciphertextAlphabet: \"cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR\",\n *     reverse: true\n * }); // \"Hello\"\n * ```\n */\nconst simpleSubstitutionCipher = function(str, options = {}) {\n    let plaintextAlphabet = options.plaintextAlphabet;\n    let ciphertextAlphabet = options.ciphertextAlphabet;\n    let reverse = options.reverse;\n    let unknownChar = options.unknownChar;\n\n    if (plaintextAlphabet === undefined) plaintextAlphabet = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\";\n    if (ciphertextAlphabet === undefined) ciphertextAlphabet = \"hrVtM=TYziLNIemw39dBXDj18lykGUPosR20+fEK6buFCcJpZgqWH/xQ57S4nvaAO\";\n    if (reverse === undefined) reverse = false;\n    if (unknownChar === undefined) unknownChar = \"?\";\n\n    if (typeof plaintextAlphabet !== \"string\") throw new Error(\"Plaintext alphabet must be a string.\");\n    if (typeof ciphertextAlphabet !== \"string\") throw new Error(\"Ciphertext alphabet must be a string.\");\n\n    if (plaintextAlphabet.length !== ciphertextAlphabet.length) {\n        throw new Error(\"Plaintext alphabet and ciphertext alphabet must have the same length.\");\n    }\n\n    if (reverse) {\n        const temp = plaintextAlphabet;\n        plaintextAlphabet = ciphertextAlphabet;\n        ciphertextAlphabet = temp;\n    }\n\n    const lookupMap = new Map();\n    for (let i = 0; i < plaintextAlphabet.length; i++) {\n        lookupMap.set(plaintextAlphabet.charAt(i), ciphertextAlphabet.charAt(i));\n    }\n\n    const result = [];\n    for (let i = 0; i < str.length; i++) {\n        let char = lookupMap.get(str.charAt(i));\n        if (char === undefined) char = unknownChar === null ? char : unknownChar;\n        result.push(char);\n    }\n\n    return result.join(\"\");\n};\n\n/* test */ module.exports = {\n    snippet: simpleSubstitutionCipher,\n    snippetName: \"simpleSubstitutionCipher\",\n    snippetTest: t => {\n        t.is(simpleSubstitutionCipher(\"Hello\"), \"YPff6\");\n        t.is(simpleSubstitutionCipher(\"YPff6\", { reverse: true }), \"Hello\");\n        t.is(simpleSubstitutionCipher(\"Hello\", {\n            ciphertextAlphabet: \"cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR\"\n        }), \"WDpp=\");\n        t.is(simpleSubstitutionCipher(\"WDpp=\", {\n            ciphertextAlphabet: \"cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR\",\n            reverse: true\n        }), \"Hello\");\n    }\n};\n\n\n\n\n\n// t.is(simpleSubstitutionCipher(\"hello! ^^\"), \"yTDCkTnRz=7P\");\n// t.is(simpleSubstitutionCipher(\"yTDCkTnRz=7P\", { reverse: true }), \"hello! ^^\");\n// t.is(simpleSubstitutionCipher(\"hello! ^^\", {\n//     ciphertextAlphabet: \"cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR\"\n// }), \"lf1HPfXTQthD\");\n// t.is(simpleSubstitutionCipher(\"lf1HPfXTQthD\", {\n//     ciphertextAlphabet: \"cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR\",\n//     reverse: true\n// }), \"hello! ^^\");",
     "static": true,
     "longname": "src/simple-substitution-cipher.js",
     "access": null,
@@ -1454,7 +1465,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 48,
+    "__docId__": 49,
     "kind": "function",
     "name": "simpleSubstitutionCipher",
     "memberof": "src/simple-substitution-cipher.js",
@@ -1548,10 +1559,10 @@
     }
   },
   {
-    "__docId__": 49,
+    "__docId__": 50,
     "kind": "file",
     "name": "src/sort-by.js",
-    "content": "/**\n * Sort the given array in-place using the values returned by the valuePicker.\n * \n * @requires snippet:map-in-place\n * \n * @param {Array} array The array to be sorted.\n * @param {function} valuePicker A function that when applied to each value of\n * the array returns another value to be used for the sorting. This function is\n * called only once per value.\n * @param {boolean} [reverse=false] Whether or not to reverse the sorting.\n * \n * @return {Array} The given array (for chaining convenience).\n * \n * @example\n * \n * ```\n * let list = [{id:7},{id:3}];\n * sortBy(list, x => x.id);\n * console.log(x); // [{id:3},{id:7}];\n * ```\n */\nlet sortBy = function(array, valuePicker, reverse = false) {\n    let n = reverse ? -1 : 1;\n    snippets.mapInPlace(array, x => ({ value: x, picked: valuePicker(x) }));\n    array.sort((a, b) => a.picked < b.picked ? -n : a.picked === b.picked ? 0 : n);\n    snippets.mapInPlace(array, x => x.value);\n    return array;\n};\n\n/* test */ module.exports = {\n    snippet: sortBy,\n    snippetName: \"sortBy\",\n    snippetTest: t => {\n        let list = [{id:7},{id:3}];\n        sortBy(list, x => x.id);\n        t.deepEqual(list, [{id:3},{id:7}]);\n    }\n};",
+    "content": "/**\n * Sort the given array in-place using the values returned by the valuePicker.\n * \n * @requires snippet:map-in-place\n * \n * @param {Array} array The array to be sorted.\n * @param {function} valuePicker A function that when applied to each value of\n * the array returns another value to be used for the sorting. This function is\n * called only once per value.\n * @param {boolean} [reverse=false] Whether or not to reverse the sorting.\n * \n * @return {Array} The given array (for chaining convenience).\n * \n * @example\n * \n * ```\n * let list = [{id:7},{id:3}];\n * sortBy(list, x => x.id);\n * console.log(x); // [{id:3},{id:7}];\n * ```\n */\nconst sortBy = function(array, valuePicker, reverse = false) {\n    const n = reverse ? -1 : 1;\n    snippets.mapInPlace(array, x => ({ value: x, picked: valuePicker(x) }));\n    array.sort((a, b) => a.picked < b.picked ? -n : a.picked === b.picked ? 0 : n);\n    snippets.mapInPlace(array, x => x.value);\n    return array;\n};\n\n/* test */ module.exports = {\n    snippet: sortBy,\n    snippetName: \"sortBy\",\n    snippetTest: t => {\n        const list = [{id:7},{id:3}];\n        sortBy(list, x => x.id);\n        t.deepEqual(list, [{id:3},{id:7}]);\n    }\n};",
     "static": true,
     "longname": "src/sort-by.js",
     "access": null,
@@ -1559,7 +1570,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 50,
+    "__docId__": 51,
     "kind": "function",
     "name": "sortBy",
     "memberof": "src/sort-by.js",
@@ -1626,10 +1637,10 @@
     }
   },
   {
-    "__docId__": 51,
+    "__docId__": 52,
     "kind": "file",
     "name": "src/wait.js",
-    "content": "/**\n * Get a promise that resolves after a given amount of milliseconds.\n * \n * @param {int} millis The amount of milliseconds to wait before resolving the promise.\n * @param {*} [value] A value to fulfill the promise with.\n * \n * @return {Promise} A promise that resolves after the given amount of milliseconds with\n * the given value (if given) or undefined (if not given).\n */\nlet wait = function(millis, value = undefined) {\n    return new Promise(resolve => {\n        setTimeout(() => {\n            resolve(value);\n        }, millis);\n    });\n};\n\n/* test */ module.exports = {\n    snippet: wait,\n    snippetName: \"wait\",\n    snippetTest: t => {\n        t.pass();\n    }\n};",
+    "content": "/**\n * Get a promise that resolves after a given amount of milliseconds.\n * \n * @param {int} millis The amount of milliseconds to wait before resolving the promise.\n * @param {*} [value] A value to fulfill the promise with.\n * \n * @return {Promise} A promise that resolves after the given amount of milliseconds with\n * the given value (if given) or undefined (if not given).\n */\nconst wait = function(millis, value = undefined) {\n    return new Promise(resolve => {\n        setTimeout(() => {\n            resolve(value);\n        }, millis);\n    });\n};\n\n/* test */ module.exports = {\n    snippet: wait,\n    snippetName: \"wait\",\n    snippetTest: t => {\n        t.pass();\n    }\n};",
     "static": true,
     "longname": "src/wait.js",
     "access": null,
@@ -1637,7 +1648,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 52,
+    "__docId__": 53,
     "kind": "function",
     "name": "wait",
     "memberof": "src/wait.js",
@@ -1683,10 +1694,10 @@
     }
   },
   {
-    "__docId__": 53,
+    "__docId__": 54,
     "kind": "file",
     "name": "src/zero-pad-left.js",
-    "content": "/**\n * Convert the given value to string, adding zeros to the left of it\n * so that the resulting string has length equal to the given length\n * (or, if the number representation is longer than the given length,\n * simply return the number converted to string).\n * \n * @param {*} value The value to be converted (usually a number)\n * @param {int} length The desired length\n * \n * @return {string} A string representation of the value with\n * length greater than or equal to the given length.\n * \n * @example\n * \n * ```\n * zeroPadLeft(1234, 7); // \"0001234\"\n * zeroPadLeft(1234, 3); // \"1234\"\n * zeroPadLeft(\"Hello\", 9); // \"0000Hello\"\n * ```\n */\nlet zeroPadLeft = function(value, length) {\n    var str = \"\" + value;\n    while (str.length < length) str = \"0\" + str;\n    return str;\n};\n\n/* test */ module.exports = {\n    snippet: zeroPadLeft,\n    snippetName: \"zeroPadLeft\",\n    snippetTest: t => {\n        t.is(zeroPadLeft(1234, 7), \"0001234\");\n        t.is(zeroPadLeft(1234, 3), \"1234\");\n        t.is(zeroPadLeft(\"Hello\", 9), \"0000Hello\");\n    }\n};",
+    "content": "/**\n * Convert the given value to string, adding zeros to the left of it\n * so that the resulting string has length equal to the given length\n * (or, if the number representation is longer than the given length,\n * simply return the number converted to string).\n * \n * @param {*} value The value to be converted (usually a number)\n * @param {int} length The desired length\n * \n * @return {string} A string representation of the value with\n * length greater than or equal to the given length.\n * \n * @example\n * \n * ```\n * zeroPadLeft(1234, 7); // \"0001234\"\n * zeroPadLeft(1234, 3); // \"1234\"\n * zeroPadLeft(\"Hello\", 9); // \"0000Hello\"\n * ```\n */\nconst zeroPadLeft = function(value, length) {\n    let str = \"\" + value;\n    while (str.length < length) str = \"0\" + str;\n    return str;\n};\n\n/* test */ module.exports = {\n    snippet: zeroPadLeft,\n    snippetName: \"zeroPadLeft\",\n    snippetTest: t => {\n        t.is(zeroPadLeft(1234, 7), \"0001234\");\n        t.is(zeroPadLeft(1234, 3), \"1234\");\n        t.is(zeroPadLeft(\"Hello\", 9), \"0000Hello\");\n    }\n};",
     "static": true,
     "longname": "src/zero-pad-left.js",
     "access": null,
@@ -1694,7 +1705,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 54,
+    "__docId__": 55,
     "kind": "function",
     "name": "zeroPadLeft",
     "memberof": "src/zero-pad-left.js",

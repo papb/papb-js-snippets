@@ -38,6 +38,7 @@
  * not &quot;object&quot; will be copied by reference (without cloning).
  * 
  * @requires npm:is-circular^1.0.0
+ * @requires snippet:map-object
  * 
  * @param {object} object The object to be cloned
  * 
@@ -45,7 +46,7 @@
  * 
  * @throws {Error} If the object has circular references
  */
-let deepClone = (() =&gt; {
+const deepClone = (() =&gt; {
     const isCircular = require(&apos;is-circular&apos;);
     return function(obj) {
         if (obj === null) return null;
@@ -60,8 +61,8 @@ let deepClone = (() =&gt; {
     snippet: deepClone,
     snippetName: &quot;deepClone&quot;,
     snippetTest: t =&gt; {
-        let obj = { a: 1, b: 2, c: [{ d: 3, e: 4 }] };
-        let clone = deepClone(obj);
+        const obj = { a: 1, b: 2, c: [{ d: 3, e: 4 }] };
+        const clone = deepClone(obj);
         t.not(clone, obj);
         t.not(clone.c, obj.c);
         t.not(clone.c[0], obj.c[0]);

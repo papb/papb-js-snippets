@@ -51,11 +51,11 @@
  * console.log(y); // { a: &quot;hello-a&quot;, b: &quot;world-b&quot; };
  * ```
  */
-let mapObject = function(obj, mapFunction) {
+const mapObject = function(obj, mapFunction) {
     if (typeof obj !== &quot;object&quot;) throw new TypeError(&quot;obj must be an object&quot;);
     if (typeof mapFunction !== &quot;function&quot;) throw new TypeError(&quot;mapFunction must be a function&quot;);
     if (obj === null) return null;
-    let result = {};
+    const result = {};
     Object.keys(obj).forEach(key =&gt; {
         result[key] = mapFunction(obj[key], key);
     });
@@ -66,8 +66,8 @@ let mapObject = function(obj, mapFunction) {
     snippet: mapObject,
     snippetName: &quot;mapObject&quot;,
     snippetTest: t =&gt; {
-        let x = { a: &quot;hello&quot;, b: &quot;world&quot; };
-        let y = mapObject(x, (value, key) =&gt; value + &quot;-&quot; + key);
+        const x = { a: &quot;hello&quot;, b: &quot;world&quot; };
+        const y = mapObject(x, (value, key) =&gt; value + &quot;-&quot; + key);
         t.deepEqual(y, { a: &quot;hello-a&quot;, b: &quot;world-b&quot; });
     }
 };</code></pre>

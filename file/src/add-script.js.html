@@ -33,9 +33,7 @@
 
 
 <div class="content" data-ice="content" style="margin-left: 0;"><h1 data-ice="title">src/add-script.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">&quot;use strict&quot;;
-
-/**
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
  * Adds an script from the given src to the page.
  * 
  * WARNING: This is incredibly dangerous. Only use this if you are sure
@@ -46,7 +44,7 @@
  * 
  * @return {Promise} A promise that resolves when the script finishes loading.
  */
-let addScript = function(document, src) {
+const addScript = function(document, src) {
     if (typeof src !== &quot;string&quot;) throw new Error(&quot;Invalid src argument: must be a string.&quot;);
     return new Promise(resolve =&gt; {
         const script = document.createElement(&apos;script&apos;);
@@ -54,7 +52,7 @@ let addScript = function(document, src) {
         script.onload = resolve;
         document.body.appendChild(script);
     });
-}
+};
 
 /**
  * Adds an script with the given content to the page.

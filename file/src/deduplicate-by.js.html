@@ -61,9 +61,9 @@
  * console.log(array); // [{ a: 1, b: 2 }]
  * ```
  */
-let deduplicateBy = function(array, valuePicker, inPlace = false) {
+const deduplicateBy = function(array, valuePicker, inPlace = false) {
     let result = [];
-    let helperArray = array.map(x =&gt; ({ value: x, picked: valuePicker(x) }));
+    const helperArray = array.map(x =&gt; ({ value: x, picked: valuePicker(x) }));
     helperArray.forEach(x =&gt; {
         if (!result.find(r =&gt; r.picked === x.picked)) result.push(x);
     });
@@ -76,7 +76,7 @@ let deduplicateBy = function(array, valuePicker, inPlace = false) {
     snippet: deduplicateBy,
     snippetName: &quot;deduplicateBy&quot;,
     snippetTest: t =&gt; {
-        let array = [{ a: 1, b: 2 }, { a: 3, b: 2 }];
+        const array = [{ a: 1, b: 2 }, { a: 3, b: 2 }];
         deduplicateBy(array, x =&gt; x.a, true);
         t.deepEqual(array, [{ a: 1, b: 2 }, { a: 3, b: 2 }]);
         deduplicateBy(array, x =&gt; x.b, true);

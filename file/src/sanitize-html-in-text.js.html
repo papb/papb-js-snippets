@@ -41,8 +41,8 @@
  * 
  * @return {string} The sanitized text
  */
-let sanitizeHTMLInText = function(text) {
-    var map = { &apos;&amp;&apos;: &apos;amp&apos;, &apos;&lt;&apos;: &apos;lt&apos;, &apos;&gt;&apos;: &apos;gt&apos;, &apos;&quot;&apos;: &apos;quot&apos;, &quot;&apos;&quot;: &apos;#039&apos; };
+const sanitizeHTMLInText = function(text) {
+    const map = { &apos;&amp;&apos;: &apos;amp&apos;, &apos;&lt;&apos;: &apos;lt&apos;, &apos;&gt;&apos;: &apos;gt&apos;, &apos;&quot;&apos;: &apos;quot&apos;, &quot;&apos;&quot;: &apos;#039&apos; };
     return text.replace(/[&amp;&lt;&gt;&quot;&apos;]/g, m =&gt; `&amp;${map[m]};`);
 };
 

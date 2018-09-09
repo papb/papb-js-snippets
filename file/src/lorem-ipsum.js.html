@@ -48,10 +48,10 @@
  * 
  * @return {string} The generated string.
  */
-let loremIpsum = (() =&gt; {
+const loremIpsum = (() =&gt; {
     const loremIpsum = require(&apos;lorem-ipsum&apos;);
     return function(wordCount, fullstop = false, ucfirst = true) {
-        var str = loremIpsum({ count: wordCount, units: &apos;words&apos;, format: &apos;plain&apos; });
+        let str = loremIpsum({ count: wordCount, units: &apos;words&apos;, format: &apos;plain&apos; });
         if (ucfirst) str = str[0].toUpperCase() + str.substr(1);
         if (fullstop) str += &quot;.&quot;;
         return str;

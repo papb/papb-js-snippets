@@ -1,7 +1,7 @@
 <!DOCTYPE html><html><head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../">
-  <title data-ice="title">src/wait.js | papb-js-snippets API Document</title>
+  <title data-ice="title">src/.eslintrc.js | papb-js-snippets API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -32,29 +32,13 @@
 
 
 
-<div class="content" data-ice="content" style="margin-left: 0;"><h1 data-ice="title">src/wait.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
- * Get a promise that resolves after a given amount of milliseconds.
- * 
- * @param {int} millis The amount of milliseconds to wait before resolving the promise.
- * @param {*} [value] A value to fulfill the promise with.
- * 
- * @return {Promise} A promise that resolves after the given amount of milliseconds with
- * the given value (if given) or undefined (if not given).
- */
-const wait = function(millis, value = undefined) {
-    return new Promise(resolve =&gt; {
-        setTimeout(() =&gt; {
-            resolve(value);
-        }, millis);
-    });
-};
-
-/* test */ module.exports = {
-    snippet: wait,
-    snippetName: &quot;wait&quot;,
-    snippetTest: t =&gt; {
-        t.pass();
+<div class="content" data-ice="content" style="margin-left: 0;"><h1 data-ice="title">src/.eslintrc.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">module.exports = {
+    &quot;rules&quot;: {
+        &quot;strict&quot;: &quot;off&quot;
+    },
+    &quot;globals&quot;: {
+        &quot;snippets&quot;: false
     }
 };</code></pre>
 

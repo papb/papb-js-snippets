@@ -53,8 +53,8 @@
  * zeroPadLeft(&quot;Hello&quot;, 9); // &quot;0000Hello&quot;
  * ```
  */
-let zeroPadLeft = function(value, length) {
-    var str = &quot;&quot; + value;
+const zeroPadLeft = function(value, length) {
+    let str = &quot;&quot; + value;
     while (str.length &lt; length) str = &quot;0&quot; + str;
     return str;
 };

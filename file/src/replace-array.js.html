@@ -50,7 +50,7 @@
  * console.log(x); // [&quot;a&quot;, &quot;b&quot;]
  * ```
  */
-let replaceArray = function(baseArray, otherArray) {
+const replaceArray = function(baseArray, otherArray) {
     baseArray.splice(0, baseArray.length, ...otherArray);
     return baseArray;
 };
@@ -59,7 +59,7 @@ let replaceArray = function(baseArray, otherArray) {
     snippet: replaceArray,
     snippetName: &quot;replaceArray&quot;,
     snippetTest: t =&gt; {
-        let x = [1, -1, -2, 3];
+        const x = [1, -1, -2, 3];
         replaceArray(x, [&quot;a&quot;, &quot;b&quot;]);
         t.deepEqual(x, [&quot;a&quot;, &quot;b&quot;]);
     }
