@@ -4,7 +4,7 @@ const test = require('ava');
 const fs = require('fs');
 const path = require('path');
 
-const files = fs.readdirSync("src").map(file => ({
+const files = fs.readdirSync("src").filter(file => file !== ".eslintrc.js").map(file => ({
     filename: file,
     content: require(path.join(__dirname, "src", file))
 }));
