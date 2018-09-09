@@ -3,6 +3,7 @@
  * not "object" will be copied by reference (without cloning).
  * 
  * @requires npm:is-circular^1.0.0
+ * @requires snippet:map-object
  * 
  * @param {object} object The object to be cloned
  * 

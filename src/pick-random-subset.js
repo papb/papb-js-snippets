@@ -1,7 +1,6 @@
 /**
  * Pick a random subset array of the given array.
  * 
- * @requires snippet:pick-random
  * @requires snippet:random-int
  * 
  * @param {Array} array The source array.
