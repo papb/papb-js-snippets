@@ -192,6 +192,34 @@ different arguments (and is idempotent).</p>
         <p>
           
           
+          <span data-ice="name"><span><a href="function/index.html#static-function-countOccurrences">countOccurrences</a></span></span><span data-ice="signature">(array: <span>Array</span>): <span>Map</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Counts how many times each element of the array occurs in it.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
           <span data-ice="name"><span><a href="function/index.html#static-function-deduplicateBy">deduplicateBy</a></span></span><span data-ice="signature">(array: <span>Array</span>, valuePicker: <span>function</span>, inPlace: <span>boolean</span>): <span>Array</span></span>
         </p>
       </div>
@@ -1177,6 +1205,94 @@ the sequence is terminated immediately).</p>
   
 
   
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-function-countOccurrences">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">countOccurrences</span><span data-ice="signature">(array: <span>Array</span>): <span>Map</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/count-occurrences.js.html#lineNumber19">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Counts how many times each element of the array occurs in it.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">array</td>
+      <td data-ice="type"><span>Array</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type" data-ice="returnType"><span>Map</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>A map that maps elements to the amount of occurrences.</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="example">
+    <h4>Example:</h4>
+    
+  <div class="example-doc" data-ice="exampleDoc">
+      
+      <pre class="prettyprint source-code"><code data-ice="exampleCode">
+```
+let array = [&quot;a&quot;, 1, null, &quot;b&quot;, null, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;];
+let countMap = countOccurrences(array);
+countMap.get(&quot;a&quot;); // 3
+countMap.get(1); // 1
+countMap.get(null); // 2
+countMap.get(&quot;b&quot;); // 2
+```</code></pre>
+    </div>
+</div>
 
   
 
