@@ -15,9 +15,11 @@
   "author": "Pedro Augusto de Paula Barbosa",
   "license": "MIT",
   "dependencies": {
+    "fs-jetpack": "^2.2.0",
     "is-circular": "^1.0.2",
     "js-base64": "^2.4.8",
     "lorem-ipsum": "^1.0.5",
+    "request": "^2.88.0",
     "utf8": "^3.0.0"
   },
   "devDependencies": {
