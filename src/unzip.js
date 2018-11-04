@@ -39,6 +39,13 @@ const unzip = function(zipFilePath, destFolder = ".", cwd = ".") {
     snippet: unzip,
     snippetName: "unzip",
     snippetTest: t => {
-        t.pass();
+        const jetpack = require("fs-jetpack");
+        t.plan(3);
+        return unzip("test-fixtures/example-zip-file.zip", "test-temp").then(() => {
+            t.is(jetpack.exists("test-temp/example-file.txt"), "file");
+            t.is(jetpack.read("test-temp/example-file.txt"), "example-content");
+            jetpack.remove("test-temp");
+            t.pass();
+        });
     }
 };
