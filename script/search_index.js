@@ -54,6 +54,12 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
+    "papb-js-snippets/src/download-file.js~downloadfile",
+    "function/index.html#static-function-downloadFile",
+    "<span>downloadFile</span> <span class=\"search-result-import-path\">papb-js-snippets/src/download-file.js</span>",
+    "function"
+  ],
+  [
     "papb-js-snippets/src/ellipsis.js~ellipsis",
     "function/index.html#static-function-ellipsis",
     "<span>ellipsis</span> <span class=\"search-result-import-path\">papb-js-snippets/src/ellipsis.js</span>",
@@ -162,6 +168,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "papb-js-snippets/src/unzip.js~unzip",
+    "function/index.html#static-function-unzip",
+    "<span>unzip</span> <span class=\"search-result-import-path\">papb-js-snippets/src/unzip.js</span>",
+    "function"
+  ],
+  [
     "papb-js-snippets/src/wait.js~wait",
     "function/index.html#static-function-wait",
     "<span>wait</span> <span class=\"search-result-import-path\">papb-js-snippets/src/wait.js</span>",
@@ -231,6 +243,12 @@ window.esdocSearchIndex = [
     "src/deep-clone.js",
     "file/src/deep-clone.js.html",
     "src/deep-clone.js",
+    "file"
+  ],
+  [
+    "src/download-file.js",
+    "file/src/download-file.js.html",
+    "src/download-file.js",
     "file"
   ],
   [
@@ -333,6 +351,12 @@ window.esdocSearchIndex = [
     "src/sort-by.js",
     "file/src/sort-by.js.html",
     "src/sort-by.js",
+    "file"
+  ],
+  [
+    "src/unzip.js",
+    "file/src/unzip.js.html",
+    "src/unzip.js",
     "file"
   ],
   [

@@ -249,6 +249,34 @@ elements by the values each yield when passed to the valuePicker function.</p>
         <p>
           
           
+          <span data-ice="name"><span><a href="function/index.html#static-function-downloadFile">downloadFile</a></span></span><span data-ice="signature">(sourceURL: <span>string</span>, destinationFilePath: <span>string</span>): <span>Promise</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Downloads a file from a given URL and saves it.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
           <span data-ice="name"><span><a href="function/index.html#static-function-ellipsis">ellipsis</a></span></span><span data-ice="signature">(str: <span>string</span>, length: <span>int</span>): <span>string</span></span>
         </p>
       </div>
@@ -681,6 +709,34 @@ as Knuth algorithm).</p>
         
         
         <div data-ice="description"><p>Sort the given array in-place using the values returned by the valuePicker.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="function/index.html#static-function-unzip">unzip</a></span></span><span data-ice="signature">(zipFilePath: <span>string</span>, destFolter: <span>string</span>, cwd: <span>string</span>): <span>Promise</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Unzips a given zip file into the destination folder.</p>
 </div>
       </div>
     </td>
@@ -1401,6 +1457,90 @@ console.log(array); // [{ a: 1, b: 2 }]
 ```</code></pre>
     </div>
 </div>
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-function-downloadFile">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">downloadFile</span><span data-ice="signature">(sourceURL: <span>string</span>, destinationFilePath: <span>string</span>): <span>Promise</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/download-file.js.html#lineNumber15">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Downloads a file from a given URL and saves it.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">sourceURL</td>
+      <td data-ice="type"><span>string</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>The URL containing the file to be downloaded.</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">destinationFilePath</td>
+      <td data-ice="type"><span>string</span></td>
+      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="description"><p>The path (including filename) for
+the file to be saved. If omitted, defaults to the same filename given in
+the sourceURL.</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type" data-ice="returnType"><span>Promise</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>A promise that resolves when everything is done or reject
+with any error that happens in the process.</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
 
   
 
@@ -2829,6 +2969,105 @@ console.log(x); // [{id:3},{id:7}];
 ```</code></pre>
     </div>
 </div>
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-function-unzip">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">unzip</span><span data-ice="signature">(zipFilePath: <span>string</span>, destFolter: <span>string</span>, cwd: <span>string</span>): <span>Promise</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/unzip.js.html#lineNumber22">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Unzips a given zip file into the destination folder.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">zipFilePath</td>
+      <td data-ice="type"><span>string</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>The path to the zip file, as an
+absolute path or a relative path to the given cwd (current
+working directory).</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">destFolter</td>
+      <td data-ice="type"><span>string</span></td>
+      <td data-ice="appendix"><ul><li>optional</li>
+<li>default: &quot;.&quot;</li></ul></td>
+      <td data-ice="description"><p>The destination folder, into
+which the unzipped files will be put, as an absolute path or
+a relative path to the given cwd (current working directory).
+Will be created if it does not exist.</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">cwd</td>
+      <td data-ice="type"><span>string</span></td>
+      <td data-ice="appendix"><ul><li>optional</li>
+<li>default: &quot;.&quot;</li></ul></td>
+      <td data-ice="description"><p>The reference path to be used for
+internally computing the absolute paths of the first two
+parameters. This parameter itself can be given as an absolute
+path or a relative path to <code>process.cwd()</code>.</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type" data-ice="returnType"><span>Promise</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>A promise that resolves when the unzipping is
+complete as rejects if any error happens in the process.</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
 
   
 
