@@ -168,6 +168,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "papb-js-snippets/src/to-diacritics-insensitive-regex.js~todiacriticsinsensitiveregex",
+    "variable/index.html#static-variable-toDiacriticsInsensitiveRegex",
+    "<span>toDiacriticsInsensitiveRegex</span> <span class=\"search-result-import-path\">papb-js-snippets/src/to-diacritics-insensitive-regex.js</span>",
+    "variable"
+  ],
+  [
     "papb-js-snippets/src/unzip.js~unzip",
     "function/index.html#static-function-unzip",
     "<span>unzip</span> <span class=\"search-result-import-path\">papb-js-snippets/src/unzip.js</span>",
@@ -351,6 +357,12 @@ window.esdocSearchIndex = [
     "src/sort-by.js",
     "file/src/sort-by.js.html",
     "src/sort-by.js",
+    "file"
+  ],
+  [
+    "src/to-diacritics-insensitive-regex.js",
+    "file/src/to-diacritics-insensitive-regex.js.html",
+    "src/to-diacritics-insensitive-regex.js",
     "file"
   ],
   [

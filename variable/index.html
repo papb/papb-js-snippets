@@ -149,6 +149,34 @@
       
     </td>
   </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="variable/index.html#static-variable-toDiacriticsInsensitiveRegex">toDiacriticsInsensitiveRegex</a></span></span><span data-ice="signature">(string: <span>string</span>): <span>RegExp</span>: <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Converts a given string to a regex that matches it in a diacritic-insensitive way.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
 </tbody>
 </table>
 </div>
@@ -423,6 +451,73 @@ length 64 and made of only hexadecimal symbols (0-9 and a-f).</p>
       <pre class="prettyprint source-code"><code data-ice="exampleCode">
 ```
 sha256(&quot;test&quot;); // &quot;9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08&quot;
+```</code></pre>
+    </div>
+</div>
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-variable-toDiacriticsInsensitiveRegex">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">toDiacriticsInsensitiveRegex</span><span data-ice="signature">(string: <span>string</span>): <span>RegExp</span>: <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/to-diacritics-insensitive-regex.js.html#lineNumber14">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Converts a given string to a regex that matches it in a diacritic-insensitive way.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type" data-ice="returnType"><span>RegExp</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>The regexp that matches the string in a diacritic-insensitive way</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="example">
+    <h4>Example:</h4>
+    
+  <div class="example-doc" data-ice="exampleDoc">
+      
+      <pre class="prettyprint source-code"><code data-ice="exampleCode">
+```
+toDiacriticsInsensitiveRegex(&quot;resume&quot;) === /r[Ee&#xC8;&#xE8;&#xC9;&#xE9;&#xCA;&#xEA;&#xCB;&#xEB;]s[Uu&#xD9;&#xF9;&#xDA;&#xFA;&#xDB;&#xFB;&#xDC;&#xFC;]m[Ee&#xC8;&#xE8;&#xC9;&#xE9;&#xCA;&#xEA;&#xCB;&#xEB;]/i
 ```</code></pre>
     </div>
 </div>
