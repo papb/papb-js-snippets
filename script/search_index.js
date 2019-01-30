@@ -36,6 +36,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "papb-js-snippets/src/colorize-console.js~colorizeconsole",
+    "function/index.html#static-function-colorizeConsole",
+    "<span>colorizeConsole</span> <span class=\"search-result-import-path\">papb-js-snippets/src/colorize-console.js</span>",
+    "function"
+  ],
+  [
     "papb-js-snippets/src/count-occurrences.js~countoccurrences",
     "function/index.html#static-function-countOccurrences",
     "<span>countOccurrences</span> <span class=\"search-result-import-path\">papb-js-snippets/src/count-occurrences.js</span>",
@@ -231,6 +237,12 @@ window.esdocSearchIndex = [
     "src/call-sequentially.js",
     "file/src/call-sequentially.js.html",
     "src/call-sequentially.js",
+    "file"
+  ],
+  [
+    "src/colorize-console.js",
+    "file/src/colorize-console.js.html",
+    "src/colorize-console.js",
     "file"
   ],
   [
