@@ -102,6 +102,12 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
+    "papb-js-snippets/src/make-private-accessor.js~makeprivateaccessor",
+    "function/index.html#static-function-makePrivateAccessor",
+    "<span>makePrivateAccessor</span> <span class=\"search-result-import-path\">papb-js-snippets/src/make-private-accessor.js</span>",
+    "function"
+  ],
+  [
     "papb-js-snippets/src/map-in-place.js~mapinplace",
     "function/index.html#static-function-mapInPlace",
     "<span>mapInPlace</span> <span class=\"search-result-import-path\">papb-js-snippets/src/map-in-place.js</span>",
@@ -309,6 +315,12 @@ window.esdocSearchIndex = [
     "src/lorem-ipsum.js",
     "file/src/lorem-ipsum.js.html",
     "src/lorem-ipsum.js",
+    "file"
+  ],
+  [
+    "src/make-private-accessor.js",
+    "file/src/make-private-accessor.js.html",
+    "src/make-private-accessor.js",
     "file"
   ],
   [
