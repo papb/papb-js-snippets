@@ -132,6 +132,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "papb-js-snippets/src/read-console.js~readconsole",
+    "function/index.html#static-function-readConsole",
+    "<span>readConsole</span> <span class=\"search-result-import-path\">papb-js-snippets/src/read-console.js</span>",
+    "function"
+  ],
+  [
     "papb-js-snippets/src/replace-array.js~replacearray",
     "function/index.html#static-function-replaceArray",
     "<span>replaceArray</span> <span class=\"search-result-import-path\">papb-js-snippets/src/replace-array.js</span>",
@@ -327,6 +333,12 @@ window.esdocSearchIndex = [
     "src/random-int.js",
     "file/src/random-int.js.html",
     "src/random-int.js",
+    "file"
+  ],
+  [
+    "src/read-console.js",
+    "file/src/read-console.js.html",
+    "src/read-console.js",
     "file"
   ],
   [
