@@ -6,7 +6,6 @@ module.exports = {
     "extends": ["eslint:recommended"],
     "rules": {
         "no-console": "off",
-        "no-unused-vars": "off",
         "eqeqeq": ["error", "always"],
         "no-return-assign": "error",
         "no-throw-literal": "error",

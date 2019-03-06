@@ -3,7 +3,7 @@
 const cheerio = require("cheerio");
 const esdocConfig = require("./../esdoc-config.js");
 
-function handleHTML(html, fileName) {
+function handleHTML(html, fileName) { // eslint-disable-line no-unused-vars
     const $ = cheerio.load(html);
 
     const $title = $("head title");
