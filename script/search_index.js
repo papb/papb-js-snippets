@@ -72,6 +72,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "papb-js-snippets/src/exec-async.js~execasync",
+    "function/index.html#static-function-execAsync",
+    "<span>execAsync</span> <span class=\"search-result-import-path\">papb-js-snippets/src/exec-async.js</span>",
+    "function"
+  ],
+  [
     "papb-js-snippets/src/filter-in-place.js~filterinplace",
     "function/index.html#static-function-filterInPlace",
     "<span>filterInPlace</span> <span class=\"search-result-import-path\">papb-js-snippets/src/filter-in-place.js</span>",
@@ -279,6 +285,12 @@ window.esdocSearchIndex = [
     "src/ellipsis.js",
     "file/src/ellipsis.js.html",
     "src/ellipsis.js",
+    "file"
+  ],
+  [
+    "src/exec-async.js",
+    "file/src/exec-async.js.html",
+    "src/exec-async.js",
     "file"
   ],
   [

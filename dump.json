@@ -802,6 +802,53 @@
   {
     "__docId__": 26,
     "kind": "file",
+    "name": "src/exec-async.js",
+    "content": "/**\r\n * Executes a system command and returns a promise for its stdout output.\r\n * Output to stderr is ignored.\r\n * \r\n * @param {string} command The command to execute\r\n * \r\n * @return {Promise<string>} A promise for the output. Rejects if the command\r\n * exits with nonzero code.\r\n */\r\nconst execAsync = function(command) {\r\n    const { exec } = require('child_process');\r\n    return new Promise((resolve, reject) => {\r\n        exec(command, (err, stdout, stderr) => { // eslint-disable-line no-unused-vars\r\n            if (err) {\r\n                reject(err);\r\n            } else {\r\n                resolve(stdout);\r\n            }\r\n        });\r\n    });\r\n};\r\n\r\n/* test */ module.exports = {\r\n    snippet: execAsync,\r\n    snippetName: \"execAsync\",\r\n    snippetTest: t => {\r\n        t.plan(2);\r\n        return Promise.all([\r\n            execAsync(\"node -v\").then(result => {\r\n                t.true(/\\d+\\.\\d+\\.\\d+/.test(result));\r\n            }),\r\n            execAsync(\"node --non-existent-option\").catch(() => {\r\n                t.pass();\r\n            }),\r\n        ]);\r\n    }\r\n};",
+    "static": true,
+    "longname": "src/exec-async.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 27,
+    "kind": "function",
+    "name": "execAsync",
+    "memberof": "src/exec-async.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/exec-async.js~execAsync",
+    "access": null,
+    "export": false,
+    "importPath": "papb-js-snippets/src/exec-async.js",
+    "importStyle": null,
+    "description": "Executes a system command and returns a promise for its stdout output.\nOutput to stderr is ignored.",
+    "lineNumber": 10,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "command",
+        "description": "The command to execute"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise<string>"
+      ],
+      "spread": false,
+      "description": "A promise for the output. Rejects if the command\nexits with nonzero code."
+    }
+  },
+  {
+    "__docId__": 28,
+    "kind": "file",
     "name": "src/filter-in-place.js",
     "content": "/**\n * Filter an array in-place.\n * \n * @requires snippet:replace-array\n * \n * @param {function} filterFunction The filter function.\n * \n * @return {Array} Returns the same array.\n * \n * @example\n * \n * ```\n * let x = [1, -1, -2, 3];\n * filterInPlace(x, v => v > 0);\n * console.log(x); // [1, 3]\n * ```\n */\nconst filterInPlace = function(array, filterFunction) {\n    return snippets.replaceArray(array, array.filter(filterFunction));\n};\n\n/* test */ module.exports = {\n    snippet: filterInPlace,\n    snippetName: \"filterInPlace\",\n    snippetTest: t => {\n        const x = [1, -1, -2, 3];\n        filterInPlace(x, v => v > 0);\n        t.deepEqual(x, [1, 3]);\n    }\n};",
     "static": true,
@@ -811,7 +858,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 27,
+    "__docId__": 29,
     "kind": "function",
     "name": "filterInPlace",
     "memberof": "src/filter-in-place.js",
@@ -856,7 +903,7 @@
     }
   },
   {
-    "__docId__": 28,
+    "__docId__": 30,
     "kind": "file",
     "name": "src/get-now-string.js",
     "content": "/**\n * Get a string representation of the current moment.\n * \n * The string follows the pattern of the following example: 2018-07-22_20h04min29s\n * \n * @return {string}\n */\nconst getNowString = function() {\n    const reg = /^(.+)T(.+):(.+):(.+)\\.\\d{3}Z$/;\n    const str = new Date().toJSON();\n    const res = reg.exec(str);\n    return res[1] + \"_\" + res[2] + \"h\" + res[3] + \"min\" + res[4] + \"s\";\n};\n\n/* test */ module.exports = {\n    snippet: getNowString,\n    snippetName: \"getNowString\",\n    snippetTest: t => {\n        t.regex(getNowString(), /^\\d{4}-\\d{2}-\\d{2}_\\d{2}h\\d{2}min\\d{2}s$/);\n    }\n};",
@@ -867,7 +914,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 29,
+    "__docId__": 31,
     "kind": "function",
     "name": "getNowString",
     "memberof": "src/get-now-string.js",
@@ -892,7 +939,7 @@
     }
   },
   {
-    "__docId__": 30,
+    "__docId__": 32,
     "kind": "file",
     "name": "src/lorem-ipsum.js",
     "content": "/**\n * Generate a random string of words, lorem-ipsum style.\n * \n * @requires npm:lorem-ipsum^1.0.0\n * \n * @param {int} wordCount The amount of words to generate.\n * \n * @param {boolean} [fullstop=false] Whether or not to add a\n * full stop (\".\") in the end of the string.\n * \n * @param {boolean} [ucfirst=true] Whether or not the first\n * character is uppercase.\n * \n * @return {string} The generated string.\n */\nconst loremIpsum = (() => {\n    const loremIpsum = require('lorem-ipsum');\n    return function(wordCount, fullstop = false, ucfirst = true) {\n        let str = loremIpsum({ count: wordCount, units: 'words', format: 'plain' });\n        if (ucfirst) str = str[0].toUpperCase() + str.substr(1);\n        if (fullstop) str += \".\";\n        return str;\n    };\n})();\n\n/* test */ module.exports = {\n    snippet: loremIpsum,\n    snippetName: \"loremIpsum\",\n    snippetTest: t => {\n        t.pass();\n    }\n};",
@@ -903,7 +950,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 31,
+    "__docId__": 33,
     "kind": "variable",
     "name": "loremIpsum",
     "memberof": "src/lorem-ipsum.js",
@@ -972,7 +1019,7 @@
     }
   },
   {
-    "__docId__": 32,
+    "__docId__": 34,
     "kind": "file",
     "name": "src/map-in-place.js",
     "content": "/**\n * Map an array in-place.\n * \n * @requires snippet:replace-array\n * \n * @param {function} mapFunction The map function.\n * \n * @return {Array} Returns the same array.\n * \n * @example\n * \n * ```\n * let x = [1, -1, -2, 3];\n * mapInPlace(x, v => v + 2);\n * console.log(x); // [3, 1, 0, 5]\n * ```\n */\nconst mapInPlace = function(array, mapFunction) {\n    return snippets.replaceArray(array, array.map(mapFunction));\n};\n\n/* test */ module.exports = {\n    snippet: mapInPlace,\n    snippetName: \"mapInPlace\",\n    snippetTest: t => {\n        const x = [1, -1, -2, 3];\n        mapInPlace(x, v => v + 2);\n        t.deepEqual(x, [3, 1, 0, 5]);\n    }\n};",
@@ -983,7 +1030,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 33,
+    "__docId__": 35,
     "kind": "function",
     "name": "mapInPlace",
     "memberof": "src/map-in-place.js",
@@ -1028,7 +1075,7 @@
     }
   },
   {
-    "__docId__": 34,
+    "__docId__": 36,
     "kind": "file",
     "name": "src/map-object.js",
     "content": "/**\n * Create a new object with the same keys as the given object, whose values\n * on those keys are mapped by the mapFunction function. This should be analogous\n * to the usage of Array.prototype.map, but for objects.\n * \n * @param {object} obj The source object\n * @param {function(value: *, key: string): *} mapFunction The map function\n * \n * @return {object} The new object\n * \n * @example\n * \n * ```\n * let x = { a: \"hello\", b: \"world\" };\n * let y = mapObject(x, (value, key) => value + \"-\" + key);\n * console.log(y); // { a: \"hello-a\", b: \"world-b\" };\n * ```\n */\nconst mapObject = function(obj, mapFunction) {\n    if (typeof obj !== \"object\") throw new TypeError(\"obj must be an object\");\n    if (typeof mapFunction !== \"function\") throw new TypeError(\"mapFunction must be a function\");\n    if (obj === null) return null;\n    const result = {};\n    Object.keys(obj).forEach(key => {\n        result[key] = mapFunction(obj[key], key);\n    });\n    return result;\n};\n\n/* test */ module.exports = {\n    snippet: mapObject,\n    snippetName: \"mapObject\",\n    snippetTest: t => {\n        const x = { a: \"hello\", b: \"world\" };\n        const y = mapObject(x, (value, key) => value + \"-\" + key);\n        t.deepEqual(y, { a: \"hello-a\", b: \"world-b\" });\n    }\n};",
@@ -1039,7 +1086,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 35,
+    "__docId__": 37,
     "kind": "function",
     "name": "mapObject",
     "memberof": "src/map-object.js",
@@ -1088,7 +1135,7 @@
     }
   },
   {
-    "__docId__": 36,
+    "__docId__": 38,
     "kind": "file",
     "name": "src/open-native-file-select-dialog.js",
     "content": "/**\n * Open the native file select dialog, exaclty as\n * when a user clicks on a <input type='file' />.\n * \n * @return {Promise} A promise that resolves with the\n * selected file(s).\n */\nconst openNativeFileSelectDialog = function() {\n    return new Promise(resolve => {\n        const input = document.createElement(\"input\"); /* global document */\n        input.type = \"file\";\n        input.style.display = \"none\";\n        input.onchange = function(e) {\n            resolve(e.target.files);\n        };\n        input.click();\n        input.remove();\n    });\n};\n\n/* test */ module.exports = {\n    snippet: openNativeFileSelectDialog,\n    snippetName: \"openNativeFileSelectDialog\",\n    snippetTest: t => {\n        t.pass();\n    }\n};",
@@ -1099,7 +1146,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 37,
+    "__docId__": 39,
     "kind": "function",
     "name": "openNativeFileSelectDialog",
     "memberof": "src/open-native-file-select-dialog.js",
@@ -1124,7 +1171,7 @@
     }
   },
   {
-    "__docId__": 38,
+    "__docId__": 40,
     "kind": "file",
     "name": "src/pick-random-subset.js",
     "content": "/**\n * Pick a random subset array of the given array.\n * \n * @requires snippet:random-int\n * \n * @param {Array} array The source array.\n * \n * @param {object} [options] An object specifying options.\n * @param {int} [options.length] If specified, defines the length of the subset to be taken.\n * If omitted (undefined), the length of the subset will be defined randomly between\n * options.minLength and array.length (inclusive)\n * @param {int} [options.minLength=0] This option is only relevant if options.length is\n * undefined. This option defines the minimum length of the picked subset. A common use case\n * is to set this option to 1 instead of the default 0 to disallow the empty subset to be\n * taken.\n * \n * @returns {Array} An array whose elements consist of a random subset of the given array.\n * \n * @throws {Error} If options.length or options.minLength is greater than array.length.\n */\nconst pickRandomSubset = function(array, options = undefined) {\n    // Edited from https://github.com/Jam3/random-array-subset\n\n    let length = options && options.length !== undefined ? options.length : undefined;\n    const minLength = options && options.minLength !== undefined ? options.minLength : 0;\n\n    if (length === undefined) {\n        if (minLength > array.length) {\n            throw new Error(\"The specified minLength can't be greater than the array length.\");\n        }\n        length = snippets.randomInt(minLength, array.length + 1);\n    } else if (length > array.length) {\n        throw new Error(\"The specified length can't be greater than the array length.\");\n    }\n    array = array.slice();\n    const result = [];\n    while (result.length < length) {\n        const index = snippets.randomInt(0, array.length);\n        result.push(array[index]);\n        array.splice(index, 1);\n    }\n    return result;\n};\n\n/* test */ module.exports = {\n    snippet: pickRandomSubset,\n    snippetName: \"pickRandomSubset\",\n    snippetTest: t => {\n        const array = [{}, {}, {}, {}];\n        for (let i = 0; i < 20; i++) {\n            t.true(snippets.arrayHas(array, ...pickRandomSubset(array)));\n            t.is(pickRandomSubset(array, { length: 3 }).length, 3);\n            t.is(pickRandomSubset(array, { length: 0 }).length, 0);\n            t.true(pickRandomSubset(array, { minLength: 1 }).length > 0);\n        }\n    }\n};",
@@ -1135,7 +1182,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 39,
+    "__docId__": 41,
     "kind": "function",
     "name": "pickRandomSubset",
     "memberof": "src/pick-random-subset.js",
@@ -1221,7 +1268,7 @@
     ]
   },
   {
-    "__docId__": 40,
+    "__docId__": 42,
     "kind": "file",
     "name": "src/pick-random.js",
     "content": "/**\n * Pick a random element from the given array (using a uniform distribution\n * produced by `Math.random()`).\n * \n * @param {Array} array The array.\n * \n * @returns {*} A random element from the given array.\n *\n */\nconst pickRandom = function(array) {\n    return array[Math.floor(Math.random() * array.length)];\n};\n\n/* test */ module.exports = {\n    snippet: pickRandom,\n    snippetName: \"pickRandom\",\n    snippetTest: t => {\n        const array = [{}, {}, {}, {}];\n        for (let i = 0; i < 10; i++) {\n            t.true(snippets.arrayHas(array, pickRandom(array)));\n        }\n    }\n};",
@@ -1232,7 +1279,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 41,
+    "__docId__": 43,
     "kind": "function",
     "name": "pickRandom",
     "memberof": "src/pick-random.js",
@@ -1274,7 +1321,7 @@
     }
   },
   {
-    "__docId__": 42,
+    "__docId__": 44,
     "kind": "file",
     "name": "src/random-int.js",
     "content": "/**\n * Generates an int between begin (inclusive) and end (exclusive).\n * \n * @param {int} begin The begin of the range (inclusive)\n * @param {int} end The end of the range (exclusive)\n * @return {int} An int whose value is between begin (inclusive) and\n * end (exclusive).\n * \n * @throws {Error} If end <= begin.\n * \n * @example\n * \n * ```\n * randomInt(0, 5); // A value between 0 and 4 (inclusive)\n * randomInt(-3, 1); // A value between -3 and 0 (inclusive)\n * ```\n */\nconst randomInt = function(begin, end) {\n    if (end <= begin) throw new Error(\"end must be greater than begin\");\n    return Math.floor(Math.random() * (end - begin)) + begin;\n};\n\n/* test */ module.exports = {\n    snippet: randomInt,\n    snippetName: \"randomInt\",\n    snippetTest: t => {\n        for (let i = 0; i < 100; i++) {\n            const random = randomInt(-3, 1);\n            t.true(-3 <= random);\n            t.true(random < 1);\n        }\n    }\n};",
@@ -1285,7 +1332,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 43,
+    "__docId__": 45,
     "kind": "function",
     "name": "randomInt",
     "memberof": "src/random-int.js",
@@ -1342,7 +1389,7 @@
     ]
   },
   {
-    "__docId__": 44,
+    "__docId__": 46,
     "kind": "file",
     "name": "src/read-console.js",
     "content": "/**\r\n * Reads user input from the console, optionally typing a message first.\r\n * \r\n * @param {string} [message] An optional message to prompt the user\r\n * \r\n * @return {Promise<string>} A promise with the typed answer\r\n */\r\nconst readConsole = function(message) {\r\n    message = message ? \"\" + message : \"\";\r\n    const readline = require(\"readline\");\r\n    return new Promise(resolve => {\r\n        const readlineInterface = readline.createInterface({\r\n            input: process.stdin,\r\n            output: process.stdout\r\n        });\r\n        readlineInterface.question(message, answer => {\r\n            readlineInterface.close();\r\n            resolve(answer);\r\n        });\r\n    });\r\n};\r\n\r\n/* test */ module.exports = {\r\n    snippet: readConsole,\r\n    snippetName: \"readConsole\",\r\n    snippetTest: t => {\r\n        t.pass();\r\n    }\r\n};",
@@ -1353,7 +1400,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 45,
+    "__docId__": 47,
     "kind": "function",
     "name": "readConsole",
     "memberof": "src/read-console.js",
@@ -1389,7 +1436,7 @@
     }
   },
   {
-    "__docId__": 46,
+    "__docId__": 48,
     "kind": "file",
     "name": "src/replace-array.js",
     "content": "/**\n * Replaces an array with another array (in-place).\n * \n * @param {array} baseArray The array that will be replaced by the other array.\n * @param {array} otherArray The array whose values will be put into the base array.\n * This array is not modified by calling this function.\n * \n * @return {array} Returns the base array (for chaining convenience).\n * \n * @example\n * \n * ```\n * let x = [1, -1, -2, 3];\n * replaceArray(x, [\"a\", \"b\"]);\n * console.log(x); // [\"a\", \"b\"]\n * ```\n */\nconst replaceArray = function(baseArray, otherArray) {\n    baseArray.splice(0, baseArray.length, ...otherArray);\n    return baseArray;\n};\n\n/* test */ module.exports = {\n    snippet: replaceArray,\n    snippetName: \"replaceArray\",\n    snippetTest: t => {\n        const x = [1, -1, -2, 3];\n        replaceArray(x, [\"a\", \"b\"]);\n        t.deepEqual(x, [\"a\", \"b\"]);\n    }\n};",
@@ -1400,7 +1447,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 47,
+    "__docId__": 49,
     "kind": "function",
     "name": "replaceArray",
     "memberof": "src/replace-array.js",
@@ -1449,7 +1496,7 @@
     }
   },
   {
-    "__docId__": 48,
+    "__docId__": 50,
     "kind": "file",
     "name": "src/sanitize-html-in-text.js",
     "content": "/**\n * Replaces all occurrences of '&', '<', '>', '\"' and \"'\" in text\n * with their 'safe' counterparts (such as '&amp;').\n * \n * @param {string} text The text to be sanitized\n * \n * @return {string} The sanitized text\n */\nconst sanitizeHTMLInText = function(text) {\n    const map = { '&': 'amp', '<': 'lt', '>': 'gt', '\"': 'quot', \"'\": '#039' };\n    return text.replace(/[&<>\"']/g, m => `&${map[m]};`);\n};\n\n/* test */ module.exports = {\n    snippet: sanitizeHTMLInText,\n    snippetName: \"sanitizeHTMLInText\",\n    snippetTest: t => {\n        t.is(sanitizeHTMLInText(`&<>\"'`), \"&amp;&lt;&gt;&quot;&#039;\");\n    }\n};",
@@ -1460,7 +1507,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 49,
+    "__docId__": 51,
     "kind": "function",
     "name": "sanitizeHTMLInText",
     "memberof": "src/sanitize-html-in-text.js",
@@ -1496,7 +1543,7 @@
     }
   },
   {
-    "__docId__": 50,
+    "__docId__": 52,
     "kind": "file",
     "name": "src/sha-256.js",
     "content": "/**\n * Generates the SHA-256 hash of the given string.\n * \n * (c) Chris Veness 2002-2014 / MIT License\n * Modified by Pedro Augusto de Paula Barbosa (2018) - MIT\n * \n * See http://csrc.nist.gov/groups/ST/toolkit/secure_hashing.html\n * and http://csrc.nist.gov/groups/ST/toolkit/examples.html\n * \n * @requires npm:utf8\n * \n * @param {string} str The string to be hashed\n * @return {string} The hash of the string, which is a string of\n * length 64 and made of only hexadecimal symbols (0-9 and a-f).\n * \n * @example\n * \n * ```\n * sha256(\"test\"); // \"9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08\"\n * ```\n */\nconst sha256 = (function() {\n\n    const utf8 = require('utf8');\n\n    const priv = {};\n\n    /**\n     * Rotates right (circular right shift) value x by n positions [§3.2.4].\n     */\n    priv.ROTR = function(n, x) {\n        return (x >>> n) | (x << (32-n));\n    };\n\n    /**\n     * Logical functions [§4.1.2].\n     */\n    priv.Sigma0 = function(x) { return priv.ROTR(2,  x) ^ priv.ROTR(13, x) ^ priv.ROTR(22, x); };\n    priv.Sigma1 = function(x) { return priv.ROTR(6,  x) ^ priv.ROTR(11, x) ^ priv.ROTR(25, x); };\n    priv.sigma0 = function(x) { return priv.ROTR(7,  x) ^ priv.ROTR(18, x) ^ (x>>>3); };\n    priv.sigma1 = function(x) { return priv.ROTR(17, x) ^ priv.ROTR(19, x) ^ (x>>>10); };\n    priv.Ch = function(x, y, z) { return (x & y) ^ (~x & z); };\n    priv.Maj = function(x, y, z) { return (x & y) ^ (x & z) ^ (y & z); };\n\n    /**\n     * Hexadecimal representation of a number.\n     */\n    priv.toHexStr = function(n) {\n        // Note that we can't use toString(16) as it is implementation-dependant,\n        // and in IE it returns signed numbers when used on full words.\n        let s = \"\", v;\n        for (let i = 7; i >= 0; i--) { v = (n>>>(i*4)) & 0xf; s += v.toString(16); }\n        return s;\n    };\n\n    return function sha256(str) {\n        if (typeof str !== \"string\") {\n            throw new TypeError(\"sha256: Parameter must be a string.\");\n        }\n\n        // convert string to UTF-8, as SHA only deals with byte-streams\n        let msg = utf8.encode(str);\n        \n        // constants [§4.2.2]\n        const K = [\n            0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,\n            0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,\n            0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,\n            0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,\n            0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,\n            0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,\n            0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,\n            0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2\n        ];\n\n        // initial hash value [§5.3.1]\n        const H = [\n            0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19\n        ];\n\n        // PREPROCESSING\n    \n        msg += String.fromCharCode(0x80); // add trailing '1' bit (+ 0's padding) to string [§5.1.1]\n\n        // convert string msg into 512-bit/16-integer blocks arrays of ints [§5.2.1]\n        const l = msg.length/4 + 2; // length (in 32-bit integers) of msg + ‘1’ + appended length\n        const N = Math.ceil(l/16); // number of 16-integer-blocks required to hold 'l' ints\n        const M = new Array(N);\n\n        for (let i=0; i<N; i++) {\n            M[i] = new Array(16);\n            for (let j=0; j<16; j++) { // encode 4 chars per integer, big-endian encoding\n                M[i][j] = (msg.charCodeAt(i*64+j*4)<<24) | (msg.charCodeAt(i*64+j*4+1)<<16) |\n                          (msg.charCodeAt(i*64+j*4+2)<<8) | (msg.charCodeAt(i*64+j*4+3));\n            } // note running off the end of msg is ok since bitwise ops on NaN return 0\n        }\n        // add length (in bits) into final pair of 32-bit integers (big-endian) [§5.1.1]\n        // note: most significant word would be (len-1)*8 >>> 32, but since JS converts\n        // bitwise-op args to 32 bits, we need to simulate this by arithmetic operators\n        M[N-1][14] = ((msg.length-1)*8) / Math.pow(2, 32); M[N-1][14] = Math.floor(M[N-1][14]);\n        M[N-1][15] = ((msg.length-1)*8) & 0xffffffff;\n\n        // HASH COMPUTATION [§6.1.2]\n\n        const W = new Array(64); let a, b, c, d, e, f, g, h;\n        for (let i=0; i<N; i++) {\n\n            // 1 - prepare message schedule 'W'\n            for (let t=0;  t<16; t++) W[t] = M[i][t];\n            for (let t=16; t<64; t++) W[t] = (priv.sigma1(W[t-2]) + W[t-7] + priv.sigma0(W[t-15]) + W[t-16]) & 0xffffffff;\n\n            // 2 - initialise working variables a, b, c, d, e, f, g, h with previous hash value\n            a = H[0]; b = H[1]; c = H[2]; d = H[3]; e = H[4]; f = H[5]; g = H[6]; h = H[7];\n\n            // 3 - main loop (note 'addition modulo 2^32')\n            for (let t=0; t<64; t++) {\n                const T1 = h + priv.Sigma1(e) + priv.Ch(e, f, g) + K[t] + W[t];\n                const T2 = priv.Sigma0(a) + priv.Maj(a, b, c);\n                h = g;\n                g = f;\n                f = e;\n                e = (d + T1) & 0xffffffff;\n                d = c;\n                c = b;\n                b = a;\n                a = (T1 + T2) & 0xffffffff;\n            }\n\n            // 4 - compute the new intermediate hash value (note 'addition modulo 2^32')\n            H[0] = (H[0]+a) & 0xffffffff;\n            H[1] = (H[1]+b) & 0xffffffff;\n            H[2] = (H[2]+c) & 0xffffffff;\n            H[3] = (H[3]+d) & 0xffffffff;\n            H[4] = (H[4]+e) & 0xffffffff;\n            H[5] = (H[5]+f) & 0xffffffff;\n            H[6] = (H[6]+g) & 0xffffffff;\n            H[7] = (H[7]+h) & 0xffffffff;\n        }\n\n        return priv.toHexStr(H[0]) + priv.toHexStr(H[1]) + priv.toHexStr(H[2]) + priv.toHexStr(H[3]) +\n               priv.toHexStr(H[4]) + priv.toHexStr(H[5]) + priv.toHexStr(H[6]) + priv.toHexStr(H[7]);\n    };\n\n})();\n\n/* test */ module.exports = {\n    snippet: sha256,\n    snippetName: \"sha256\",\n    snippetTest: t => {\n        t.is(sha256(\"test\"), \"9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08\");\n        t.is(sha256(\"中文\"), \"72726d8818f693066ceb69afa364218b692e62ea92b385782363780f47529c21\");\n    }\n};",
@@ -1507,7 +1554,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 51,
+    "__docId__": 53,
     "kind": "variable",
     "name": "sha256",
     "memberof": "src/sha-256.js",
@@ -1555,7 +1602,7 @@
     }
   },
   {
-    "__docId__": 52,
+    "__docId__": 54,
     "kind": "file",
     "name": "src/shallow-clone.js",
     "content": "/**\n * Returns a shallow clone of the given object.\n * \n * @param {object} obj The object to be shallow-cloned\n * @return {object} The shallow-cloned object\n */\nconst shallowClone = function(obj) {\n    return Object.assign({}, obj);\n};\n\n/* test */ module.exports = {\n    snippet: shallowClone,\n    snippetName: \"shallowClone\",\n    snippetTest: t => {\n        const x = { a: 1, b: 2 };\n        t.not(x, { a: 1, b: 2 });\n        t.deepEqual(shallowClone(x), { a: 1, b: 2 });\n    }\n};",
@@ -1566,7 +1613,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 53,
+    "__docId__": 55,
     "kind": "function",
     "name": "shallowClone",
     "memberof": "src/shallow-clone.js",
@@ -1602,7 +1649,7 @@
     }
   },
   {
-    "__docId__": 54,
+    "__docId__": 56,
     "kind": "file",
     "name": "src/shuffle-array.js",
     "content": "/**\n * Shuffles the given array in-place, using the Fisher-Yates algorithm (also known\n * as Knuth algorithm).\n * \n * Recall that if you want a new array instead of changing the existing array, just\n * call .slice() before.\n * \n * @param {Array} array The array to be shuffled.\n * @return {Array} The same array (for chaining convenience).\n * \n * @example\n * \n * ```\n * let fruits = [\"Apple\", \"Orange\", \"Mango\"];\n * fruits.shuffle();\n * console.log(fruits); // [\"Orange\", \"Mango\", \"Apple\"];\n * ```\n * \n * http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array\n * Credits to http://sedition.com/perl/javascript-fy.html\n * Thanks also to CoolAJ86\n */\nconst shuffleArray = function(array) {\n    if (!Array.isArray(array)) {\n        throw new TypeError(\"Parameter must be an array.\");\n    }\n\n    let currentIndex = array.length;\n    let randomIndex;\n    let temp;\n\n    // While there remain elements to shuffle...\n    while (currentIndex > 0) {\n\n        // Pick a remaining element...\n        randomIndex = Math.floor(Math.random() * currentIndex);\n        currentIndex--;\n\n        // And swap it with the current element.\n        temp = array[currentIndex];\n        array[currentIndex] = array[randomIndex];\n        array[randomIndex] = temp;\n    }\n\n    return array;\n};\n\n/* test */ module.exports = {\n    snippet: shuffleArray,\n    snippetName: \"shuffleArray\",\n    snippetTest: t => {\n        const fruits = [\"Apple\", \"Orange\", \"Mango\"];\n        const result = shuffleArray(fruits);\n        t.is(fruits, result);\n        t.true(snippets.arrayHas(result, \"Apple\", \"Orange\", \"Mango\"));\n\n        t.throws(() => shuffleArray({}));\n        t.throws(() => shuffleArray(null));\n        t.throws(() => shuffleArray(5));\n        t.throws(() => shuffleArray(\"test\"));\n    }\n};",
@@ -1613,7 +1660,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 55,
+    "__docId__": 57,
     "kind": "function",
     "name": "shuffleArray",
     "memberof": "src/shuffle-array.js",
@@ -1652,7 +1699,7 @@
     }
   },
   {
-    "__docId__": 56,
+    "__docId__": 58,
     "kind": "file",
     "name": "src/simple-substitution-cipher.js",
     "content": "/**\n * Perform a simple substitution cipher on a string. Note: this is a very weak encryption algorithm that shouldn't\n * be used for security purposes.\n * \n * It is common to associate this function with Base64 encode/decode methods so that any string can be encrypted,\n * instead of only working with strings whose chars are in the plaintext alphabet. The default plaintext and\n * ciphertext alphabets are compatible with Base64. See, for example. js-base64 by dankogai on npm.\n *\n * @param {string} str The string to be encrypted.\n * \n * @param {Object} [options] An object to provide options.\n * \n * @param {string} [options.plaintextAlphabet=\"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\"]\n * The plaintext alphabet to be used. Must have the same length as options.ciphertextAlphabet.\n * \n * @param {string} [options.ciphertextAlphabet=\"hrVtM=TYziLNIemw39dBXDj18lykGUPosR20+fEK6buFCcJpZgqWH/xQ57S4nvaAO\"]\n * The ciphertext alphabet to be used. Must have the same length as options.plaintextAlphabet.\n * \n * @param {boolean} [options.reverse=false] Whether or not to reverse the encryption. Setting this to true is exactly\n * equivalent as switching options.plaintextAlphabet and options.ciphertextAlphabet.\n * \n * @param {char | null} [options.unknownChar=\"?\"] The character to be used in place of a character in the input string that\n * is not present in the plaintext alphabet. If null, the character will be left untouched.\n * \n * @see https://en.wikipedia.org/wiki/Substitution_cipher\n * \n * @example\n * \n * ```\n * simpleSubstitutionCipher(\"Hello\"); //\"YPff6\"\n * simpleSubstitutionCipher(\"YPff6\", { reverse: true }); // \"Hello\"\n * simpleSubstitutionCipher(\"Hello\", {\n *     ciphertextAlphabet: \"cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR\"\n * }); // \"WDpp=\"\n * simpleSubstitutionCipher(\"WDpp=\", {\n *     ciphertextAlphabet: \"cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR\",\n *     reverse: true\n * }); // \"Hello\"\n * ```\n */\nconst simpleSubstitutionCipher = function(str, options = {}) {\n    let plaintextAlphabet = options.plaintextAlphabet;\n    let ciphertextAlphabet = options.ciphertextAlphabet;\n    let reverse = options.reverse;\n    let unknownChar = options.unknownChar;\n\n    if (plaintextAlphabet === undefined) plaintextAlphabet = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\";\n    if (ciphertextAlphabet === undefined) ciphertextAlphabet = \"hrVtM=TYziLNIemw39dBXDj18lykGUPosR20+fEK6buFCcJpZgqWH/xQ57S4nvaAO\";\n    if (reverse === undefined) reverse = false;\n    if (unknownChar === undefined) unknownChar = \"?\";\n\n    if (typeof plaintextAlphabet !== \"string\") throw new Error(\"Plaintext alphabet must be a string.\");\n    if (typeof ciphertextAlphabet !== \"string\") throw new Error(\"Ciphertext alphabet must be a string.\");\n\n    if (plaintextAlphabet.length !== ciphertextAlphabet.length) {\n        throw new Error(\"Plaintext alphabet and ciphertext alphabet must have the same length.\");\n    }\n\n    if (reverse) {\n        const temp = plaintextAlphabet;\n        plaintextAlphabet = ciphertextAlphabet;\n        ciphertextAlphabet = temp;\n    }\n\n    const lookupMap = new Map();\n    for (let i = 0; i < plaintextAlphabet.length; i++) {\n        lookupMap.set(plaintextAlphabet.charAt(i), ciphertextAlphabet.charAt(i));\n    }\n\n    const result = [];\n    for (let i = 0; i < str.length; i++) {\n        let char = lookupMap.get(str.charAt(i));\n        if (char === undefined) char = unknownChar === null ? char : unknownChar;\n        result.push(char);\n    }\n\n    return result.join(\"\");\n};\n\n/* test */ module.exports = {\n    snippet: simpleSubstitutionCipher,\n    snippetName: \"simpleSubstitutionCipher\",\n    snippetTest: t => {\n        t.is(simpleSubstitutionCipher(\"Hello\"), \"YPff6\");\n        t.is(simpleSubstitutionCipher(\"YPff6\", { reverse: true }), \"Hello\");\n        t.is(simpleSubstitutionCipher(\"Hello\", {\n            ciphertextAlphabet: \"cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR\"\n        }), \"WDpp=\");\n        t.is(simpleSubstitutionCipher(\"WDpp=\", {\n            ciphertextAlphabet: \"cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR\",\n            reverse: true\n        }), \"Hello\");\n    }\n};\n\n\n\n\n\n// t.is(simpleSubstitutionCipher(\"hello! ^^\"), \"yTDCkTnRz=7P\");\n// t.is(simpleSubstitutionCipher(\"yTDCkTnRz=7P\", { reverse: true }), \"hello! ^^\");\n// t.is(simpleSubstitutionCipher(\"hello! ^^\", {\n//     ciphertextAlphabet: \"cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR\"\n// }), \"lf1HPfXTQthD\");\n// t.is(simpleSubstitutionCipher(\"lf1HPfXTQthD\", {\n//     ciphertextAlphabet: \"cq/r8tfWQ306yFAEVK24O1jGIolPMnD7gTUZdpCm=+kxHzSNLs59iuBbahevXJwYR\",\n//     reverse: true\n// }), \"hello! ^^\");",
@@ -1663,7 +1710,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 57,
+    "__docId__": 59,
     "kind": "function",
     "name": "simpleSubstitutionCipher",
     "memberof": "src/simple-substitution-cipher.js",
@@ -1757,7 +1804,7 @@
     }
   },
   {
-    "__docId__": 58,
+    "__docId__": 60,
     "kind": "file",
     "name": "src/sort-by.js",
     "content": "/**\n * Sort the given array in-place using the values returned by the valuePicker.\n * \n * @requires snippet:map-in-place\n * \n * @param {Array} array The array to be sorted.\n * @param {function} valuePicker A function that when applied to each value of\n * the array returns another value to be used for the sorting. This function is\n * called only once per value.\n * @param {boolean} [reverse=false] Whether or not to reverse the sorting.\n * \n * @return {Array} The given array (for chaining convenience).\n * \n * @example\n * \n * ```\n * let list = [{id:7},{id:3}];\n * sortBy(list, x => x.id);\n * console.log(x); // [{id:3},{id:7}];\n * ```\n */\nconst sortBy = function(array, valuePicker, reverse = false) {\n    const n = reverse ? -1 : 1;\n    snippets.mapInPlace(array, x => ({ value: x, picked: valuePicker(x) }));\n    array.sort((a, b) => a.picked < b.picked ? -n : a.picked === b.picked ? 0 : n);\n    snippets.mapInPlace(array, x => x.value);\n    return array;\n};\n\n/* test */ module.exports = {\n    snippet: sortBy,\n    snippetName: \"sortBy\",\n    snippetTest: t => {\n        const list = [{id:7},{id:3}];\n        sortBy(list, x => x.id);\n        t.deepEqual(list, [{id:3},{id:7}]);\n    }\n};",
@@ -1768,7 +1815,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 59,
+    "__docId__": 61,
     "kind": "function",
     "name": "sortBy",
     "memberof": "src/sort-by.js",
@@ -1835,7 +1882,7 @@
     }
   },
   {
-    "__docId__": 60,
+    "__docId__": 62,
     "kind": "file",
     "name": "src/to-diacritics-insensitive-regex.js",
     "content": "/**\r\n * Converts a given string to a regex that matches it in a diacritic-insensitive way.\r\n * \r\n * @param {string} string The string to be matched\r\n * \r\n * @return {RegExp} The regexp that matches the string in a diacritic-insensitive way\r\n * \r\n * @example\r\n * \r\n * ```\r\n * toDiacriticsInsensitiveRegex(\"resume\") === /r[EeÈèÉéÊêËë]s[UuÙùÚúÛûÜü]m[EeÈèÉéÊêËë]/i\r\n * ```\r\n */\r\nconst toDiacriticsInsensitiveRegex = (() => {\r\n    // Adapted from https://github.com/pocesar/js-diacritic-regex (thank you very much!)\r\n    const charsToEscape = \"-[]{}()*+!<=:?./\\\\^$|#,\";\r\n    const mappings = {\r\n        \"a\": \"AaÀàÁáÂâÃãÄä\", // \"a\": String.fromCharCode(65, 97, 192, 224, 193, 225, 194, 226, 195, 227, 196, 228),\r\n        \"c\": \"CcÇç\", // \"e\": String.fromCharCode(69, 101, 200, 232, 201, 233, 202, 234, 203, 235),\r\n        \"e\": \"EeÈèÉéÊêËë\", // \"i\": String.fromCharCode(73, 105, 204, 236, 205, 237, 206, 238, 207, 239),\r\n        \"i\": \"IiÌìÍíÎîÏï\", // \"o\": String.fromCharCode(79, 111, 210, 242, 211, 243, 212, 244, 213, 245, 214, 246),\r\n        \"n\": \"NnÑñ\", // \"n\": String.fromCharCode(78, 110, 209, 241),\r\n        \"o\": \"OoÒòÓóÔôÕõÖö\", // \"u\": String.fromCharCode(85, 117, 217, 249, 218, 250, 219, 251, 220, 252),\r\n        \"u\": \"UuÙùÚúÛûÜü\", // \"c\": String.fromCharCode(67, 99, 199, 231),\r\n        \"y\": \"YyÝýÿ\" // \"y\": String.fromCharCode(89, 121, 221, 253, 159, 255)\r\n    };\r\n    return string => {\r\n        const regexString = string.split(\"\").map(char => {\r\n            if (charsToEscape.indexOf(char) !== -1) return `\\\\${char}`;\r\n            for (const key in mappings) {\r\n                if (key === char || mappings[key].indexOf(char) !== -1) {\r\n                    return `[${mappings[key]}]`;\r\n                }\r\n            }\r\n            return char;\r\n        }).join(\"\");\r\n        return new RegExp(regexString, \"i\");\r\n    };\r\n})();\r\n\r\n/* test */ module.exports = {\r\n    snippet: toDiacriticsInsensitiveRegex,\r\n    snippetName: \"toDiacriticsInsensitiveRegex\",\r\n    snippetTest: t => {\r\n        t.is(toDiacriticsInsensitiveRegex(\"resume\").toString(), `/r[EeÈèÉéÊêËë]s[UuÙùÚúÛûÜü]m[EeÈèÉéÊêËë]/i`);\r\n        t.is(toDiacriticsInsensitiveRegex(\"a+b?\").toString(), `/[AaÀàÁáÂâÃãÄä]\\\\+b\\\\?/i`);\r\n        t.is(toDiacriticsInsensitiveRegex(\"match.me(\\\\'\\\\')\").toString(), `/m[AaÀàÁáÂâÃãÄä]t[CcÇç]h\\\\.m[EeÈèÉéÊêËë]\\\\(\\\\\\\\'\\\\\\\\'\\\\)/i`);\r\n    }\r\n};",
@@ -1846,7 +1893,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 61,
+    "__docId__": 63,
     "kind": "variable",
     "name": "toDiacriticsInsensitiveRegex",
     "memberof": "src/to-diacritics-insensitive-regex.js",
@@ -1888,7 +1935,7 @@
     }
   },
   {
-    "__docId__": 62,
+    "__docId__": 64,
     "kind": "file",
     "name": "src/unzip.js",
     "content": "/**\n * Unzips a given zip file into the destination folder.\n * \n * @requires npm:extract-zip^1.6.7\n * @requires npm:fs-jetpack^2.2.0\n * \n * @param {string} zipFilePath The path to the zip file, as an\n * absolute path or a relative path to the given cwd (current\n * working directory).\n * @param {string} [destFolter=\".\"] The destination folder, into\n * which the unzipped files will be put, as an absolute path or\n * a relative path to the given cwd (current working directory).\n * Will be created if it does not exist.\n * @param {string} [cwd=\".\"] The reference path to be used for\n * internally computing the absolute paths of the first two\n * parameters. This parameter itself can be given as an absolute\n * path or a relative path to `process.cwd()`.\n * \n * @return {Promise} A promise that resolves when the unzipping is\n * complete as rejects if any error happens in the process.\n */\nconst unzip = function(zipFilePath, destFolder = \".\", cwd = \".\") {\n    const jetpack = require(\"fs-jetpack\");\n    const extract = require(\"extract-zip\");\n\n    const localJetpack = jetpack.cwd(cwd);\n    return localJetpack.dirAsync(destFolder).then(() => new Promise((resolve, reject) => {\n        extract(localJetpack.path(zipFilePath), { dir: localJetpack.path(destFolder) }, function(err) {\n            if (err) {\n                reject(err);\n            } else {\n                resolve();\n            }\n        });\n    }));\n};\n\n/* test */ module.exports = {\n    snippet: unzip,\n    snippetName: \"unzip\",\n    snippetTest: t => {\n        const jetpack = require(\"fs-jetpack\");\n        t.plan(3);\n        return unzip(\"test-fixtures/example-zip-file.zip\", \"test-temp\").then(() => {\n            t.is(jetpack.exists(\"test-temp/example-file.txt\"), \"file\");\n            t.is(jetpack.read(\"test-temp/example-file.txt\"), \"example-content\");\n            jetpack.remove(\"test-temp\");\n            t.pass();\n        });\n    }\n};",
@@ -1899,7 +1946,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 63,
+    "__docId__": 65,
     "kind": "function",
     "name": "unzip",
     "memberof": "src/unzip.js",
@@ -1969,7 +2016,7 @@
     }
   },
   {
-    "__docId__": 64,
+    "__docId__": 66,
     "kind": "file",
     "name": "src/wait.js",
     "content": "/**\n * Get a promise that resolves after a given amount of milliseconds.\n * \n * @param {int} millis The amount of milliseconds to wait before resolving the promise.\n * @param {*} [value] A value to fulfill the promise with.\n * \n * @return {Promise} A promise that resolves after the given amount of milliseconds with\n * the given value (if given) or undefined (if not given).\n */\nconst wait = function(millis, value = undefined) {\n    return new Promise(resolve => {\n        setTimeout(() => {\n            resolve(value);\n        }, millis);\n    });\n};\n\n/* test */ module.exports = {\n    snippet: wait,\n    snippetName: \"wait\",\n    snippetTest: t => {\n        t.pass();\n    }\n};",
@@ -1980,7 +2027,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 65,
+    "__docId__": 67,
     "kind": "function",
     "name": "wait",
     "memberof": "src/wait.js",
@@ -2026,7 +2073,7 @@
     }
   },
   {
-    "__docId__": 66,
+    "__docId__": 68,
     "kind": "file",
     "name": "src/zero-pad-left.js",
     "content": "/**\n * Convert the given value to string, adding zeros to the left of it\n * so that the resulting string has length equal to the given length\n * (or, if the number representation is longer than the given length,\n * simply return the number converted to string).\n * \n * @param {*} value The value to be converted (usually a number)\n * @param {int} length The desired length\n * \n * @return {string} A string representation of the value with\n * length greater than or equal to the given length.\n * \n * @example\n * \n * ```\n * zeroPadLeft(1234, 7); // \"0001234\"\n * zeroPadLeft(1234, 3); // \"1234\"\n * zeroPadLeft(\"Hello\", 9); // \"0000Hello\"\n * ```\n */\nconst zeroPadLeft = function(value, length) {\n    let str = \"\" + value;\n    while (str.length < length) str = \"0\" + str;\n    return str;\n};\n\n/* test */ module.exports = {\n    snippet: zeroPadLeft,\n    snippetName: \"zeroPadLeft\",\n    snippetTest: t => {\n        t.is(zeroPadLeft(1234, 7), \"0001234\");\n        t.is(zeroPadLeft(1234, 3), \"1234\");\n        t.is(zeroPadLeft(\"Hello\", 9), \"0000Hello\");\n    }\n};",
@@ -2037,7 +2084,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 67,
+    "__docId__": 69,
     "kind": "function",
     "name": "zeroPadLeft",
     "memberof": "src/zero-pad-left.js",
