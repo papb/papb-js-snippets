@@ -15,10 +15,5 @@ const browserSecureRandom = function() {
     snippetName: "browserSecureRandom",
     snippetTest: t => {
         t.pass();
-        // The code below could be used to test the equivalent implementation for Node
-        // for (let i = 0; i < 1000; i++) {
-        //     const r = browserSecureRandom();
-        //     t.true(0 <= r && r < 1);
-        // }
     }
 };
