@@ -30,6 +30,12 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
+    "papb-js-snippets/src/browser-secure-random.js~browsersecurerandom",
+    "function/index.html#static-function-browserSecureRandom",
+    "<span>browserSecureRandom</span> <span class=\"search-result-import-path\">papb-js-snippets/src/browser-secure-random.js</span>",
+    "function"
+  ],
+  [
     "papb-js-snippets/src/call-sequentially.js~callsequentially",
     "function/index.html#static-function-callSequentially",
     "<span>callSequentially</span> <span class=\"search-result-import-path\">papb-js-snippets/src/call-sequentially.js</span>",
@@ -120,10 +126,22 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "papb-js-snippets/src/node-secure-random.js~nodesecurerandom",
+    "function/index.html#static-function-nodeSecureRandom",
+    "<span>nodeSecureRandom</span> <span class=\"search-result-import-path\">papb-js-snippets/src/node-secure-random.js</span>",
+    "function"
+  ],
+  [
     "papb-js-snippets/src/open-native-file-select-dialog.js~opennativefileselectdialog",
     "function/index.html#static-function-openNativeFileSelectDialog",
     "<span>openNativeFileSelectDialog</span> <span class=\"search-result-import-path\">papb-js-snippets/src/open-native-file-select-dialog.js</span>",
     "function"
+  ],
+  [
+    "papb-js-snippets/src/overlays.js~overlays",
+    "variable/index.html#static-variable-overlays",
+    "<span>overlays</span> <span class=\"search-result-import-path\">papb-js-snippets/src/overlays.js</span>",
+    "variable"
   ],
   [
     "papb-js-snippets/src/pick-random.js~pickrandom",
@@ -252,6 +270,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/browser-secure-random.js",
+    "file/src/browser-secure-random.js.html",
+    "src/browser-secure-random.js",
+    "file"
+  ],
+  [
     "src/call-sequentially.js",
     "file/src/call-sequentially.js.html",
     "src/call-sequentially.js",
@@ -336,9 +360,21 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/node-secure-random.js",
+    "file/src/node-secure-random.js.html",
+    "src/node-secure-random.js",
+    "file"
+  ],
+  [
     "src/open-native-file-select-dialog.js",
     "file/src/open-native-file-select-dialog.js.html",
     "src/open-native-file-select-dialog.js",
+    "file"
+  ],
+  [
+    "src/overlays.js",
+    "file/src/overlays.js.html",
+    "src/overlays.js",
     "file"
   ],
   [
