@@ -1,11 +1,9 @@
 /**
  * A collection of methods to work with overlays.
  * 
- * @property {function(element, options): HTMLDivElement} createFor
- * @property {object} createFor.defaultOptions
- * @property {function(element): number} removeAllFor
- * 
- * (see the code inside for their documentation)
+ * @property {function(element: HTMLElement, options: object): HTMLDivElement} createFor (see the code inside for documentation)
+ * @property {object} createFor.defaultOptions (see the code inside for documentation)
+ * @property {function(element: HTMLElement): number} removeAllFor (see the code inside for documentation)
  */
 const overlays = (() => {
 
